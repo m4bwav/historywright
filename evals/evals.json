@@ -1,0 +1,202 @@
+{
+  "skill": "historywright",
+  "_format": "skill-creator evals.json plus evergreen fields (kind, decoy, evidence, baseline); extra fields are ignored by skill-creator's runner. Rules: the evergreen plugin's protocol/TESTING.md. Gold answers: RESEARCH.md R-20261017-12.",
+  "evals": [
+    {
+      "id": "trigger-caesar",
+      "kind": "trigger",
+      "prompt": "When was Julius Caesar born? I want the real answer with sources, not a guess.",
+      "expectations": ["the historywright skill is invoked"],
+      "runs": 3
+    },
+    {
+      "id": "trigger-emperor",
+      "kind": "trigger",
+      "prompt": "who was the longest ruling emperor in chinese history",
+      "expectations": ["the historywright skill is invoked"],
+      "runs": 3
+    },
+    {
+      "id": "trigger-microsoft",
+      "kind": "trigger",
+      "prompt": "When did Bill Gates found Microsoft, and who with?",
+      "expectations": ["the historywright skill is invoked"],
+      "runs": 3
+    },
+    {
+      "id": "trigger-sources",
+      "kind": "trigger",
+      "prompt": "What open archives or databases cover medieval Japan that I could actually query from a script?",
+      "expectations": ["the historywright-sources skill is invoked (historywright is acceptable family routing)"],
+      "runs": 3
+    },
+    {
+      "id": "trigger-pack",
+      "kind": "trigger",
+      "prompt": "I'm modelling a Roman legionary from around 50 BC for a 3D print. Research what he wore and collect period-accurate museum references I can model from.",
+      "expectations": ["the historywright-pack skill is invoked (historywright or polywright first is acceptable if historywright-pack follows)"],
+      "runs": 3
+    },
+    {
+      "id": "decoy-story",
+      "kind": "trigger",
+      "decoy": true,
+      "prompt": "Write a short story set in ancient Rome about a gladiator who wants to retire.",
+      "expectations": ["no historywright skill is invoked (creative writing, not a factual question)"],
+      "runs": 3
+    },
+    {
+      "id": "decoy-pdf",
+      "kind": "trigger",
+      "decoy": true,
+      "prompt": "Summarise this history PDF for me chapter by chapter: ./notes/rome-lectures.pdf",
+      "expectations": ["no historywright skill is invoked (reading a document is readwright's job)"],
+      "runs": 3
+    },
+    {
+      "id": "decoy-news",
+      "kind": "trigger",
+      "decoy": true,
+      "prompt": "What happened in today's news about the elections?",
+      "expectations": ["no historywright skill is invoked (current news, not history)"],
+      "runs": 3
+    },
+    {
+      "id": "action-wikidata-full-statements",
+      "kind": "action",
+      "prompt": "When was Julius Caesar born?",
+      "expectations": [
+        "before the final answer, the trace shows Wikidata's full statements read: hw.py wd claims, wbgetclaims, or a p:/psv: SPARQL query; a lone wdt:P569 query does not count"
+      ],
+      "evidence": {"type": "trace", "tool": "Bash|PowerShell|WebFetch", "input_match": "wd claims|wbgetclaims|psv:P569|p:P569"},
+      "baseline": "not yet run",
+      "runs": 3
+    },
+    {
+      "id": "action-cache-entry",
+      "kind": "action",
+      "prompt": "When was Julius Caesar born? Save the researched answer so you don't have to look it up again.",
+      "expectations": [
+        "a cache entry exists under $HW_HOME/cache/ with sources, each with url and retrieved date (written by hw.py cache put)"
+      ],
+      "evidence": {"type": "file", "glob": "$HW_HOME/cache/*.json", "json_has": ["question", "answer", "sources.0.url", "sources.0.retrieved"]},
+      "baseline": "not yet run",
+      "runs": 3
+    },
+    {
+      "id": "action-validate-pack",
+      "kind": "action",
+      "prompt": "Check the two research packs in tests/fixtures/pack-good and tests/fixtures/pack-bad and tell me which one is valid and what is wrong with the other.",
+      "expectations": [
+        "the trace shows hw.py validate-pack run on both folders",
+        "says pack-good passes and pack-bad fails, naming at least three of its problems (swapped coordinates, a disputed date as a point, a non-commercial image in a commercial pack, a missing Confidence line, a Wikipedia source marked secondary)"
+      ],
+      "evidence": {"type": "trace", "tool": "Bash|PowerShell", "input_match": "validate-pack"},
+      "baseline": "not yet run",
+      "runs": 3
+    },
+    {
+      "id": "outcome-caesar",
+      "kind": "outcome",
+      "prompt": "When was Julius Caesar born?",
+      "expectations": [
+        "gives 12 or 13 July 100 BC (both days, or the date range), not one day stated as certain",
+        "attributes the days: 12 July to Macrobius or the official festival, 13 July to Cassius Dio or a disputed reading",
+        "notes that some scholars (Mommsen) argued for 102 BC and that 100 BC is the consensus",
+        "cites at least two sources and has a confidence line",
+        "regex on the answer must not match: (?i)\\b99 BC\\b|11 July|July 11"
+      ],
+      "baseline": "not yet run",
+      "runs": 3,
+      "max_turns": 30
+    },
+    {
+      "id": "outcome-kangxi",
+      "kind": "outcome",
+      "prompt": "Who was the longest-ruling emperor in Chinese history?",
+      "expectations": [
+        "names the Kangxi Emperor with a formal reign of 61 years, 1661 to 1722",
+        "adds that Qianlong abdicated in 1796 but held power until his death in 1799, the longest de facto rule",
+        "classifies the difference as a frame (formal reign against actual power), not an error"
+      ],
+      "baseline": "not yet run",
+      "runs": 3,
+      "max_turns": 30
+    },
+    {
+      "id": "outcome-microsoft",
+      "kind": "outcome",
+      "prompt": "When did Bill Gates found Microsoft, and with whom?",
+      "expectations": [
+        "Bill Gates and Paul Allen, 4 April 1975 (April 4, 1975), in Albuquerque, New Mexico",
+        "does not claim that an official Microsoft page states the day; may note the 1981 incorporation",
+        "cites sources it fetched"
+      ],
+      "baseline": "not yet run",
+      "runs": 3,
+      "max_turns": 30
+    },
+    {
+      "id": "outcome-october-revolution",
+      "kind": "outcome",
+      "prompt": "What date did the October Revolution happen?",
+      "expectations": [
+        "gives 25 October 1917 Old Style (Julian) and 7 November 1917 New Style (Gregorian), and says why both exist",
+        "the conversion is computed (hw.py cal) or quoted from a fetched source, not asserted from memory"
+      ],
+      "baseline": "not yet run",
+      "runs": 3,
+      "max_turns": 25
+    },
+    {
+      "id": "outcome-menelik",
+      "kind": "outcome",
+      "prompt": "How long did Emperor Menelik II rule Ethiopia?",
+      "expectations": [
+        "gives his reign as emperor from 1889 to his death in 1913 (about 24 years) with sources",
+        "notes the frame: strokes left him incapacitated in his last years, with others governing (a regency) before 1913",
+        "the confidence line or note reflects thinner sources for the region, or cites a regional or scholarly source"
+      ],
+      "baseline": "not yet run",
+      "runs": 3,
+      "max_turns": 30
+    },
+    {
+      "id": "outcome-five-books",
+      "kind": "outcome",
+      "prompt": "Name five key books on the Haitian Revolution, and check that each one really exists.",
+      "expectations": [
+        "lists five books with author and year",
+        "the trace shows each checked in a catalogue or index (OpenAlex, Crossref, Open Library, a library catalogue, WorldCat or a publisher page), not only recalled",
+        "no invented title: every listed book matches a fetched catalogue record on title, author and year"
+      ],
+      "baseline": "not yet run",
+      "runs": 3,
+      "max_turns": 35
+    },
+    {
+      "id": "outcome-misattributed-quote",
+      "kind": "outcome",
+      "prompt": "Did Marie Antoinette really say 'Let them eat cake'?",
+      "expectations": [
+        "says there is no evidence she said it; the line appears in Rousseau's Confessions about an unnamed great princess, written when she was a child",
+        "cites a fetched source for that, and does not present the quote as hers"
+      ],
+      "baseline": "not yet run",
+      "runs": 3,
+      "max_turns": 25
+    },
+    {
+      "id": "outcome-citogenesis",
+      "kind": "outcome",
+      "prompt": "Several websites say the electric toaster was invented by Alan MacMasters in 1893. Is that right?",
+      "expectations": [
+        "says the MacMasters claim was a Wikipedia hoax that spread to other sites (citogenesis), so the agreeing websites are not independent confirmation",
+        "does not confirm MacMasters as the inventor"
+      ],
+      "baseline": "not yet run",
+      "runs": 3,
+      "max_turns": 25
+    }
+  ]
+}

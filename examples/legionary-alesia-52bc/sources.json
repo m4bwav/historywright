@@ -1,0 +1,108 @@
+{
+ "sources": [
+  {
+   "id": "s1",
+   "title": "Histories, Book 6 (chapters 22-23), trans. W. R. Paton (Loeb, 1922)",
+   "author": "Polybius",
+   "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Polybius/6*.html",
+   "kind": "primary",
+   "tier": 1,
+   "retrieved": "2026-10-17",
+   "licence": "public domain translation",
+   "derived_from": [],
+   "via": "LacusCurtius",
+   "claims": [
+    {
+     "claim": "Legionaries carried a Spanish sword on the right thigh",
+     "quote": "Besides the shield they also carry a sword, hanging on the right thigh and called a Spanish sword.",
+     "locator": "6.23.6"
+    },
+    {
+     "claim": "They also had two pila, a brass helmet and greaves",
+     "quote": "a brass helmet, and greaves",
+     "locator": "6.23.8"
+    },
+    {
+     "claim": "Helmets carried a crest of three upright purple or black feathers",
+     "quote": "three upright purple or black feathers",
+     "locator": "6.23.12"
+    },
+    {
+     "claim": "Common soldiers wore a small brass heart-protector; wealthier men a coat of mail",
+     "quote": "those who are rated above ten thousand drachmas wear instead of this a coat of chain-mail",
+     "locator": "6.23.15"
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "The Gallic War, Book 2, trans. H. J. Edwards (Loeb, 1917)",
+   "author": "Julius Caesar",
+   "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Caesar/Gallic_War/2*.html",
+   "kind": "primary",
+   "tier": 1,
+   "retrieved": "2026-10-17",
+   "licence": "public domain translation",
+   "derived_from": [],
+   "via": "LacusCurtius",
+   "claims": [
+    {
+     "claim": "Caesar's legionaries wore helmets, carried covered shields and fixed badges in battle (57 BC)",
+     "quote": "there was no space not only to fit badges in their places, but even to put on helmets and draw covers from shields",
+     "locator": "2.21"
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Helmet of the Montefortino Type (2015.758.1), collection record",
+   "author": "The Metropolitan Museum of Art",
+   "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/684492",
+   "kind": "structured",
+   "tier": 1,
+   "retrieved": "2026-10-17",
+   "licence": "CC0",
+   "derived_from": [],
+   "claims": [
+    {
+     "claim": "A bronze Montefortino-type helmet dated late 4th to early 3rd century BC",
+     "quote": "Helmet of the Montefortino Type"
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Museo de la Romanizacion, Gladius (Wikimedia Commons file page)",
+   "author": "Artistosteles",
+   "url": "https://commons.wikimedia.org/wiki/File:Museo_de_la_Romanizaci%C3%B3n,_Gladius.jpg",
+   "kind": "structured",
+   "tier": 2,
+   "retrieved": "2026-10-17",
+   "licence": "CC BY-SA 4.0",
+   "derived_from": [],
+   "claims": [
+    {
+     "claim": "A gladius hispaniensis of the 3rd to 1st century BC",
+     "quote": "Gladius Hispaniensis, siglos III-I a. C"
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Battle of Alesia (Q131386), Wikidata statements",
+   "author": "Wikidata contributors",
+   "url": "https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=Q131386&format=json",
+   "kind": "structured",
+   "tier": 3,
+   "retrieved": "2026-10-17",
+   "licence": "CC0",
+   "derived_from": [],
+   "claims": [
+    {
+     "claim": "The siege ran from July to September 52 BC (statements without references)",
+     "quote": "P580"
+    }
+   ]
+  }
+ ]
+}

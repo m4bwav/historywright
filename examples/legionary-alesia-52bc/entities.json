@@ -1,0 +1,37 @@
+{
+ "entities": [
+  {
+   "qid": "Q131386",
+   "label": "Battle of Alesia",
+   "type": "event",
+   "coord": [
+    4.50027778,
+    47.53722222
+   ],
+   "dates": {
+    "span": {
+     "as_written": "July to September 52 BC",
+     "calendar": "roman-republican",
+     "edtf": "-0051-07/-0051-09",
+     "jdn": [
+      1702612,
+      1702703
+     ],
+     "precision": "month",
+     "qualifier": null,
+     "era_name": null,
+     "sources": [
+      "s5"
+     ]
+    }
+   }
+  },
+  {
+   "qid": "Q1757364",
+   "label": "Montefortino helmet",
+   "type": "object type",
+   "coord": null,
+   "dates": {}
+  }
+ ]
+}

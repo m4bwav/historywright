@@ -1,0 +1,25 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.501071,
+     47.537854
+    ]
+   },
+   "properties": {
+    "name": "Alesia (Alise-Sainte-Reine, Cote-d'Or)",
+    "source": "whg:place:whg:16:7668691",
+    "when": "-0051",
+    "expected_coord": [
+     4.501071,
+     47.537854
+    ],
+    "note": "World Historical Gazetteer repr_point; Wikidata gives 4.50028, 47.53722"
+   }
+  }
+ ]
+}

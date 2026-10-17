@@ -1,0 +1,27 @@
+{
+  "name": "historywright",
+  "version": "0.1.0",
+  "description": "Evergreen history research skills for AI agents: answers history questions from sources, not model memory. Reads Wikidata's full statements (precision, calendar, disputed values, references), follows Wikipedia's footnotes to scholarship and primary texts, corroborates with two independent sources, computes dates in code (BCE, Julian and Gregorian, Old Style, AUC, Islamic, Chinese, Japanese and Korean eras from the DILA tables), and answers with inline citations, a confidence line and a sources-disagree note. A registry of about 60 sources by era, region and access, an era outline, and research packs (sources with quotes, EDTF dates, GeoJSON places, timelines, licensed museum references, anachronism checklists) that 3D, film and image plugins read. A stdlib Python CLI (hw.py) does the fetching, dates and checks.",
+  "author": {
+    "name": "Mark Rogers",
+    "url": "https://github.com/m4bwav"
+  },
+  "license": "MIT",
+  "keywords": [
+    "history",
+    "historical-research",
+    "fact-checking",
+    "citations",
+    "wikidata",
+    "calendar-conversion",
+    "digital-humanities",
+    "agent-skills",
+    "evergreen"
+  ],
+  "skills": "./skills",
+  "repository": "https://github.com/m4bwav/historywright",
+  "homepage": "https://github.com/m4bwav/historywright",
+  "documentationUrl": "https://github.com/m4bwav/historywright#readme",
+  "supportUrl": "https://github.com/m4bwav/historywright/issues",
+  "privacyPolicyUrl": "https://github.com/m4bwav/historywright#privacy"
+}

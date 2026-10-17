@@ -1,0 +1,2777 @@
+{
+  "registry": "1",
+  "updated": "2026-10-17",
+  "notes": "Seed source registry for historywright, read by hw.py and the historywright-sources skill. tier: 1 primary or expert-curated, 2 curated reference or aggregator, 3 crowd-sourced tertiary (a finder, never the cited authority). access: open (no sign-up), ua-required (refuses clients without an identifying User-Agent), key-optional (works keyless at reduced depth; a free key goes further), key-required (needs a key: with route src it is a free instant key substituted for {key}; with route link-out it is gated by email or approval), paid (subscription), browse-only (web pages, no API), bulk-only (dumps or GitHub, no query API), link-out (only a link). route: wd, wp, place, oa, doi or cal when an hw.py command owns the source; src when the generic search block works; link-out when hw.py does not query it (paid, browse-only, bulk-only, bot-walled, or an open API the JSON search cannot drive, such as XML, SPARQL or identifier lookups; such an API keeps its probe). search: {q} is the URL-encoded query and {key} the user's key; items is a dotted path to the result list (empty means the response itself; an object's values are taken as a list); fields are dotted paths inside one item (numeric segments index lists; an empty path means the item itself); optional link is a URL template filled from the extracted fields; optional skip drops leading rows (a CDX header). detail: a second call per result, its url filled from the field named by id_field; items null means the response is the record. ua: plain means send 'historywright <contact email>' instead of the standard User-Agent. pace_s: minimum seconds between requests to the host, from the documented limit (0.5 when none is documented, never below 0.1). probe: one cheap keyless call (or a public demo key) and its expected status; null for paid, browse-only, bulk-only and bot-walled entries. mirrors: Wikipedia mirror and derivative domains (suffix match) that never count as independent corroboration.",
+  "mirrors": [
+    "academic-accelerator.com",
+    "academic.ru",
+    "academickids.com",
+    "alchetron.com",
+    "answers.com",
+    "dbpedia.org",
+    "en-academic.com",
+    "enacademic.com",
+    "encyclopedia.thefreedictionary.com",
+    "encyclopedia2.thefreedictionary.com",
+    "everipedia.com",
+    "everipedia.org",
+    "everybodywiki.com",
+    "explained.today",
+    "grokipedia.com",
+    "infogalactic.com",
+    "justapedia.org",
+    "kiddle.co",
+    "open-encyclopedia.com",
+    "the-free-web-encyclopedia.com",
+    "thefreeencyclopedia.com",
+    "wiki.alquds.edu",
+    "wiki2.org",
+    "wikiless.org",
+    "wikimili.com",
+    "wikipedia.org",
+    "wikitia.com",
+    "wikiwand.com",
+    "wikizero.com",
+    "wikizero.org",
+    "wn.com"
+  ],
+  "sources": [
+    {
+      "id": "wikidata",
+      "name": "Wikidata",
+      "use": "Who, when, with whom: dated statements with precision, calendar, rank, qualifiers and references; a QID for every entity",
+      "kind": "structured",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 3,
+      "licence": "CC0",
+      "access": "ua-required",
+      "key": null,
+      "host": "www.wikidata.org",
+      "pace_s": 0.3,
+      "route": "wd",
+      "url": "https://www.wikidata.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=Q1048&property=P569&format=json",
+        "expect": 200
+      },
+      "notes": "Read full statements (wbgetclaims, or SPARQL p:/ps:/psv: at query.wikidata.org/sparql), never wdt: truthy values, which hide disputed statements (Caesar's 102 BC). SPARQL timeValue uses XSD year 0 and converts to Gregorian; the JSON uses historical numbering. WDQS: 60 s timeout, 5 parallel per IP. Wikimedia limits since 2026-03-12: 200/min with a contact User-Agent, 10/min without, concurrency 3, honour Retry-After. Counts as tier 2 where the statement carries a reference.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-2"
+    },
+    {
+      "id": "wikidata-scholarly",
+      "name": "Wikidata Query Service, scholarly graph",
+      "use": "Scholarly articles split out of the main Wikidata graph: a paper's QID, DOI, authors and venue",
+      "kind": "structured",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 3,
+      "licence": "CC0",
+      "access": "ua-required",
+      "key": null,
+      "host": "query-scholarly.wikidata.org",
+      "pace_s": 1.0,
+      "route": "wd",
+      "url": "https://query-scholarly.wikidata.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://query-scholarly.wikidata.org/sparql?query=ASK%7B%7D&format=json",
+        "expect": 200
+      },
+      "notes": "Split since 2025-05-09; people, places and events stay in the main graph at query.wikidata.org, and the two federate. The legacy full-graph endpoint went in about January 2026. Limits: 60 s timeout, 60 s of processing per minute per User-Agent and IP, 30 error queries a minute, 5 parallel per IP. The Blazegraph replacement is undecided (QLever leads).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-5"
+    },
+    {
+      "id": "wikipedia",
+      "name": "Wikipedia (English)",
+      "use": "Finder only: route a question to an article, take its QID and follow its footnotes to the sources to cite",
+      "kind": "reference",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 3,
+      "licence": "CC BY-SA 4.0",
+      "access": "ua-required",
+      "key": null,
+      "host": "en.wikipedia.org",
+      "pace_s": 0.3,
+      "route": "wp",
+      "url": "https://en.wikipedia.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Julius_Caesar",
+        "expect": 200
+      },
+      "notes": "Never the cited authority. /api/rest_v1/page/summary/{title} returns wikibase_item (the QID). The API Portal at api.wikimedia.org was retired in June 2026; use en.wikipedia.org/api/rest_v1/ and w/api.php. Same Wikimedia limits as Wikidata. No seed routing article is featured or good; 'Timeline of human prehistory' redirects to 'Timeline of prehistory'. Domains in the mirrors list never count as corroboration.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-3"
+    },
+    {
+      "id": "pleiades",
+      "name": "Pleiades",
+      "use": "Ancient places of the Greek and Roman world and the ancient Near East, about 3000 BC to AD 640, with coordinates and name variants",
+      "kind": "gazetteer",
+      "regions": [
+        "mediterranean",
+        "middle-east",
+        "europe",
+        "africa"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "CC BY 3.0",
+      "access": "open",
+      "key": null,
+      "host": "pleiades.stoa.org",
+      "pace_s": 0.5,
+      "route": "place",
+      "url": "https://pleiades.stoa.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://pleiades.stoa.org/places/579885/json",
+        "expect": 200
+      },
+      "notes": "Per-place JSON at /places/{id}/json (also /turtle, /kml). Daily full dump atlantides.org/downloads/pleiades/json/pleiades-places-latest.json.gz (about 129 MB; cite it with its date). Numbered releases stopped at 4.1 (2025-05-28); the CSV dump is deprecated. No documented API, rate limit or User-Agent rule.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "chgis",
+      "name": "China Historical GIS, Temporal Gazetteer (TGAZ)",
+      "use": "Chinese place names and administrative units for a given year, 221 BCE to 1911",
+      "kind": "gazetteer",
+      "regions": [
+        "china"
+      ],
+      "eras": [
+        "ancient",
+        "medieval",
+        "early-modern"
+      ],
+      "tier": 1,
+      "licence": "unstated; not redistributable (WHG flags it)",
+      "access": "open",
+      "key": null,
+      "host": "chgis.hudci.org",
+      "pace_s": 0.5,
+      "route": "place",
+      "url": "https://chgis.hudci.org/tgaz/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://chgis.hudci.org/tgaz/placename?n=%E9%95%B7%E5%AE%89&yr=700&fmt=json",
+        "expect": 200
+      },
+      "notes": "placename?n=&yr=&fmt=json returns a placenames list (content type text/json); 長安 at 700 gives hvd_70625 长安县 (666-702). A malformed call returns a PHP error page, not JSON. Harvard Fairbank Center and Fudan. Never redistribute records or pull CHGIS through WHG (HTTP 451).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "whg",
+      "name": "World Historical Gazetteer",
+      "use": "Places worldwide in every era; reconciling place names to Wikidata, GeoNames, TGN and Pleiades",
+      "kind": "gazetteer",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "per source (attribution object in each response)",
+      "access": "key-required",
+      "key": "whg",
+      "host": "whgazetteer.org",
+      "pace_s": 0.1,
+      "route": "place",
+      "url": "https://whgazetteer.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://whgazetteer.org/api/schema/",
+        "expect": 200
+      },
+      "notes": "Free token from the profile page (ORCID sign-in), sent as ?token= or Authorization: Bearer. The User-Agent must identify the client. 600/min and 5,000/day; 429 with Retry-After. Entity /entity/place:{id}/api (Linked Places v1.1), /reconcile (OpenRefine, at most 50 queries per POST), /suggest/entity. Records with redistributable false (chgis, nl, kain_par) return 451. The probe reads the keyless OpenAPI schema.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "periodo",
+      "name": "PeriodO",
+      "use": "Period names to date ranges, each definition tied to the scholarly source that made it",
+      "kind": "period",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "CC0",
+      "access": "bulk-only",
+      "key": null,
+      "host": "n2t.net",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://perio.do/en/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Full dataset at n2t.net/ark:/99152/p0dataset.json (also .ttl and .csv); browse at client.perio.do. No query API, so hw.py would have to cache the dump (open question). WHG serves the periods as entity/period:. Date of the last dataset change not confirmed. Landing page answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "cliopatria",
+      "name": "Cliopatria (Seshat polity borders)",
+      "use": "Polity borders from 3400 BCE to 2024 CE with Wikidata QIDs: largest empire in a year, borders for maps and video",
+      "kind": "structured",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "CC BY 4.0",
+      "access": "bulk-only",
+      "key": null,
+      "host": "github.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://github.com/Seshat-Global-History-Databank/cliopatria",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "One GeoJSON (cliopatria.geojson.zip) with Name, FromYear, ToYear (negative = BCE), Area, a Wikidata ID and a Wikipedia phrase; Zenodo 13363121; Scientific Data 2025-02-12. The best open source for timed polity polygons in places.geojson. Repo API answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "ohm",
+      "name": "OpenHistoricalMap",
+      "use": "Dated map features and boundaries (start_date and end_date tags) for any era",
+      "kind": "gazetteer",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 3,
+      "licence": "mostly CC0 (per-feature exceptions; Landmasses tileset ODbL)",
+      "access": "open",
+      "key": null,
+      "host": "overpass-api.openhistoricalmap.org",
+      "pace_s": 1.0,
+      "route": "link-out",
+      "url": "https://www.openhistoricalmap.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://overpass-api.openhistoricalmap.org/api/status",
+        "expect": 200
+      },
+      "notes": "Overpass API at overpass-api.openhistoricalmap.org/api/interpreter answered on 2026-10-17 (2 slots per client); ohm.overpass-ultra.us is a browser front end. Planet files at planet.openhistoricalmap.org (daily current, weekly history), vector tiles at vtiles.openhistoricalmap.org, QLever SPARQL at qlever.dev/ohm-planet. Crowd-sourced quality. 2026-10-17: Overpass refused a User-Agent ending in python-urllib (403) and accepted the plain historywright agent. hw.py place does not query OHM yet (Overpass QL), so the route is link-out with the probe kept.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "seshat",
+      "name": "Seshat Global History Databank",
+      "use": "Comparative polity variables (social complexity, warfare, religion, economy, crisis) for 864 polities",
+      "kind": "structured",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "CC BY-NC-SA (non-commercial)",
+      "access": "open",
+      "key": null,
+      "host": "seshat-db.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://seshat-db.com/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://seshat-db.com/api/?format=json",
+        "expect": 200
+      },
+      "notes": "Django REST API root opens keyless (groups core, general, sc, wf, rt, ec, crisisdb). /api/core/polities/ lists all 864 polities but ignored ?search= on 2026-10-17, so the generic search cannot drive it; page the lists or use the Polaris-2026 Excel (GitHub build_polaris_dataset). Python clients seshat_api and SeshatDatasetAnalysis.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "getty-vocab",
+      "name": "Getty Vocabularies (TGN, ULAN, AAT)",
+      "use": "Historical place names (TGN), artists (ULAN), object, material and style terms (AAT)",
+      "kind": "reference",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "ODC-By 1.0",
+      "access": "open",
+      "key": null,
+      "host": "vocab.getty.edu",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://www.getty.edu/research/tools/vocabularies/",
+      "search": {
+        "url": "https://vocab.getty.edu/sparql.json?query=select%20%3Fs%20%3Fl%20%3Fscheme%20%7B%3Fs%20luc%3Aterm%20%22{q}%22%3B%20skos%3AinScheme%20%3Fscheme%3B%20gvp%3AprefLabelGVP%2Fxl%3AliteralForm%20%3Fl%7D%20limit%2010",
+        "items": "results.bindings",
+        "fields": {
+          "title": "l.value",
+          "url": "s.value",
+          "id": "s.value",
+          "scheme": "scheme.value"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://vocab.getty.edu/sparql.json?query=select%20%3Fs%20%3Fl%20%3Fscheme%20%7B%3Fs%20luc%3Aterm%20%22helmet%22%3B%20skos%3AinScheme%20%3Fscheme%3B%20gvp%3AprefLabelGVP%2Fxl%3AliteralForm%20%3Fl%7D%20limit%201",
+        "expect": 200
+      },
+      "notes": "XML web services and relational downloads retired (final sets 2026-01-30); SPARQL and monthly N-Triples dumps remain. The search is a SPARQL full-text (luc:term) query with {q} inside a quoted string, so hw.py should strip double quotes from the query. Probe changed 2026-10-17: an ASK query answers XML even at sparql.json, so the probe runs a one-row SELECT.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "owid",
+      "name": "Our World in Data",
+      "use": "Long-run quantitative series (population, GDP, life expectancy) mostly since 1800",
+      "kind": "structured",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "CC BY 4.0 (some series non-redistributable: 403)",
+      "access": "open",
+      "key": null,
+      "host": "ourworldindata.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://ourworldindata.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://ourworldindata.org/grapher/population.metadata.json",
+        "expect": 200
+      },
+      "notes": "Charts API by slug: /grapher/{slug}.csv, .metadata.json (per-source citations) and .zip, with csvType, country and time parameters. The Search, Tables and Indicators APIs are 'under active development'. No limits documented. Cite the underlying source named in the metadata.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "topostext",
+      "name": "ToposText",
+      "use": "Ancient Greek and Roman places with references to the ancient texts that mention them",
+      "kind": "gazetteer",
+      "regions": [
+        "mediterranean"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 2,
+      "licence": "attribution requested, but the footer says All Rights Reserved: confirm before redistributing",
+      "access": "bulk-only",
+      "key": null,
+      "host": "topostext.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://topostext.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "8,150 places, about 279k ancient-text references. Downloads at topostext.org/TT-downloads: GeoJSON (2025-11-20), pelagios.ttl crosswalk to Pleiades and DARE, WHG-format JSON-LD (2023-11). No API. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "d-place",
+      "name": "D-PLACE",
+      "use": "Comparative ethnography of 1,400+ societies (Ethnographic Atlas, SCCS), mostly pre-1950 sources",
+      "kind": "structured",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "CC BY-NC 4.0 (non-commercial)",
+      "access": "bulk-only",
+      "key": null,
+      "host": "github.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://d-place.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "v3.3.0 (2026-01-13) as CLDF on GitHub D-PLACE/dplace-cldf (repo API 200 on 2026-10-17). Open counterpart to eHRAF for cross-cultural questions, not for dated events. Flag NC.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-4"
+    },
+    {
+      "id": "dila",
+      "name": "DILA Authority Database, time authority",
+      "use": "Chinese, Japanese, Korean and Vietnamese era names and regnal years to Julian Day Numbers, about 220 BCE to 1945",
+      "kind": "period",
+      "regions": [
+        "china",
+        "japan",
+        "korea",
+        "vietnam"
+      ],
+      "eras": [
+        "ancient",
+        "medieval",
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "CC BY-SA 3.0 (attribute DILA)",
+      "access": "bulk-only",
+      "key": null,
+      "host": "authority.dila.edu.tw",
+      "pace_s": 0.5,
+      "route": "cal",
+      "url": "https://authority.dila.edu.tw/time/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://authority.dila.edu.tw/time/",
+        "expect": 200
+      },
+      "notes": "hw.py cal downloads authority_time.2012-02.zip (1.34 MB; mirror github.com/DILA-edu/Authority-Databases) on first use and builds the SQLite table in ~/.historywright/. 1,637 eras; an ambiguous era name returns every match. The site is a frameset with no API documentation; the probe checks the landing page.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-10"
+    },
+    {
+      "id": "openalex",
+      "name": "OpenAlex",
+      "use": "Scholarly works, authors and venues: find the secondary literature behind a claim",
+      "kind": "scholarship",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "CC0",
+      "access": "key-optional",
+      "key": "openalex",
+      "host": "api.openalex.org",
+      "pace_s": 0.1,
+      "route": "oa",
+      "url": "https://openalex.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://api.openalex.org/works?search=julius%20caesar&per_page=1",
+        "expect": 200
+      },
+      "notes": "Since 2026-02-13: keys and a daily dollar budget. Free key: $1/day, 30 req/s; keyless: about a tenth of that, 10 req/s, and no paging past page 1. The mailto polite pool is gone (many community tools still assume it). Each response reports meta.cost_usd; budget at /rate-limit?api_key=. Semantic search 1 req/s.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-7"
+    },
+    {
+      "id": "crossref",
+      "name": "Crossref",
+      "use": "Check that a DOI exists and matches the cited title, authors, year and venue",
+      "kind": "scholarship",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "metadata facts, open",
+      "access": "open",
+      "key": null,
+      "host": "api.crossref.org",
+      "pace_s": 0.1,
+      "route": "doi",
+      "url": "https://www.crossref.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://api.crossref.org/works/10.2307/298459",
+        "expect": 200
+      },
+      "notes": "Limits since 2025-12-01: public pool 5/s single records, 1/s lists, concurrency 1; polite pool (mailto= or a contact in the User-Agent) 10/s single, 3/s lists, concurrency 3. Metadata Plus is paid.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-7"
+    },
+    {
+      "id": "semantic-scholar",
+      "name": "Semantic Scholar",
+      "use": "Abstracts and citation links for scholarly papers",
+      "kind": "scholarship",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "Semantic Scholar API licence",
+      "access": "key-optional",
+      "key": "semanticscholar",
+      "host": "api.semanticscholar.org",
+      "pace_s": 1.0,
+      "route": "link-out",
+      "url": "https://www.semanticscholar.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://api.semanticscholar.org/graph/v1/paper/search?query=julius%20caesar&limit=1&fields=title,year,url",
+        "expect": 200
+      },
+      "notes": "Keyless calls share one throttled pool; keyed use starts at 1 req/s (keys by email). The keyless paper search answered 429 on both tries on 2026-10-17, so its paths are unverified and it has no search block; documented shape: data[].title, url, year, paperId. Add the block once a quiet pool or a key lets the paths be checked. The probe flaps between 200 and 429. The keyless pool often answers 429 (seen 2026-10-17); a probe 429 means busy, not moved.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-7"
+    },
+    {
+      "id": "doaj",
+      "name": "Directory of Open Access Journals",
+      "use": "Open-access journal articles and journals",
+      "kind": "scholarship",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "metadata CC0; articles per journal licence",
+      "access": "open",
+      "key": null,
+      "host": "doaj.org",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://doaj.org/",
+      "search": {
+        "url": "https://doaj.org/api/search/articles/{q}?pageSize=10",
+        "items": "results",
+        "fields": {
+          "title": "bibjson.title",
+          "date": "bibjson.year",
+          "id": "id",
+          "url": "bibjson.link.0.url"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://doaj.org/api/search/articles/caesar?pageSize=1",
+        "expect": 200
+      },
+      "notes": "v4 API needs no key; public data dumps.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-7"
+    },
+    {
+      "id": "core",
+      "name": "CORE",
+      "use": "Open-access research outputs from repositories worldwide, with full text where available",
+      "kind": "scholarship",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "per output",
+      "access": "open",
+      "key": null,
+      "host": "api.core.ac.uk",
+      "pace_s": 2.0,
+      "route": "src",
+      "url": "https://core.ac.uk/",
+      "search": {
+        "url": "https://api.core.ac.uk/v3/search/works/?q={q}&limit=10",
+        "items": "results",
+        "fields": {
+          "title": "title",
+          "date": "yearPublished",
+          "id": "id",
+          "url": "downloadUrl"
+        },
+        "link": "https://core.ac.uk/works/{id}"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://api.core.ac.uk/v3/search/works/?q=caesar&limit=1",
+        "expect": 200
+      },
+      "notes": "No registration: 5 single requests (or 1 batch) per 10 s; faster tiers are paid. The path needs the trailing slash (search/works/): without it the API answers 301 with an empty body (2026-10-17).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-7"
+    },
+    {
+      "id": "persee",
+      "name": "Persée",
+      "use": "French scholarship and journal back runs in the humanities",
+      "kind": "scholarship",
+      "regions": [
+        "europe"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "open (Persée terms)",
+      "access": "open",
+      "key": null,
+      "host": "data.persee.fr",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.persee.fr/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://data.persee.fr/sparql?query=ASK%7B%7D&format=json",
+        "expect": 200
+      },
+      "notes": "SPARQL at data.persee.fr (an ASK answered JSON on 2026-10-17) and OAI-PMH at oai.persee.fr/oai. No keyword search endpoint, so link-out for the generic search.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-7"
+    },
+    {
+      "id": "jstor",
+      "name": "JSTOR",
+      "use": "Journal back runs and books in history (subscription)",
+      "kind": "scholarship",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "www.jstor.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.jstor.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "No open search API; the home page served a 'Client Challenge' page to curl on 2026-10-17. Constellate shut 2025-07-01; JSTOR Text Analysis Support is a request process for datasets. Find the article through OpenAlex or Crossref and link to JSTOR.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-7"
+    },
+    {
+      "id": "bbih",
+      "name": "Bibliography of British and Irish History (IHR/Brepols)",
+      "use": "Bibliography of British and Irish history (subscription)",
+      "kind": "scholarship",
+      "regions": [
+        "uk"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "www.brepolis.net",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.brepolis.net/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "The Royal Historical Society left in January 2025; BBIH continues under the IHR and Brepols (five-year agreement), sold by subscription. No open API. Update notes on the IHR blog.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-7"
+    },
+    {
+      "id": "ehraf",
+      "name": "eHRAF World Cultures and Archaeology",
+      "use": "Indexed ethnographic and archaeological full text for cross-cultural questions (subscription)",
+      "kind": "primary-corpus",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "prehistory",
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "ehrafworldcultures.yale.edu",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://hraf.yale.edu/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Institutional membership, interface only. The open counterpart is D-PLACE (CC BY-NC).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-7"
+    },
+    {
+      "id": "cnki",
+      "name": "CNKI (China National Knowledge Infrastructure)",
+      "use": "Chinese journals, theses and conference papers (subscription)",
+      "kind": "scholarship",
+      "regions": [
+        "china"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "www.cnki.net",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.cnki.net/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Subscription. Free full text of CASS journals (including 历史研究 back to 1920) is on NCPSSD after personal registration.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "ncpssd",
+      "name": "National Center for Philosophy and Social Sciences Documentation (NCPSSD)",
+      "use": "Free full text of 2,000+ Chinese social science journals, including 历史研究, after personal registration",
+      "kind": "scholarship",
+      "regions": [
+        "china"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "free to read after registration; © publishers",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.ncpssd.cn",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.ncpssd.cn/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Run by the CASS library; the practical open output of the CASS history institutes. Sign-up needed for full text; no API. www.ncpssd.cn answered 200 on 2026-10-17 (the creation pass cited ncpssd.org).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "ocd",
+      "name": "Oxford Classical Dictionary",
+      "use": "Authoritative short articles on the Greek and Roman world (subscription)",
+      "kind": "reference",
+      "regions": [
+        "mediterranean"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "oxfordre.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://oxfordre.com/classics",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Subscription through Oxford Research Encyclopedias; oxfordre.com/classics returned 403 to curl on 2026-10-17. Paid status from memory in the creation pass, not re-verified.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "new-pauly",
+      "name": "Brill's New Pauly",
+      "use": "Encyclopaedia of the ancient world and its reception (subscription)",
+      "kind": "reference",
+      "regions": [
+        "mediterranean",
+        "middle-east"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "referenceworks.brill.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://referenceworks.brill.com/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Brill Reference Works, subscription. Paid status from memory in the creation pass, not re-verified.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "ei",
+      "name": "Encyclopaedia of Islam (EI2, EI3)",
+      "use": "Reference articles on Islamic history, people, places and terms (subscription)",
+      "kind": "reference",
+      "regions": [
+        "middle-east",
+        "africa",
+        "south-asia",
+        "central-asia"
+      ],
+      "eras": [
+        "medieval",
+        "early-modern",
+        "modern"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "referenceworks.brill.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://referenceworks.brill.com/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Brill Reference Works, subscription. Paid status from memory in the creation pass, not re-verified. Encyclopaedia Iranica is the free counterpart for the Iranian world.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "iranica",
+      "name": "Encyclopaedia Iranica",
+      "use": "Reference articles on Iranian history, peoples and culture",
+      "kind": "reference",
+      "regions": [
+        "middle-east",
+        "central-asia",
+        "south-asia"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "free to read; © Encyclopaedia Iranica Foundation",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.iranicaonline.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.iranicaonline.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Moved in 2025 to UC Irvine's Jordan Center; free online (Brill platform since 2021). Answered 200 to curl with hw.py's User-Agent on 2026-10-17 (403 to the research fetcher).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "bho",
+      "name": "British History Online",
+      "use": "Victoria County Histories, record calendars and surveys for British local and national history",
+      "kind": "reference",
+      "regions": [
+        "uk"
+      ],
+      "eras": [
+        "medieval",
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "free for most content; a subset of the State Papers calendars by subscription",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.british-history.ac.uk",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.british-history.ac.uk/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Institute of Historical Research. No API. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "perseus",
+      "name": "Perseus Digital Library",
+      "use": "Greek and Latin texts with translations",
+      "kind": "primary-corpus",
+      "regions": [
+        "mediterranean"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "CC BY-SA (GitHub texts; not re-verified)",
+      "access": "bulk-only",
+      "key": null,
+      "host": "github.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://scaife.perseus.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Perseus 4.0 is frozen; Scaife Viewer (v2025-02-21-001) is the live reader, and its CTS/GraphQL API is not documented as stable. Script route: TEI in GitHub PerseusDL/canonical-greekLit and canonical-latinLit (repo API 200 on 2026-10-17).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "lacuscurtius",
+      "name": "LacusCurtius",
+      "use": "English translations of Greek and Latin authors (Plutarch, Cassius Dio, Suetonius) and Smith's Dictionary",
+      "kind": "primary-corpus",
+      "regions": [
+        "mediterranean"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "per page: an asterisk in the URL marks public domain; none means © Bill Thayer",
+      "access": "browse-only",
+      "key": null,
+      "host": "penelope.uchicago.edu",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/home.html",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Static pages, stable URLs; last site update 2023-05-12; 61 works. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "attalus",
+      "name": "Attalus",
+      "use": "Event lists for 324-30 BC tied to the ancient sources, with translations",
+      "kind": "primary-corpus",
+      "regions": [
+        "mediterranean",
+        "middle-east"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 2,
+      "licence": "© site; per page",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.attalus.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.attalus.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Static pages. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "fordham",
+      "name": "Internet History Sourcebooks Project (Fordham)",
+      "use": "Translated primary texts for ancient, medieval and modern history, plus African, East Asian, Indian, Islamic and Jewish sourcebooks",
+      "kind": "primary-corpus",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "ancient",
+        "medieval",
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "copy-permitted, not necessarily copyright-free",
+      "access": "browse-only",
+      "key": null,
+      "host": "sourcebooks.fordham.edu",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://sourcebooks.fordham.edu/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Static pages; revised 2026-09-21. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "avalon",
+      "name": "Avalon Project (Yale Law School)",
+      "use": "Documents in law, history and diplomacy from antiquity to the present: treaties, charters, constitutions",
+      "kind": "primary-corpus",
+      "regions": [
+        "world",
+        "us",
+        "europe"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "mostly public domain; per document",
+      "access": "browse-only",
+      "key": null,
+      "host": "avalon.law.yale.edu",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://avalon.law.yale.edu/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Static pages; registry update dated 2025-08-14. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "frus",
+      "name": "Foreign Relations of the United States (Office of the Historian)",
+      "use": "US diplomatic documents, from 1861",
+      "kind": "primary-corpus",
+      "regions": [
+        "us",
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "public domain (US government)",
+      "access": "bulk-only",
+      "key": null,
+      "host": "github.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://history.state.gov/historicaldocuments",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "FRUS TEI on GitHub HistoryAtState/frus (repo API 200 on 2026-10-17) and an OPDS catalogue (history.state.gov/developer).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "hansard",
+      "name": "Historic Hansard",
+      "use": "UK parliamentary debates 1803-2005",
+      "kind": "primary-corpus",
+      "regions": [
+        "uk"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "Open Parliament Licence (assumed)",
+      "access": "browse-only",
+      "key": null,
+      "host": "api.parliament.uk",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://api.parliament.uk/historic-hansard/index.html",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Static pages with an undated 'temporarily moved' notice. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "dprr",
+      "name": "Digital Prosopography of the Roman Republic",
+      "use": "Roman Republic office holders, careers and relationships, 509-31 BC",
+      "kind": "biography",
+      "regions": [
+        "mediterranean"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "open (terms not re-verified)",
+      "access": "open",
+      "key": null,
+      "host": "romanrepublic.ac.uk",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://romanrepublic.ac.uk/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://romanrepublic.ac.uk/rdf/repositories/dprr/query?query=SELECT%20%3Fs%20WHERE%20%7B%3Fs%20%3Fp%20%3Fo%7D%20LIMIT%201",
+        "expect": 200
+      },
+      "notes": "Read-only RDF4J SPARQL at romanrepublic.ac.uk/rdf/repositories/dprr/query. A plain GET answers SPARQL XML (200 on 2026-10-17) unless the Accept header asks for application/sparql-results+json, so the JSON generic search does not drive it.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "edh",
+      "name": "Epigraphic Database Heidelberg",
+      "use": "Latin inscriptions of the Roman Empire with dates, findspots and Trismegistos IDs",
+      "kind": "primary-corpus",
+      "regions": [
+        "mediterranean",
+        "europe"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "CC BY-SA 4.0",
+      "access": "open",
+      "key": null,
+      "host": "edh.ub.uni-heidelberg.de",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://edh.ub.uni-heidelberg.de/",
+      "search": {
+        "url": "https://edh.ub.uni-heidelberg.de/data/api/inschrift/suche?atext1={q}&limit=10",
+        "items": "items",
+        "fields": {
+          "title": "transcription",
+          "id": "id",
+          "not_before": "not_before",
+          "not_after": "not_after",
+          "country": "country"
+        },
+        "link": "https://edh.ub.uni-heidelberg.de/edh/inschrift/{id}"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://edh.ub.uni-heidelberg.de/data/api/inschrift/suche?atext1=votum%20solvit&limit=1",
+        "expect": 200
+      },
+      "notes": "Some records have not_before and not_after swapped (HD000034: 300 and 201), so order them before use. Frozen since December 2021, hosted by Heidelberg UB. An Anubis wall blocked the research fetcher, but curl with hw.py's User-Agent reached the data pages and API on 2026-10-17. atext1 searches the Latin transcription; also hd_nr, provinz, land, fo_modern, fo_antik, dat_jahr_a/dat_jahr_e (BC negative), tm_nr. DTS API and CSV/EpiDoc dumps.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "edcs",
+      "name": "Epigraphik-Datenbank Clauss-Slaby",
+      "use": "The largest Latin inscription index (542,484 inscriptions)",
+      "kind": "primary-corpus",
+      "regions": [
+        "mediterranean",
+        "europe"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "free; no licence stated",
+      "access": "browse-only",
+      "key": null,
+      "host": "edcs.hist.uzh.ch",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://edcs.hist.uzh.ch/en/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Moved to the University of Zurich in 2025 after Manfred Clauss died (2025-01-20); no account, no API documented. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "papyri",
+      "name": "papyri.info",
+      "use": "Greek, Latin and Coptic papyri and ostraca: texts, translations, metadata",
+      "kind": "primary-corpus",
+      "regions": [
+        "mediterranean",
+        "africa"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "open; per text (not re-verified)",
+      "access": "bulk-only",
+      "key": null,
+      "host": "github.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://papyri.info/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "The site sits behind an Anubis wall for scripts, and the challenge page comes back with status 200 (seen 2026-10-17), so a status check alone would call it live; its data mirrors hourly to GitHub DCLP/idp.data, the script route (repo API 200 on 2026-10-17).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "trismegistos",
+      "name": "Trismegistos",
+      "use": "Identifiers and metadata linking ancient texts, people and places, mainly Egypt and the ancient Mediterranean",
+      "kind": "catalogue",
+      "regions": [
+        "mediterranean",
+        "africa",
+        "middle-east"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "core search: institutional subscription; TM Data Services CC BY-SA 4.0",
+      "access": "paid",
+      "key": null,
+      "host": "www.trismegistos.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.trismegistos.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Core search needs an institutional subscription since January 2020. The site served a 'Security Check' page (403) to curl on 2026-10-17. The open TM Data Services (APIs and table dumps) are CC BY-SA 4.0.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "loeb",
+      "name": "Loeb Classical Library",
+      "use": "Greek and Latin texts with facing English translations (subscription)",
+      "kind": "primary-corpus",
+      "regions": [
+        "mediterranean"
+      ],
+      "eras": [
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "© Harvard University Press; older volumes are public domain on Internet Archive",
+      "access": "paid",
+      "key": null,
+      "host": "www.loebclassics.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.loebclassics.com/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Digital Loeb is a subscription. Public-domain Loeb volumes (pre-1930) are on Internet Archive and LacusCurtius.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "cbdb",
+      "name": "China Biographical Database",
+      "use": "Chinese officials and literati: dates, offices, kinship and places, about 650,000 people",
+      "kind": "biography",
+      "regions": [
+        "china"
+      ],
+      "eras": [
+        "ancient",
+        "medieval",
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "CC BY-NC-SA 4.0 (non-commercial)",
+      "access": "bulk-only",
+      "key": null,
+      "host": "cbdb.fas.harvard.edu",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://cbdb.hsites.harvard.edu/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://cbdb.fas.harvard.edu/cbdbapi/person.php?name=%E7%8E%8B%E5%AE%89%E7%9F%B3&o=json",
+        "expect": 200
+      },
+      "notes": "Current data is the SQLite release BJ 20260602 on GitHub (cbdb-project). The legacy cbdbapi person.php?name=&o=json answered JSON on 2026-10-17 but reports data Version 20131220 and returns a dict for one match, so it is a finder only. The academic release runs about a year behind the commercial partner.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "openiti",
+      "name": "OpenITI",
+      "use": "Premodern Arabic and Persian texts: 9,106 books by 3,618 authors",
+      "kind": "primary-corpus",
+      "regions": [
+        "middle-east",
+        "africa",
+        "central-asia"
+      ],
+      "eras": [
+        "medieval",
+        "early-modern"
+      ],
+      "tier": 1,
+      "licence": "per text (check)",
+      "access": "bulk-only",
+      "key": null,
+      "host": "zenodo.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://zenodo.org/records/17767721",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Release 2025.1.9 (concept DOI 10.5281/zenodo.3082463), 2.35 billion words, with new Persian and manuscript subcorpora; Zenodo record API answered 200 on 2026-10-17. Upstream al-Maktaba al-Shamela has no API or licence statement.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "ctext",
+      "name": "Chinese Text Project (ctext.org)",
+      "use": "Pre-modern Chinese texts including the classics and the 24 Histories",
+      "kind": "primary-corpus",
+      "regions": [
+        "china"
+      ],
+      "eras": [
+        "ancient",
+        "medieval",
+        "early-modern"
+      ],
+      "tier": 1,
+      "licence": "texts CC BY-NC-SA 3.0 (per the PyPI wrapper)",
+      "access": "paid",
+      "key": null,
+      "host": "api.ctext.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://ctext.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "The API needs an institutional subscription and a registered IP: a keyless gettext call returned ERR_REQUIRES_AUTHENTICATION on 2026-10-17. The terms forbid scraping and warn that scrapers may be fed corrupted data. Read in a browser; for scripts use Kanripo or Wikisource.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "scripta-sinica",
+      "name": "Scripta Sinica (漢籍全文資料庫, Academia Sinica)",
+      "use": "Full-text Chinese historical texts including the standard histories",
+      "kind": "primary-corpus",
+      "regions": [
+        "china"
+      ],
+      "eras": [
+        "ancient",
+        "medieval",
+        "early-modern"
+      ],
+      "tier": 1,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "hanchi.ihp.sinica.edu.tw",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://hanchi.ihp.sinica.edu.tw/ihp/hanji.htm",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Limited free tier; the fuller 授權使用 tier is licensed. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "kanripo",
+      "name": "Kanseki Repository (Kanripo)",
+      "use": "Pre-modern Chinese texts as plain text on GitHub",
+      "kind": "primary-corpus",
+      "regions": [
+        "china"
+      ],
+      "eras": [
+        "ancient",
+        "medieval",
+        "early-modern"
+      ],
+      "tier": 1,
+      "licence": "GitHub texts (licence to confirm)",
+      "access": "open",
+      "key": null,
+      "host": "www.kanripo.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.kanripo.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "The search API (kanripo.org/api/v1.0/search?query=) served a Cloudflare challenge (403) to curl on 2026-10-17; texts are on GitHub (kanripo organisation). The free script alternative to ctext.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "nlc",
+      "name": "National Library of China, Chinese Ancient Books Resource (中华古籍资源库)",
+      "use": "Scanned Chinese rare books and manuscripts",
+      "kind": "primary-corpus",
+      "regions": [
+        "china"
+      ],
+      "eras": [
+        "ancient",
+        "medieval",
+        "early-modern"
+      ],
+      "tier": 1,
+      "licence": "per item",
+      "access": "browse-only",
+      "key": null,
+      "host": "read.nlc.cn",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "http://read.nlc.cn/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "106,000+ items (January 2025), 11th release 2025-12-30; reading without login; image-based; no API. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "loc",
+      "name": "Library of Congress",
+      "use": "US history: books, manuscripts, maps, photographs and digitised collections",
+      "kind": "archive",
+      "regions": [
+        "us",
+        "world"
+      ],
+      "eras": [
+        "early-modern",
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "mostly public domain; per item",
+      "access": "open",
+      "key": null,
+      "host": "www.loc.gov",
+      "pace_s": 3.0,
+      "route": "src",
+      "url": "https://www.loc.gov/",
+      "search": {
+        "url": "https://www.loc.gov/search/?q={q}&fo=json&c=10",
+        "items": "results",
+        "fields": {
+          "title": "title",
+          "url": "url",
+          "date": "date",
+          "id": "id"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://www.loc.gov/search/?q=caesar&fo=json&c=1",
+        "expect": 200
+      },
+      "notes": "JSON API: 20 requests/min with a one-hour block if exceeded (text and image services 150/min); a 429 or CAPTCHA can appear below the limit. Page size up to 1,000, paging cap 100,000. Add fo=json to any loc.gov page. Some url values are protocol-relative (//hdl.loc.gov/...): prefix https:.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "chronicling-america",
+      "name": "Chronicling America (Library of Congress)",
+      "use": "Digitised US newspapers 1756-1963 with OCR",
+      "kind": "newspapers",
+      "regions": [
+        "us"
+      ],
+      "eras": [
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "mostly public domain",
+      "access": "open",
+      "key": null,
+      "host": "www.loc.gov",
+      "pace_s": 3.0,
+      "route": "src",
+      "url": "https://www.loc.gov/collections/chronicling-america/",
+      "search": {
+        "url": "https://www.loc.gov/collections/chronicling-america/?q={q}&fo=json&c=10",
+        "items": "results",
+        "fields": {
+          "title": "title",
+          "url": "url",
+          "date": "date",
+          "id": "id"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://www.loc.gov/collections/chronicling-america/?q=lindbergh&fo=json&c=1",
+        "expect": 200
+      },
+      "notes": "The legacy chroniclingamerica.loc.gov API is gone; since 2025-08-04 the collection is served only through the loc.gov JSON API, sharing loc's host and its 20/min budget. OCR as ALTO on tile.loc.gov; bulk OCR from the OCR Data page; data not fully synced since the migration.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "nara",
+      "name": "US National Archives Catalog",
+      "use": "US federal records",
+      "kind": "archive",
+      "regions": [
+        "us"
+      ],
+      "eras": [
+        "early-modern",
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "US government records, mostly public domain",
+      "access": "key-required",
+      "key": "nara",
+      "host": "catalog.archives.gov",
+      "pace_s": 1.0,
+      "route": "link-out",
+      "url": "https://catalog.archives.gov/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Catalog API v2 (catalog.archives.gov/api/v2) with a key requested by email from Catalog_API@nara.gov, sent as the x-api-key header; 10,000 queries a month, then the key is blocked until the 1st; terms say do not cache or store content. A keyless /api/v2/records/search call returned the catalogue's HTML app shell (200, not JSON) on 2026-10-17. v1 retired 2023-09. Bulk: AWS Registry of Open Data.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "tna",
+      "name": "The National Archives (UK) Discovery",
+      "use": "UK government and colonial records and 2,500+ other UK archives: what exists, its reference and its dates",
+      "kind": "archive",
+      "regions": [
+        "uk",
+        "world"
+      ],
+      "eras": [
+        "medieval",
+        "early-modern",
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "OGL v3.0",
+      "access": "open",
+      "key": null,
+      "host": "discovery.nationalarchives.gov.uk",
+      "pace_s": 1.0,
+      "route": "src",
+      "url": "https://discovery.nationalarchives.gov.uk/",
+      "search": {
+        "url": "https://discovery.nationalarchives.gov.uk/API/search/records?sps.searchQuery={q}&sps.resultsPageSize=10",
+        "items": "records",
+        "fields": {
+          "title": "title",
+          "date": "coveringDates",
+          "id": "id",
+          "reference": "reference",
+          "held_by": "heldBy.0"
+        },
+        "link": "https://discovery.nationalarchives.gov.uk/details/r/{id}"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://discovery.nationalarchives.gov.uk/API/search/records?sps.searchQuery=magna%20carta&sps.resultsPageSize=1",
+        "expect": 200
+      },
+      "notes": "Catalogue entries, not full text. 3,000 requests per 5 minutes, then the IP is blocked; TNA suggests about 10 requests per 5-10 s. Answered JSON without an Accept header on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "internet-archive",
+      "name": "Internet Archive",
+      "use": "Old books, scholarly reprints and scans (including the Digital Library of India)",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "per item",
+      "access": "open",
+      "key": null,
+      "host": "archive.org",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://archive.org/",
+      "search": {
+        "url": "https://archive.org/advancedsearch.php?q={q}&fl%5B%5D=identifier&fl%5B%5D=title&fl%5B%5D=date&rows=10&output=json",
+        "items": "response.docs",
+        "fields": {
+          "title": "title",
+          "date": "date",
+          "id": "identifier"
+        },
+        "link": "https://archive.org/details/{id}"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://archive.org/advancedsearch.php?q=gibbon%20decline&fl%5B%5D=identifier&fl%5B%5D=title&fl%5B%5D=date&rows=1&output=json",
+        "expect": 200
+      },
+      "notes": "Tier depends on the item (1 for a facsimile of a primary source, 3 for a crowd upload). Sorted paging stops at 10,000; the scrape API pages with a cursor. In-copyright full text is behind lending. No documented rate limit.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "hathitrust",
+      "name": "HathiTrust",
+      "use": "Book identity, rights status and public-domain scans",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "public domain or search-only per item (rightsCode)",
+      "access": "open",
+      "key": null,
+      "host": "catalog.hathitrust.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.hathitrust.org/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://catalog.hathitrust.org/api/volumes/brief/oclc/424023.json",
+        "expect": 200
+      },
+      "notes": "The Bibliographic API takes identifiers (oclc, isbn, lccn, htid), not free text, so no generic search; its records object is keyed by record id. The Data API retired 2024-07-17. Full text: public-domain volumes in the babel viewer, Research Datasets or HTRC.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "ndl",
+      "name": "National Diet Library Search (Japan)",
+      "use": "Japanese books, journals and archives of every era; NDL Digital Collections scans",
+      "kind": "catalogue",
+      "regions": [
+        "japan"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "per provider",
+      "access": "open",
+      "key": null,
+      "host": "ndlsearch.ndl.go.jp",
+      "pace_s": 1.0,
+      "route": "link-out",
+      "url": "https://ndlsearch.ndl.go.jp/",
+      "search": null,
+      "detail": null,
+      "probe": {
+        "url": "https://ndlsearch.ndl.go.jp/api/opensearch?title=%E5%BE%B3%E5%B7%9D%E5%AE%B6%E5%BA%B7&cnt=1",
+        "expect": 200
+      },
+      "notes": "Keyless OpenSearch (RSS), SRU, OpenURL and OAI-PMH (spec PDF dated 2026-09-25); XML only, so the JSON generic search does not drive it (use japan-search for JSON). No parallel requests; credit 'NDL Search API'; commercial use needs an application. IIIF manifests at dl.ndl.go.jp/api/iiif/{pid}/manifest.json (2019 pattern, unverified).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "japan-search",
+      "name": "Japan Search",
+      "use": "Japanese cultural heritage across 240 databases (about 29.8 million records): objects, documents, images",
+      "kind": "catalogue",
+      "regions": [
+        "japan"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "per item (common.contentsRightsType)",
+      "access": "open",
+      "key": null,
+      "host": "jpsearch.go.jp",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://jpsearch.go.jp/",
+      "search": {
+        "url": "https://jpsearch.go.jp/api/item/search/jps-cross?keyword={q}&size=10",
+        "items": "list",
+        "fields": {
+          "title": "common.title",
+          "url": "common.linkUrl",
+          "date": "common.temporal.0",
+          "id": "id",
+          "licence": "common.contentsRightsType"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://jpsearch.go.jp/api/item/search/jps-cross?keyword=%E5%BE%B3%E5%B7%9D%E5%AE%B6%E5%BA%B7&size=1",
+        "expect": 200
+      },
+      "notes": "Keyless JSON cross-search (endpoint found and tested during the registry build, 2026-10-17); also SPARQL. Rights types such as pdm and ccby per item.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "europeana",
+      "name": "Europeana",
+      "use": "European cultural heritage aggregated from thousands of libraries, archives and museums",
+      "kind": "catalogue",
+      "regions": [
+        "europe"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "per item (rights field); metadata believed CC0",
+      "access": "key-required",
+      "key": "europeana",
+      "host": "api.europeana.eu",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://www.europeana.eu/",
+      "search": {
+        "url": "https://api.europeana.eu/record/v2/search.json?wskey={key}&query={q}&rows=10",
+        "items": "items",
+        "fields": {
+          "title": "title.0",
+          "id": "id",
+          "licence": "rights.0",
+          "provider": "dataProvider.0"
+        },
+        "link": "https://www.europeana.eu/item{id}",
+        "demo_key": "api2demo"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://api.europeana.eu/record/v2/search.json?wskey=api2demo&query=caesar&rows=1",
+        "expect": 200
+      },
+      "notes": "Free key from a Europeana account; the public demo key api2demo works for tests and the probe. rows max 100; cursor paging for bulk. Never store an item's guid or link: they echo the key (utm_campaign, wskey). No limit documented. demo_key api2demo is Europeana's public shared test key (low limits); a personal key is free.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "deutsche-biographie",
+      "name": "Deutsche Biographie",
+      "use": "Lives and dates of people in German-speaking history (NDB, ADB and index)",
+      "kind": "biography",
+      "regions": [
+        "europe"
+      ],
+      "eras": [
+        "medieval",
+        "early-modern",
+        "modern"
+      ],
+      "tier": 2,
+      "licence": "metadata CC0; ADB articles CC BY-NC-SA; NDB articles CC BY-NC-ND",
+      "access": "open",
+      "key": null,
+      "host": "data.deutsche-biographie.de",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://www.deutsche-biographie.de/",
+      "search": {
+        "url": "https://data.deutsche-biographie.de/beta/solr-open/?q=r_nam:{q}&wt=json&rows=10",
+        "items": "response.docs",
+        "fields": {
+          "title": "defnam",
+          "date": "r_flr",
+          "id": "id"
+        },
+        "link": "https://www.deutsche-biographie.de/{id}.html"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://data.deutsche-biographie.de/beta/solr-open/?q=*:*&wt=json&rows=1",
+        "expect": 200
+      },
+      "notes": "Open Solr API labelled beta (Historical Commission at the Bavarian Academy of Sciences and the Bavarian State Library). A bare q matches nothing: query a field (r_nam names, defnam display name; r_flr is the life span, padded with whitespace and newlines, so trim it). Search path set during the registry build.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "ddb",
+      "name": "Deutsche Digitale Bibliothek",
+      "use": "German libraries, archives and museums aggregated",
+      "kind": "catalogue",
+      "regions": [
+        "europe"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "metadata CC0; objects per item",
+      "access": "key-required",
+      "key": "ddb",
+      "host": "api.deutsche-digitale-bibliothek.de",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.deutsche-digitale-bibliothek.de/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Free key from a My DDB account (Konto > API-Zugang); a keyless /search call returned 403 on 2026-10-17. OpenAPI spec labelled 'develop'. Fields not verified, so no search block yet.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "dpla",
+      "name": "Digital Public Library of America",
+      "use": "US libraries, archives and museums aggregated",
+      "kind": "catalogue",
+      "regions": [
+        "us"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "metadata believed CC0; objects per item",
+      "access": "key-required",
+      "key": "dpla",
+      "host": "api.dp.la",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://dp.la/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Free key by email (POST api.dp.la/v2/api_key/{email}), passed as api_key. A keyless /v2/items call returned 403 JSON on 2026-10-17, and dp.la itself returned 403 to curl. Fields not verified, so no search block yet.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "gallica",
+      "name": "Gallica (Bibliothèque nationale de France)",
+      "use": "French books, manuscripts, maps and the francophone press",
+      "kind": "catalogue",
+      "regions": [
+        "europe",
+        "africa"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "Gallica reuse conditions (rights-free items marked fayes)",
+      "access": "open",
+      "key": null,
+      "host": "gallica.bnf.fr",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://gallica.bnf.fr/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Keyless SRU (Dublin Core XML, 50 records a page), but it served a Cloudflare challenge (403) to curl with hw.py's User-Agent on 2026-10-17, as pages did to the research fetcher. XML anyway. Re-check at each refresh; a community MCP server (sweet-bnf) exists.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "trove",
+      "name": "Trove (National Library of Australia)",
+      "use": "Australian newspapers and collections",
+      "kind": "newspapers",
+      "regions": [
+        "oceania"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "metadata under the Trove API terms; objects per item",
+      "access": "key-required",
+      "key": "trove",
+      "host": "api.trove.nla.gov.au",
+      "pace_s": 0.3,
+      "route": "link-out",
+      "url": "https://trove.nla.gov.au/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "API v3 needs a key with approval levels; commercial use, full-text harvesting and AI/ML uses need higher review or permission (about 200 calls/min). The main independent tools author had his keys cancelled without notice. A keyless v3 call returned 401 on 2026-10-17; the web pages sit behind Anubis. Fragile. v2 retired 2024-09.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "abhilekh-patal",
+      "name": "Abhilekh Patal (National Archives of India)",
+      "use": "Records of the National Archives of India: 100 million+ digitised pages",
+      "kind": "archive",
+      "regions": [
+        "south-asia"
+      ],
+      "eras": [
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "per record",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.abhilekh-patal.in",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.abhilekh-patal.in/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Catalogue search only; copies through Page-on-Demand and Digitize-on-Demand; no API. Returned an empty 202 (bot challenge) to curl on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "eap",
+      "name": "Endangered Archives Programme (British Library)",
+      "use": "Digitised endangered archives from Africa, Asia, Latin America and elsewhere",
+      "kind": "archive",
+      "regions": [
+        "africa",
+        "south-asia",
+        "latin-america",
+        "world"
+      ],
+      "eras": [
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "per collection (EAP terms)",
+      "access": "browse-only",
+      "key": null,
+      "host": "eap.bl.uk",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://eap.bl.uk/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "eap.bl.uk returned an empty page to the research fetcher and an empty 202 to curl on 2026-10-17; the BL interim catalogue (recovering from the 2023 cyber-attack) lists about 499,000 EAP items.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "pares",
+      "name": "PARES (Portal de Archivos Españoles)",
+      "use": "Spanish state archives, including the Archivo General de Indias for colonial Latin America",
+      "kind": "archive",
+      "regions": [
+        "europe",
+        "latin-america"
+      ],
+      "eras": [
+        "medieval",
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "per record",
+      "access": "browse-only",
+      "key": null,
+      "host": "pares.mcu.es",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://pares.mcu.es/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "PARES 2.0 (2016), no API; a 2026 FECYT call says it urgently needs renewal. Answered 429 to a single curl request on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "hemeroteca-brasileira",
+      "name": "Hemeroteca Digital Brasileira (Biblioteca Nacional)",
+      "use": "Digitised Brazilian newspapers and periodicals",
+      "kind": "newspapers",
+      "regions": [
+        "latin-america"
+      ],
+      "eras": [
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "per item",
+      "access": "browse-only",
+      "key": null,
+      "host": "bndigital.bn.gov.br",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://bndigital.bn.gov.br/hemeroteca-digital/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "No API (the community pyHDB scraper exists). The landing page returned 403 to curl on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "met",
+      "name": "The Metropolitan Museum of Art",
+      "use": "Objects from every culture with dates and CC0 images where public domain",
+      "kind": "museum",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "CC0 when isPublicDomain is true",
+      "access": "open",
+      "key": null,
+      "host": "collectionapi.metmuseum.org",
+      "pace_s": 0.1,
+      "route": "src",
+      "url": "https://www.metmuseum.org/art/collection",
+      "search": {
+        "url": "https://collectionapi.metmuseum.org/public/collection/v1.1/search?q={q}&hasImages=true&limit=10",
+        "items": "objectIDs",
+        "fields": {
+          "id": ""
+        }
+      },
+      "detail": {
+        "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}",
+        "id_field": "id",
+        "items": null,
+        "fields": {
+          "title": "title",
+          "url": "objectURL",
+          "date": "objectDate",
+          "id": "objectID",
+          "culture": "culture",
+          "image": "primaryImage",
+          "public_domain": "isPublicDomain"
+        }
+      },
+      "probe": {
+        "url": "https://collectionapi.metmuseum.org/public/collection/v1.1/search?q=helmet&hasImages=true&limit=1",
+        "expect": 200
+      },
+      "notes": "v1 search retired 2026-10-01; v1.1 search returns objectIDs only (limit up to 500, offset+limit at most 10,000), so each result needs the v1 objects call. No culture filter: filter date and culture after fetching (dateBegin/dateEnd take negative years for BCE). Docs ask for under 80 requests/s. Open Access CSV for bulk.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "cleveland",
+      "name": "Cleveland Museum of Art Open Access",
+      "use": "Objects with CC0 images and structured dates",
+      "kind": "museum",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "CC0 per record (share_license_status)",
+      "access": "open",
+      "key": null,
+      "host": "openaccess-api.clevelandart.org",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://www.clevelandart.org/open-access",
+      "search": {
+        "url": "https://openaccess-api.clevelandart.org/api/artworks/?q={q}&has_image=1&cc0=1&limit=10",
+        "items": "data",
+        "fields": {
+          "title": "title",
+          "url": "url",
+          "date": "creation_date",
+          "id": "id",
+          "image": "images.web.url",
+          "licence": "share_license_status"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=roman%20helmet&has_image=1&cc0=1&limit=1",
+        "expect": 200
+      },
+      "notes": "No key, no documented limit. 'roman helmet' returns Greek and later helmets: check culture and date per record.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "artic",
+      "name": "Art Institute of Chicago",
+      "use": "Objects with CC0 data and IIIF images",
+      "kind": "museum",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "data CC0 except description and place fields (CC BY 4.0); images per is_public_domain",
+      "access": "open",
+      "key": null,
+      "host": "api.artic.edu",
+      "pace_s": 1.0,
+      "route": "src",
+      "url": "https://www.artic.edu/collection",
+      "search": {
+        "url": "https://api.artic.edu/api/v1/artworks/search?q={q}&limit=10&fields=id,title,date_display,image_id,is_public_domain",
+        "items": "data",
+        "fields": {
+          "title": "title",
+          "date": "date_display",
+          "id": "id",
+          "image_id": "image_id",
+          "public_domain": "is_public_domain"
+        },
+        "link": "https://www.artic.edu/artworks/{id}"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://api.artic.edu/api/v1/artworks/search?q=helmet&limit=1&fields=id,title",
+        "expect": 200
+      },
+      "notes": "60 requests/min per IP; optional AIC-User-Agent header. Image URL: https://www.artic.edu/iiif/2/{image_id}/full/843,/0/default.jpg. Nightly dumps on GitHub art-institute-of-chicago/api-data.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "getty",
+      "name": "J. Paul Getty Museum collection",
+      "use": "Objects and CC0 images (Linked Art)",
+      "kind": "museum",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "CC0 with exceptions; images CC0 (88,000+ as of 2024)",
+      "access": "open",
+      "key": null,
+      "host": "data.getty.edu",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.getty.edu/art/collection/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Linked Art API and SPARQL at data.getty.edu. On 2026-10-17 data.getty.edu/museum/collection/ redirected to /docs/, which returned 404 JSON. No keyword search endpoint confirmed, so link-out until re-checked; TGN, ULAN and AAT are the getty-vocab entry.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "smithsonian",
+      "name": "Smithsonian Open Access",
+      "use": "Smithsonian objects and specimens with CC0 metadata and media",
+      "kind": "museum",
+      "regions": [
+        "us",
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "CC0 metadata; media only for CC0 items (filter on usage access)",
+      "access": "key-required",
+      "key": "smithsonian",
+      "host": "api.si.edu",
+      "pace_s": 3.6,
+      "route": "src",
+      "url": "https://www.si.edu/openaccess",
+      "search": {
+        "url": "https://api.si.edu/openaccess/api/v1.0/search?q={q}&rows=10&api_key={key}",
+        "items": "response.rows",
+        "fields": {
+          "title": "title",
+          "id": "id",
+          "url": "content.descriptiveNonRepeating.guid",
+          "date": "content.indexedStructured.date.0",
+          "unit": "unitCode",
+          "licence": "content.descriptiveNonRepeating.metadata_usage.access"
+        },
+        "demo_key": "DEMO_KEY"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://api.si.edu/openaccess/api/v1.0/search?q=helmet&rows=1&api_key=DEMO_KEY",
+        "expect": 200
+      },
+      "notes": "Path corrected on 2026-10-17: record_link is absent on some records, so url reads the ARK permalink (descriptiveNonRepeating.guid); metadata_usage.access gives CC0. Free api.data.gov key, 1,000 requests/hour. The probe uses api.data.gov's public DEMO_KEY (30 requests/hour per IP). demo_key DEMO_KEY is api.data.gov's shared demo key (30 requests an hour); a personal key is free and instant.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "rijksmuseum",
+      "name": "Rijksmuseum",
+      "use": "Dutch and colonial-era objects, most public domain",
+      "kind": "museum",
+      "regions": [
+        "europe",
+        "world"
+      ],
+      "eras": [
+        "medieval",
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "per record (most objects public domain; take the licence from each record)",
+      "access": "open",
+      "key": null,
+      "host": "data.rijksmuseum.nl",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://www.rijksmuseum.nl/en/collection",
+      "search": {
+        "url": "https://data.rijksmuseum.nl/search/collection?title={q}",
+        "items": "orderedItems",
+        "fields": {
+          "id": "id",
+          "url": "id"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://data.rijksmuseum.nl/search/collection?title=helm",
+        "expect": 200
+      },
+      "notes": "The old key API is removed (third-party clients get 410). The keyless Linked Art search (beta) returns 100 object IDs a page (pageToken); resolve each id.rijksmuseum.nl URL for the record and its licence. Other parameters: creator, type, material, technique, description, creationDate, imageAvailable. SRU deprecated.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "commons",
+      "name": "Wikimedia Commons",
+      "use": "Images for objects the CC0 museum APIs lack, each with its own licence, author and date",
+      "kind": "museum",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 3,
+      "licence": "per file (extmetadata LicenseShortName)",
+      "access": "ua-required",
+      "key": null,
+      "host": "commons.wikimedia.org",
+      "pace_s": 0.3,
+      "route": "src",
+      "url": "https://commons.wikimedia.org/",
+      "search": {
+        "url": "https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch={q}&gsrnamespace=6&gsrlimit=10&prop=imageinfo&iiprop=url%7Cextmetadata&iiextmetadatafilter=LicenseShortName%7CArtist%7CDateTimeOriginal&format=json",
+        "items": "query.pages",
+        "fields": {
+          "title": "title",
+          "url": "imageinfo.0.descriptionurl",
+          "image": "imageinfo.0.url",
+          "licence": "imageinfo.0.extmetadata.LicenseShortName.value",
+          "artist": "imageinfo.0.extmetadata.Artist.value",
+          "date": "imageinfo.0.extmetadata.DateTimeOriginal.value",
+          "id": "pageid"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=roman%20helmet&gsrnamespace=6&gsrlimit=1&prop=imageinfo&iiprop=url%7Cextmetadata&iiextmetadatafilter=LicenseShortName&format=json",
+        "expect": 200
+      },
+      "notes": "Keyless; Wikimedia limits (200/min with a contact User-Agent); Commons has throttled unidentified server clients since late 2025. query.pages is an object keyed by page id. Artist (HTML) and DateTimeOriginal are absent on some files (4 of 10 in the test), so treat them as optional. LicenseShortName confirmed live on 2026-10-17. Check the licence per file before a pack ships it.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "british-museum",
+      "name": "British Museum",
+      "use": "Objects from the ancient Near East, Egypt, Greece, Rome, Britain and beyond",
+      "kind": "museum",
+      "regions": [
+        "world",
+        "mediterranean",
+        "middle-east",
+        "uk"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "CC BY-NC-SA 4.0 for most images (non-commercial); commercial use licensed separately",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.britishmuseum.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.britishmuseum.org/collection",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "No current API. 750 px images direct, 2,500 px by request. The collection pages served a Cloudflare challenge (403) to curl on 2026-10-17. Flag NC; never ship in a CC0 pack.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "science-museum",
+      "name": "Science Museum Group",
+      "use": "History of science, technology, medicine and industry",
+      "kind": "museum",
+      "regions": [
+        "uk",
+        "world"
+      ],
+      "eras": [
+        "early-modern",
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "images CC BY-NC-SA 4.0; title, maker and date CC0; text CC BY",
+      "access": "bulk-only",
+      "key": null,
+      "host": "collection.sciencemuseumgroup.org.uk",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://collection.sciencemuseumgroup.org.uk/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "The collection JSON API is 'heavily rate limited' and returned 403 to curl on 2026-10-17; use the JSON/CSV dumps (coimages.sciencemuseumgroup.org.uk/datasets). Flag NC images.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "vam",
+      "name": "Victoria and Albert Museum",
+      "use": "Design, decorative arts and dress from many cultures",
+      "kind": "museum",
+      "regions": [
+        "uk",
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 1,
+      "licence": "V&A's own API terms (not Creative Commons)",
+      "access": "open",
+      "key": null,
+      "host": "api.vam.ac.uk",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://collections.vam.ac.uk/",
+      "search": {
+        "url": "https://api.vam.ac.uk/v2/objects/search?q={q}&page_size=10",
+        "items": "records",
+        "fields": {
+          "title": "_primaryTitle",
+          "date": "_primaryDate",
+          "id": "systemNumber",
+          "place": "_primaryPlace",
+          "image": "_images._primary_thumbnail"
+        },
+        "link": "https://collections.vam.ac.uk/item/{id}/"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://api.vam.ac.uk/v2/objects/search?q=helmet&page_size=1",
+        "expect": 200
+      },
+      "notes": "API v2, free and keyless. Images fall under V&A terms (section 9): flag as restricted, never CC0.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "pas",
+      "name": "Portable Antiquities Scheme",
+      "use": "Small finds recorded in England and Wales, prehistoric to post-medieval",
+      "kind": "museum",
+      "regions": [
+        "uk"
+      ],
+      "eras": [
+        "prehistory",
+        "ancient",
+        "medieval",
+        "early-modern"
+      ],
+      "tier": 1,
+      "licence": "open licence images (exact CC licence unconfirmed); some fields need login",
+      "access": "browse-only",
+      "key": null,
+      "host": "finds.org.uk",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://finds.org.uk/database",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "The documented /database/search/results/q/{q}/format/json route returned an HTML page on 2026-10-17, so no generic search. Roman finds skew later than the Late Republic.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "open-context",
+      "name": "Open Context",
+      "use": "Published excavation and survey data with dates and coordinates",
+      "kind": "archive",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "prehistory",
+        "ancient",
+        "medieval"
+      ],
+      "tier": 1,
+      "licence": "CC per project",
+      "access": "ua-required",
+      "key": null,
+      "host": "opencontext.org",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://opencontext.org/",
+      "search": {
+        "url": "https://opencontext.org/query/.json?q={q}&rows=10&response=uri-meta",
+        "items": "",
+        "fields": {
+          "title": "label",
+          "url": "href",
+          "project": "project label",
+          "early": "early bce/ce",
+          "late": "late bce/ce",
+          "id": "uri"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://opencontext.org/query/.json?q=helmet&rows=1&response=uri-meta",
+        "expect": 200
+      },
+      "notes": "Blocks requests without a User-Agent. response=uri-meta returns a bare list of results (items path empty); the default response is facets and GeoJSON (response=geo-record for places.geojson). rows up to 1,000; chronology filters allevent-start/allevent-stop; OAI-PMH.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-8"
+    },
+    {
+      "id": "edgar",
+      "name": "SEC EDGAR",
+      "use": "US company filings: incorporation, officers, history sections of 10-Ks",
+      "kind": "company",
+      "regions": [
+        "us"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "US government records, public",
+      "access": "ua-required",
+      "key": null,
+      "host": "efts.sec.gov",
+      "pace_s": 0.1,
+      "route": "src",
+      "url": "https://www.sec.gov/edgar/search/",
+      "ua": "plain",
+      "search": {
+        "url": "https://efts.sec.gov/LATEST/search-index?q={q}",
+        "items": "hits.hits",
+        "fields": {
+          "title": "_source.display_names.0",
+          "date": "_source.file_date",
+          "form": "_source.form",
+          "id": "_id",
+          "cik": "_source.ciks.0"
+        },
+        "link": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK={cik}"
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://efts.sec.gov/LATEST/search-index?q=%22Micro-Soft%22",
+        "expect": 200
+      },
+      "notes": "SEC refused hw.py's standard User-Agent (403 on efts.sec.gov and data.sec.gov, 2026-10-17) and accepted the plain form 'historywright <contact email>' (ua: plain). 10 requests/s. Full-text search (efts, filings from 2001) is unofficial; the documented route is data.sec.gov/submissions/CIK##########.json (Microsoft: CIK0000789019).",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "wayback",
+      "name": "Wayback Machine CDX",
+      "use": "Old versions of company and organisation web pages: what a site said on a date",
+      "kind": "archive",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "captures of third-party pages; per site",
+      "access": "open",
+      "key": null,
+      "host": "web.archive.org",
+      "pace_s": 4.0,
+      "route": "src",
+      "url": "https://web.archive.org/",
+      "search": {
+        "url": "https://web.archive.org/cdx/search/cdx?url={q}&output=json&limit=10&fl=timestamp,original,statuscode",
+        "items": "",
+        "fields": {
+          "date": "0",
+          "title": "1",
+          "original": "1",
+          "status": "2"
+        },
+        "link": "https://web.archive.org/web/{date}/{original}",
+        "skip": 1
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://web.archive.org/cdx/search/cdx?url=microsoft.com&output=json&limit=2",
+        "expect": 200
+      },
+      "notes": "{q} is a URL or domain, not free text. Also from=, to=, collapse=, filter= and resumeKey paging. The JSON output is a list of rows whose first row is the header (skip 1). No official limit; clients report 429 near 15/min. The availability API (archive.org/wayback/available) returned empty archived_snapshots for microsoft.com at 1996 on 2026-10-17, so CDX is the route.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "federal-register",
+      "name": "Federal Register",
+      "use": "US federal rules, notices and presidential documents since 1994",
+      "kind": "archive",
+      "regions": [
+        "us"
+      ],
+      "eras": [
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "US government works, public domain",
+      "access": "open",
+      "key": null,
+      "host": "www.federalregister.gov",
+      "pace_s": 0.5,
+      "route": "src",
+      "url": "https://www.federalregister.gov/",
+      "search": {
+        "url": "https://www.federalregister.gov/api/v1/documents.json?per_page=10&conditions%5Bterm%5D={q}",
+        "items": "results",
+        "fields": {
+          "title": "title",
+          "url": "html_url",
+          "date": "publication_date",
+          "id": "document_number",
+          "type": "type"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://www.federalregister.gov/api/v1/documents.json?per_page=1&conditions%5Bterm%5D=Microsoft",
+        "expect": 200
+      },
+      "notes": "Keyless JSON, no documented limit. The developer docs bounce scripts to an 'unblock' bot page; the API itself answered on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "chm",
+      "name": "Computer History Museum oral histories",
+      "use": "Oral histories and documents of computing companies and people",
+      "kind": "company",
+      "regions": [
+        "us",
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "per item",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.computerhistory.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.computerhistory.org/collections/oralhistories/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Transcripts online; site search only (?s=), no API. Landing answered 200 on 2026-10-17.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-6"
+    },
+    {
+      "id": "transkribus",
+      "name": "Transkribus",
+      "use": "Handwritten text recognition for manuscript images (paid route for image-only sources)",
+      "kind": "primary-corpus",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "all"
+      ],
+      "tier": 2,
+      "licence": "proprietary service",
+      "access": "paid",
+      "key": null,
+      "host": "www.transkribus.org",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.transkribus.org/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "A transcription platform, not a source. The API comes only with paid plans (Scholar about €99 a year for 900 credits; Free is 50 credits a month without API); the pricing page contradicts itself. HTR is out of v1 scope.",
+      "checked": "2026-10-17",
+      "research": "R-20261017-14"
+    }
+  ],
+  "retired": [
+    {
+      "id": "dbpedia",
+      "name": "DBpedia",
+      "reason": "Derived from Wikipedia and adds nothing over Wikidata; last release found 2025-06. Its domain stays in the mirrors list.",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "clio-infra",
+      "name": "Clio Infra",
+      "reason": "Frozen: no licence or update date stated; series end about 2018. Use OWID or the underlying studies.",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "maddison",
+      "name": "Maddison Project Database",
+      "reason": "Frozen at the 2023 release (page last modified 2024-09); OWID carries its series with citations.",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "chronicling-america-api",
+      "name": "Chronicling America legacy API",
+      "reason": "chroniclingamerica.loc.gov API retired with the 2025-08-04 migration; use chronicling-america (loc.gov JSON).",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "met-v1-search",
+      "name": "Met Collection API v1 search",
+      "reason": "Retired 2026-10-01; met uses v1.1 search.",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "hathitrust-data-api",
+      "name": "HathiTrust Data API",
+      "reason": "Retired 2024-07-17; the Bibliographic API remains (hathitrust).",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "jstor-constellate",
+      "name": "JSTOR Constellate",
+      "reason": "Shut 2025-07-01; replaced by a dataset request process.",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "trove-v2",
+      "name": "Trove API v2",
+      "reason": "Retired 2024-09; v3 needs an approved key (trove).",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "nara-v1",
+      "name": "NARA Catalog API v1",
+      "reason": "Retired 2023-09 with the old catalogue; v2 needs a key (nara).",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "getty-xml",
+      "name": "Getty Vocabularies XML web services",
+      "reason": "Discontinued; final XML sets drawn 2026-01-30. SPARQL and N-Triples remain (getty-vocab).",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "rijksmuseum-key-api",
+      "name": "Rijksmuseum key API (Rijksstudio)",
+      "reason": "Removed; clients get 410. The keyless Linked Art search replaces it (rijksmuseum).",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "wikimedia-api-portal",
+      "name": "Wikimedia API Portal (api.wikimedia.org)",
+      "reason": "Sunset June 2026; use en.wikipedia.org/api/rest_v1/ and w/api.php.",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "wdqs-legacy-full",
+      "name": "WDQS legacy full-graph endpoint",
+      "reason": "Gone after the graph split (about 2026-01-20); main graph at query.wikidata.org, scholarly at query-scholarly.wikidata.org.",
+      "date": "2026-10-17"
+    }
+  ]
+}

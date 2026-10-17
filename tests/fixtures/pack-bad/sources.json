@@ -1,0 +1,47 @@
+{
+ "sources": [
+  {
+   "id": "s1",
+   "title": "Saturnalia 1.12.34 (fixture)",
+   "author": "Macrobius",
+   "url": "https://example.org/caesar-source",
+   "kind": "primary",
+   "tier": 1,
+   "retrieved": "2026-10-17",
+   "licence": "public domain",
+   "derived_from": [],
+   "claims": [
+    {
+     "claim": "Caesar's birthday was kept on 12 July",
+     "quote": "born on the twelfth day of July",
+     "locator": "1.12.34"
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Was Caesar born in 100 or in 102 B.C.? (fixture)",
+   "author": "E. Badian",
+   "year": 1959,
+   "url": "https://example.org/badian",
+   "kind": "secondary",
+   "tier": 1,
+   "retrieved": "2026-10-17",
+   "derived_from": [],
+   "claims": [
+    {
+     "claim": "Caesar was born in 100 BC"
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Julius Caesar",
+   "url": "https://en.wikipedia.org/wiki/Julius_Caesar",
+   "kind": "secondary",
+   "tier": 3,
+   "retrieved": "2026-10-17",
+   "claims": []
+  }
+ ]
+}

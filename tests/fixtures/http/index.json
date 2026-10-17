@@ -1,0 +1,55 @@
+[
+ {
+  "match": "wikidata\\.org/w/api\\.php\\?action=wbgetclaims&entity=Q1048&",
+  "method": "GET",
+  "file": "q1048-p569-claims.json",
+  "status": 200,
+  "content_type": "application/json"
+ },
+ {
+  "match": "wikidata\\.org/w/api\\.php\\?action=wbgetentities&ids=P",
+  "method": "GET",
+  "file": "q1048-labels.json",
+  "status": 200,
+  "content_type": "application/json"
+ },
+ {
+  "match": "wikidata\\.org/w/api\\.php\\?action=wbsearchentities&search=Julius",
+  "method": "GET",
+  "file": "search-julius-caesar.json",
+  "status": 200,
+  "content_type": "application/json"
+ },
+ {
+  "match": "wikidata\\.org/w/api\\.php\\?action=wbgetentities&ids=Q1048&props=labels%7Cdescriptions",
+  "method": "GET",
+  "file": "q1048-entity.json",
+  "status": 200,
+  "content_type": "application/json"
+ },
+ {
+  "match": "example\\.org/caesar-source",
+  "method": "GET",
+  "file": "caesar-source.html",
+  "status": 200,
+  "content_type": "text/html; charset=utf-8"
+ },
+ {
+  "match": "example\\.org/missing",
+  "method": "GET",
+  "status": 404,
+  "body": "not found"
+ },
+ {
+  "match": "archive\\.org/wayback/available\\?url=https%3A%2F%2Fexample\\.org%2Fmissing",
+  "method": "GET",
+  "status": 200,
+  "body": "{\"url\": \"example.org/missing\", \"archived_snapshots\": {}}"
+ },
+ {
+  "match": "web\\.archive\\.org/cdx/search/cdx\\?url=microsoft\\.com",
+  "method": "GET",
+  "status": 200,
+  "body": "[[\"timestamp\", \"original\", \"statuscode\"], [\"19961020014044\", \"http://www.microsoft.com:80/\", \"200\"]]"
+ }
+]

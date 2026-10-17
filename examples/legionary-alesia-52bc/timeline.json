@@ -1,0 +1,26 @@
+{
+ "rows": [
+  {
+   "when": "-0056",
+   "jdn": [
+    1700600,
+    1700964
+   ],
+   "event": "Battle against the Nervii; Caesar's men fight without time to put on helmets",
+   "source": "s2",
+   "sentence": "there was no space not only to fit badges in their places, but even to put on helmets and draw covers from shields",
+   "place": "Gallia Belgica"
+  },
+  {
+   "when": "-0051-07/-0051-09",
+   "jdn": [
+    1702612,
+    1702703
+   ],
+   "event": "Siege of Alesia",
+   "source": "s5",
+   "sentence": "Wikidata P580 start time July 52 BC, P582 end time September 52 BC (unreferenced)",
+   "place": "Alesia"
+  }
+ ]
+}

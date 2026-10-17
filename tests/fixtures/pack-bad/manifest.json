@@ -1,0 +1,19 @@
+{
+ "polywright": "1",
+ "name": "bad",
+ "kind": "real",
+ "route": "found",
+ "targets": [],
+ "sources": [],
+ "outputs": [],
+ "historywright": {
+  "question": "When was Caesar born?",
+  "commercial": true,
+  "completeness": [
+   {
+    "item": "places",
+    "status": "empty"
+   }
+  ]
+ }
+}

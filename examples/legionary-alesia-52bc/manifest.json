@@ -1,0 +1,74 @@
+{
+ "polywright": "1",
+ "name": "Roman legionary, Alesia, 52 BC",
+ "kind": "real",
+ "route": "found",
+ "brief": "What did a Roman legionary of Caesar's army at the siege of Alesia (52 BC) wear and carry?",
+ "targets": [],
+ "units": "m",
+ "sources": [
+  {
+   "what": "reference image: Helmet of the Montefortino Type (The Metropolitan Museum of Art, 2015.758.1)",
+   "url": "https://www.metmuseum.org/art/collection/search/684492",
+   "author": "The Metropolitan Museum of Art",
+   "licence": "CC0",
+   "retrieved": "2026-10-17",
+   "file": "refs/the-metropolitan-museum-of-art-2015-758-1.jpg"
+  },
+  {
+   "what": "reference image: Gladius hispaniensis (Museo de la Romanizacion, Calahorra (photo: Artistosteles, Wikimedia Commons), not given on the file page (Commons file Museo de la Romanizacion, Gladius.jpg))",
+   "url": "https://commons.wikimedia.org/wiki/File:Museo_de_la_Romanizaci%C3%B3n,_Gladius.jpg",
+   "author": "Artistosteles",
+   "licence": "CC BY-SA 4.0",
+   "retrieved": "2026-10-17",
+   "file": "refs/museo-de-la-romanizacion-calahorra-photo-artistosteles-wikim.jpg"
+  }
+ ],
+ "tools": [
+  {
+   "name": "historywright",
+   "version": "0.1.0"
+  }
+ ],
+ "outputs": [],
+ "reviews": [],
+ "status": "references",
+ "historywright": {
+  "version": "1",
+  "question": "What did a Roman legionary of Caesar's army at the siege of Alesia (52 BC) wear and carry?",
+  "period": "52 BC",
+  "commercial": false,
+  "created": "2026-10-17",
+  "completeness": [
+   {
+    "item": "answer",
+    "status": "present"
+   },
+   {
+    "item": "sources",
+    "status": "present"
+   },
+   {
+    "item": "entities",
+    "status": "present"
+   },
+   {
+    "item": "places",
+    "status": "present"
+   },
+   {
+    "item": "timeline",
+    "status": "present"
+   },
+   {
+    "item": "anachronism",
+    "status": "present"
+   },
+   {
+    "item": "refs",
+    "status": "present",
+    "reason": "two objects; no dated open-access image found for a Republican mail shirt, scutum or pilum (Met, Cleveland, Art Institute and Commons searched 2026-10-17); the one Alesia weapons image on Commons is a hand sketch, not a record"
+   }
+  ]
+ }
+}

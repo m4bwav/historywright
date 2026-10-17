@@ -1,0 +1,28 @@
+{
+ "entities": [
+  {
+   "qid": "Q1048",
+   "label": "Julius Caesar",
+   "type": "person",
+   "coord": null,
+   "dates": {
+    "birth": {
+     "as_written": "12 or 13 July 100 BC",
+     "calendar": "roman-republican",
+     "edtf": "[-0099-07-12,-0099-07-13]",
+     "jdn": [
+      1685091,
+      1685092
+     ],
+     "precision": "day",
+     "qualifier": "disputed",
+     "era_name": null,
+     "sources": [
+      "s1",
+      "s2"
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "rows": [
+  {
+   "when": "[-0099-07-12,-0099-07-13]",
+   "jdn": [
+    1685091,
+    1685092
+   ],
+   "event": "Caesar born",
+   "source": "s1",
+   "sentence": "Caesar was born on the twelfth day of July",
+   "place": "Rome"
+  }
+ ]
+}

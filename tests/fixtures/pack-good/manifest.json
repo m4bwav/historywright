@@ -1,0 +1,64 @@
+{
+ "polywright": "1",
+ "name": "Caesar fixture",
+ "kind": "real",
+ "route": "found",
+ "brief": "When was Caesar born?",
+ "targets": [],
+ "units": "m",
+ "sources": [
+  {
+   "what": "reference image",
+   "url": "https://example.org/object/1",
+   "author": "Fixture Museum",
+   "licence": "CC0",
+   "retrieved": "2026-10-17"
+  }
+ ],
+ "tools": [
+  {
+   "name": "historywright",
+   "version": "0.1.0"
+  }
+ ],
+ "outputs": [],
+ "reviews": [],
+ "status": "references",
+ "historywright": {
+  "version": "1",
+  "question": "When was Caesar born?",
+  "period": "100 BC",
+  "commercial": false,
+  "created": "2026-10-17",
+  "completeness": [
+   {
+    "item": "answer",
+    "status": "present"
+   },
+   {
+    "item": "sources",
+    "status": "present"
+   },
+   {
+    "item": "entities",
+    "status": "present"
+   },
+   {
+    "item": "places",
+    "status": "present"
+   },
+   {
+    "item": "timeline",
+    "status": "present"
+   },
+   {
+    "item": "refs",
+    "status": "present"
+   },
+   {
+    "item": "anachronism",
+    "status": "present"
+   }
+  ]
+ }
+}

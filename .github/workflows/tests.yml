@@ -1,0 +1,28 @@
+# Checks the skills' structure, links, registry and public-safety guards, runs the offline hw.py tests and the size
+# budget on the three operating systems, on the oldest and newest Python supported.
+name: tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  checks:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.9", "3.14"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: skills, links, registry, LF endings and the key and path guards
+        run: python tests/check_skills.py
+      - name: hw.py tests (offline, recorded fixtures)
+        run: python tests/test_hw.py
+      - name: size budget
+        run: python scripts/budget.py

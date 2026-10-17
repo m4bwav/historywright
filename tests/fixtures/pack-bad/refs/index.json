@@ -1,0 +1,17 @@
+{
+ "refs": [
+  {
+   "file": "refs/missing.jpg",
+   "title": "Helmet",
+   "licence": "CC BY-NC-SA 4.0",
+   "url": "https://example.org/x",
+   "retrieved": "2026-10-17"
+  },
+  {
+   "file": "refs/gen.png",
+   "title": "AI legionary",
+   "licence": "CC0",
+   "generated": true
+  }
+ ]
+}

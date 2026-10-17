@@ -1,0 +1,8 @@
+{
+  "name": "historywright",
+  "owner": { "name": "Mark Rogers" },
+  "metadata": { "description": "Skills that make AI agents answer history questions from sources, not memory, with dates computed in code and every citation checked" },
+  "plugins": [
+    { "name": "historywright", "source": "./", "description": "Three evergreen history skills: the research hub (sources, corroboration, dates, cited answers), the source registry and era outline, and research packs for 3D, film and images, with the hw.py CLI" }
+  ]
+}

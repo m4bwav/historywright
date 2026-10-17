@@ -1,0 +1,38 @@
+{
+ "refs": [
+  {
+   "file": "refs/the-metropolitan-museum-of-art-2015-758-1.jpg",
+   "title": "Helmet of the Montefortino Type",
+   "object_date": "late 4th to early 3rd century BC (cheekpieces modern)",
+   "place": "Italy (Etruscan)",
+   "accession": "2015.758.1",
+   "institution": "The Metropolitan Museum of Art",
+   "url": "https://www.metmuseum.org/art/collection/search/684492",
+   "image_url": "https://images.metmuseum.org/CRDImages/aa/web-large/DP701214.jpg",
+   "licence": "CC0",
+   "author": null,
+   "nc": false,
+   "retrieved": "2026-10-17",
+   "sha256": "4e8366b067a5cee145d58cedb9dbc9b4aa578eacbcba8554ad627df0f0250c94",
+   "bytes": 79701,
+   "note": "Knob-topped bronze bowl with a short neck guard; the record says the cheekpieces are modern (not shown in this view). Polybius's three-feather crest is not preserved."
+  },
+  {
+   "file": "refs/museo-de-la-romanizacion-calahorra-photo-artistosteles-wikim.jpg",
+   "title": "Gladius hispaniensis",
+   "object_date": "3rd to 1st century BC",
+   "place": "Hispania (Calahorra museum)",
+   "accession": "not given on the file page (Commons file Museo de la Romanizacion, Gladius.jpg)",
+   "institution": "Museo de la Romanizacion, Calahorra (photo: Artistosteles, Wikimedia Commons)",
+   "url": "https://commons.wikimedia.org/wiki/File:Museo_de_la_Romanizaci%C3%B3n,_Gladius.jpg",
+   "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Museo_de_la_Romanizaci%C3%B3n%2C_Gladius.jpg/960px-Museo_de_la_Romanizaci%C3%B3n%2C_Gladius.jpg",
+   "licence": "CC BY-SA 4.0",
+   "author": "Artistosteles",
+   "nc": false,
+   "retrieved": "2026-10-17",
+   "sha256": "1d28193668489b1aa2d765c5fb5c0a5abf9d9aaf35dba2893e214e99a8b33d57",
+   "bytes": 691413,
+   "note": "Two corroded blades on a display board; the hilt and point outlines are painted restorations, not surviving metal. Model the blade shape from the metal, not the painted outline."
+  }
+ ]
+}

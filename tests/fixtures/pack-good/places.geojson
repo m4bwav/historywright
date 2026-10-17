@@ -1,0 +1,57 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4823,
+     41.8955
+    ]
+   },
+   "properties": {
+    "name": "Rome",
+    "source": "https://pleiades.stoa.org/places/423025",
+    "expected_coord": [
+     12.4823,
+     41.8955
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4,
+       41.8
+      ],
+      [
+       12.6,
+       41.8
+      ],
+      [
+       12.6,
+       42.0
+      ],
+      [
+       12.4,
+       42.0
+      ],
+      [
+       12.4,
+       41.8
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Rome (area)",
+    "source": "s1"
+   }
+  }
+ ]
+}

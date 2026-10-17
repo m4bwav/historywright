@@ -1,0 +1,17 @@
+{
+ "refs": [
+  {
+   "file": "refs/fixture-1.png",
+   "title": "Fixture object",
+   "object_date": "1st century BC",
+   "place": "Italy",
+   "accession": "FX.1",
+   "institution": "Fixture Museum",
+   "url": "https://example.org/object/1",
+   "licence": "CC0",
+   "nc": false,
+   "retrieved": "2026-10-17",
+   "sha256": "c414cd0e204de974f73753c7e28d7638e7b3691bb8b1a2bab6b25bb7fed7ce77"
+  }
+ ]
+}
