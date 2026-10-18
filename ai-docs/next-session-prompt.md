@@ -1,58 +1,60 @@
-# Kickoff: historywright after the build (Step 3: wiki, eval follow-ups, polish)
+# Kickoff: historywright Step 4 (eval cache isolation, trim, small hw.py follow-ups)
 
-Written 2026-10-17 at the end of the Step 2 build session. Paste this into a fresh session started in the folder
-that holds this repository (the historywright clone).
+Written 2026-10-18 at the end of the Step 3 session. Paste this into a fresh session started in the folder that
+holds this repository (the historywright clone).
 
 ## Where things stand
 
-- historywright is built, public and installed: https://github.com/m4bwav/historywright, installed locally as
-  historywright@mark-local 0.1.0. Three skills (`historywright`, `historywright-sources`, `historywright-pack`),
-  hw.py (five stdlib modules), an 85-source registry, the era outline, the pack contract, 31 offline tests, CI
-  green on Linux, macOS and Windows with Python 3.9 and 3.14. No tag, no release.
-- Evals (TESTS.md, T-20261017-2 to -4): triggers 15 of 15, decoys 9 of 9; the with/without A/B on 11 value cases
-  scored 82% with the skill against 39% without (+42 points, noise margin 22, cost 3.1x), harness verdict TRIM. All
-  eight outcome cases pass 3 of 3 with the skill. With a clean cache, action-wikidata-full-statements passed 3/3 with the skill and 0/3 without (T-20261017-5).
-- The first A/B (CUT) measured the harness: the runner's default tools blocked shell and web, and eval runs shared
-  the user's real cache (L-005, and the cache note in TESTS.md). Value cases now grant Bash, PowerShell,
-  WebFetch, WebSearch and Edit; the eval-written cache entries were moved to
-  `~/.historywright/cache-from-evals-2026-10-17/`.
+- historywright is public and installed: https://github.com/m4bwav/historywright, historywright@mark-local 0.1.0
+  (reinstalled from main on 2026-10-18). No tag, no release.
+- The wiki is live (12 pages, wiki commit 5f89b34), verified against main at 29bc397 on Windows and WSL Ubuntu.
+  Its note, `ai-docs/notes/2026-10-18-github-wiki.md`, holds the update procedure, the verifier and its outputs.
+- Evals: all 19 cases have passed with the skill; measured baselines are in `evals/evals.json`. The A/B verdict
+  was TRIM (82% with, 39% without, cost 3.1x).
+- Step 3 merged PR #1 to #5, including two hw.py fixes found by the wiki: `HW_RECORD` no longer writes key
+  values into fixtures, and `cal date` no longer misreads `709 AUC`, `1300 AH`, AH years, Hijri months or Roman
+  day counts.
 - Keys: OpenAlex and WHG are live in `~/.historywright/config.json`. Read them from there; never copy them
-  anywhere else. `tests/check_skills.py` fails on key-like strings, home paths and AI credit lines.
+  anywhere else.
 
 ## Read first
 
-1. `ai-docs/HANDOFF.md`, then `ai-docs/log.md` (the 2026-10-17 Step 2 entry).
-2. `ai-docs/decisions/2026-10-17-step2-build.md` (nine build rulings).
-3. `AGENTS.md` (repository rules), `README.md`, `TESTS.md`, `LEARNINGS.md` (L-001 to L-005).
-4. The owner's rules: the vault user PROFILE (`<vault>/user/PROFILE.md`, section "Code and repos";
-   `everlast.py vault where` prints the vault). The owner's private notes for this project are in the vault's
-   `projects/historywright/private/`.
+1. `ai-docs/HANDOFF.md`, then `ai-docs/log.md` (the 2026-10-18 entry).
+2. `ai-docs/decisions/2026-10-18-session-rulings.md` (six rulings) and `2026-10-17-step2-build.md`.
+3. `AGENTS.md`, `TESTS.md`, `LEARNINGS.md` (L-001 to L-005).
+4. The owner's rules: the vault user PROFILE (`everlast.py vault where` prints the vault), section "Code and repos".
 
 ## Next steps, in order
 
-0. **Uncommitted work from the last session** (it ran out of session time): branch `docs/evals-banner` was pushed with the banner (`.github/images/banner.jpg`, seed 505), the eval fixes (tools field, `_skill`, regexes, exported `evals/cases/`), TESTS.md T-2 to T-5, LEARNINGS L-005, the log, HANDOFF and this prompt. Open a PR from it (`gh pr create`), let CI pass, merge it yourself. Also owed: `evergreen.py tested . --passed ... --failed ...` to record the suite in evergreen.json, and the action-cache-entry A/B (its run never started; clear `~/.historywright/cache` first).
-
-1. **Wiki.** Ask Mark whether he has saved the first wiki page at https://github.com/m4bwav/historywright/wiki
-   (GitHub creates the wiki repository only then; `git ls-remote https://github.com/m4bwav/historywright.wiki.git`
-   tells). Then run the wikiwright skill on the repository. If he has not, ask once and move on.
-2. **Evals follow-up.** Isolate the cache for eval runs: give hw.py a project-scoped home (for example a
-   `.historywright/` folder in the working directory that `HW_HOME` lookups prefer) or run the action cases under
-   `claude plugin eval` in WSL2 with `HW_HOME` set. Then re-run the action cases. Run `evergreen.py worth
-   skills/historywright --probe` for trim candidates (TRIM verdict); trim only what the probe shows the model
-   already knows, then re-run the A/B on the with arm only (`--append`, arms with).
-3. **Open items** (README and HANDOFF list them): quote checks on PDFs (OpenAlex often links PDFs only), OHM
-   queries in `hw.py place`, WHG v3 docs, the Seshat licence page, polywright-references reading
-   `refs/index.json` notes, an `evergreen` plugin issue (its A/B environment check could match "requires approval").
-4. Keep every change in a pull request; merge it yourself once CI passes (Mark's merge-by-default rule), unless it
-   changes the release workflow or a public API, which waits for him.
+0. **Ask Mark two things in your first message, then carry on:** may the wiki verifier keep calling keyless
+   public APIs live (wikiwright L-160 `live-public-sources`, which departs from its L-122)? And is it time for the
+   v0.1.0 tag? Record his answers in `ai-docs/decisions/`. If he refuses L-160, re-verify the wiki against
+   fixtures recorded once and labelled as recorded (the note's update procedure), and set L-160's status.
+1. **Eval cache isolation.** Eval runs share the real `~/.historywright/cache`, so an earlier run's entry ends a
+   later run at Step 0. Give hw.py a project-scoped home: `HW_HOME` first, then a `.historywright/` folder in the
+   working directory when it exists, then `~/.historywright`. Test it offline, say it in cli.md and `doctor`,
+   and have the eval cases create the folder. Then re-run the three action cases (`evergreen.py worth ... --ab
+   --case "action-*"`), and record the results in TESTS.md.
+2. **Trim.** `evergreen.py worth skills/historywright --probe` for what the model already knows; trim only that
+   from SKILL.md, then re-run the A/B on the with arm only (`--append --arm with`). Every SKILL.md edit gets a
+   CHANGELOG entry and keeps the description under 700 characters.
+3. **Small hw.py follow-ups** (HANDOFF "Next" 2): Wayback capture repeats in `src wayback`, the AH `read_as`
+   label, circa as EDTF `~`, and parsing Kalends, Nones, Ides and Hijri month names. Each with a test.
+4. **Open items** (HANDOFF "Next" 3), as time allows.
+5. After any change to a packaged file, run the wiki's update procedure (the note), on Windows and in WSL.
 
 ## Rules
 
 - Commit with `git -c user.email=156112+m4bwav@users.noreply.github.com`. No AI attribution anywhere.
+- Every change goes through a pull request; merge it yourself once CI passes (squash or merge as the repo's
+  history shows; this repo uses merge commits), unless it changes the release workflow or a public API.
+- Run `python tests/check_skills.py`, `python tests/test_hw.py` and `python scripts/budget.py` before every
+  commit, and stage files by name, not with `git add -A` (Step 3 pushed a failing commit that way).
 - Research beats recall: a changed endpoint, limit, licence or gold answer needs an `R-` entry with its source.
 - hw.py stays standard library, one JSON object per command, LF endings (`write_text` helper), tested offline.
-- Never index or walk AppData. Kill processes only by PID. Parallel researchers share about 200 WebSearch calls a
-  turn: cap each.
+- The repository is public: no absolute paths from this machine, no names, no keys in any file, ai-docs included.
+- Never index or walk AppData. Kill processes only by PID. Eval runs write to the real cache until step 1 lands:
+  move `~/.historywright/cache` aside before an action case and put it back after.
 
 ## When to stop and ask
 

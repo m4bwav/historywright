@@ -10,6 +10,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261018-3 · 2026-10-18 · Docs: the registry holds 85 sources; the README's Caesar lines are a summary; cli.md exit 2 and the missing options
+- because: found while writing the wiki (ai-docs/notes/2026-10-18-github-wiki.md, inaccuracies 1 to 3)
+- files: README.md (The skills; What a run looks like), .claude-plugin/plugin.json (description), skills/historywright-sources/SKILL.md (Files), skills/historywright/references/cli.md (lead paragraph; table rows wd search, wp refs, cache, verify quote, pack init, keys)
+- "about 60 sources" became 85 (`hw.py lint`); the README says the four Caesar lines summarise the JSON; cli.md names the argparse exit 2 and lists `--lang`, `--limit`, `--max-age`, `--refetch`, `--name`, `--no-browser` and `keys status --offline`.
+
 ### C-20261018-2 · 2026-10-18 · cal date: suffix AUC and AH, AH years as their own range, refusals instead of silent misreadings
 - because: found while writing the wiki (ai-docs/notes/2026-10-18-github-wiki.md): `cal date "709 AUC"` answered AD 709 (it is 45 BC), `"AH 1300"` gave the days of 1882 rather than those of AH 1300, and `"1 Muharram 1 AH"` and `"Ides of March 44 BC"` were misread with no warning
 - files: skills/historywright/scripts/hw_dates.py (`parse_date`, `ah_year_range`), skills/historywright/scripts/hw.py (`cal date`), skills/historywright/references/dates.md (rows Kalends, AUC, Islamic), tests/test_hw.py (two tests)

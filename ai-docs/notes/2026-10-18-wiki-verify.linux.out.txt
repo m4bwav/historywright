@@ -1,0 +1,1423 @@
+## installed
+historywright at 29bc397 from https://codeload.github.com/m4bwav/historywright/zip/29bc39771fd0f7cc9c12d9c0d55766d25ec5fddd
+
+## version
+0.1.0
+[exit 0]
+
+## doctor
+{
+ "ok": true,
+ "version": "0.1.0",
+ "checks": {
+  "python": "<python>",
+  "python_ok": true,
+  "home": "<home>",
+  "contact": false,
+  "keys": {
+   "openalex": false,
+   "whg": false,
+   "smithsonian": false,
+   "europeana": false
+  },
+  "registry": {
+   "path": "<repo>/skills/historywright-sources/references/registry.json",
+   "sources": 85
+  },
+  "era_outline": true,
+  "dila_table": false,
+  "cache_entries": 0,
+  "user_agent": "historywright/0.1.0 (https://github.com/m4bwav/historywright)"
+ },
+ "todo": [
+  "set a contact address for the User-Agent: hw.py keys contact --set ADDRESS (the user's own)",
+  "East Asian eras build on first use (hw.py cal setup, 1.3 MB download)"
+ ],
+ "config_has": []
+}
+[exit 0]
+
+## keys-status
+{
+ "ok": true,
+ "config": "<home>/config.json",
+ "keys": {
+  "contact": {
+   "set": false,
+   "why": "goes into the User-Agent; Wikimedia allows 10 requests a minute without one and 200 with one"
+  },
+  "openalex": {
+   "set": false,
+   "key": null
+  },
+  "whg": {
+   "set": false,
+   "token": null
+  },
+  "smithsonian": {
+   "set": false
+  },
+  "europeana": {
+   "set": false
+  }
+ },
+ "note": "every key is optional and free; historywright works without any"
+}
+[exit 0]
+
+## wd-search
+{
+ "ok": true,
+ "api": "wbsearchentities",
+ "query": "Julius Caesar",
+ "results": [
+  {
+   "qid": "Q1048",
+   "label": "Julius Caesar",
+   "description": "Roman general and dictator"
+  },
+  {
+   "qid": "Q215750",
+   "label": "Julius Caesar",
+   "description": "play by William Shakespeare"
+  },
+  {
+   "qid": "Q1409",
+   "label": "Caligula",
+   "description": "third Roman emperor (37–41)"
+  }
+ ]
+}
+[exit 0]
+
+## wd-claims
+{
+ "ok": true,
+ "api": "wbgetclaims",
+ "qid": "Q1048",
+ "label": "Julius Caesar",
+ "claims": {
+  "P569": [
+   {
+    "rank": "preferred",
+    "value": {
+     "time": {
+      "raw": "-0100-07-12T00:00:00Z",
+      "calendar": "julian",
+      "precision": "month",
+      "as_written": "July 100 BC",
+      "edtf": "-0099-07",
+      "jdn": [
+       1685080,
+       1685110
+      ],
+      "flags": [
+       "before 45 BC: Roman republican calendar date"
+      ]
+     }
+    },
+    "qualifiers": {
+     "P1319": [
+      {
+       "time": {
+        "raw": "-0100-07-12T00:00:00Z",
+        "calendar": "julian",
+        "precision": "day",
+        "as_written": "12 July 100 BC",
+        "edtf": "-0099-07-12",
+        "jdn": [
+         1685091,
+         1685091
+        ],
+        "flags": [
+         "before 45 BC: Roman republican calendar date"
+        ]
+       }
+      }
+     ],
+     "P1326": [
+      {
+       "time": {
+        "raw": "-0100-07-13T00:00:00Z",
+        "calendar": "julian",
+        "precision": "day",
+        "as_written": "13 July 100 BC",
+        "edtf": "-0099-07-13",
+        "jdn": [
+         1685092,
+         1685092
+        ],
+        "flags": [
+         "before 45 BC: Roman republican calendar date"
+        ]
+       }
+      }
+     ],
+     "P1480": [
+      {
+       "qid": "Q18912752"
+      }
+     ]
+    },
+    "sourcing_circumstances": [
+     "disputed"
+    ],
+    "earliest": "12 July 100 BC",
+    "latest": "13 July 100 BC",
+    "references": [
+     {
+      "url": [
+       "http://www.bbc.co.uk/history/historic_figures/caesar_julius.shtml"
+      ],
+      "wikimedia_import_only": false
+     },
+     {
+      "stated_in": [
+       "Q50358336"
+      ],
+      "retrieved": [
+       "8 February 2019"
+      ],
+      "other": {
+       "P950": [
+        {
+         "value": "XX841352"
+        }
+       ]
+      },
+      "wikimedia_import_only": false
+     },
+     {
+      "stated_in": [
+       "Q206033"
+      ],
+      "other": {
+       "P675": [
+        {
+         "value": "9Q83DAAAQBAJ"
+        }
+       ]
+      },
+      "wikimedia_import_only": false
+     }
+    ],
+    "referenced": true
+   },
+   {
+    "rank": "normal",
+    "value": {
+     "time": {
+      "raw": "-0100-07-13T00:00:00Z",
+      "calendar": "julian",
+      "precision": "day",
+      "as_written": "13 July 100 BC",
+      "edtf": "-0099-07-13",
+      "jdn": [
+       1685092,
+       1685092
+      ],
+      "flags": [
+       "before 45 BC: Roman republican calendar date"
+      ]
+     }
+    },
+    "references": [
+     {
+      "url": [
+       "https://books.google.com/books?id=oR-ljeBaWIcC&pg=PA30#v=onepage&q&f=false"
+      ],
+      "stated_in": [
+       "Q24963317"
+      ],
+      "retrieved": [
+       "8 February 2019"
+      ],
+      "other": {
+       "P1932": [
+        {
+         "value": "Caius Julius Caesar was born on 13 July 100 BCE according to the modern calendar."
+        }
+       ]
+      },
+      "locator": [
+       "30"
+      ],
+      "wikimedia_import_only": false
+     },
+     {
+      "stated_in": [
+       "Q57255702"
+      ],
+      "retrieved": [
+       "8 February 2019"
+      ],
+      "locator": [
+       "147"
+      ],
+      "url": [
+       "https://books.google.com/books?id=lNV6-HsUppsC&pg=RA3-PA147&dq=13+July+100+BCE+Julius+Caesar&hl=en&sa=X&ved=0ahUKEwiprsCCxqzgAhUMVK0KHRBXCjQQ6AEIOTAD#v=onepage&q=13%20July%20100%20BCE%20Julius%20Caesar&f=false"
+      ],
+      "wikimedia_import_only": false
+     },
+     {
+      "stated_in": [
+       "Q237227"
+      ],
+      "other": {
+       "P5019": [
+        {
+         "value": "caesar"
+        }
+       ]
+      },
+      "retrieved": [
+       "8 February 2019"
+      ],
+      "wikimedia_import_only": false
+     },
+     {
+      "stated_in": [
+       "Q193563"
+      ],
+      "other": {
+       "P268": [
+        {
+         "value": "11894764p"
+        }
+       ]
+      },
+      "retrieved": [
+       "8 February 2019"
+      ],
+      "wikimedia_import_only": false
+     },
+     {
+      "stated_in": [
+       "Q2664168"
+      ],
+      "other": {
+       "P1296": [
+        {
+         "value": "0017211"
+        }
+       ]
+      },
+      "retrieved": [
+       "8 February 2019"
+      ],
+      "wikimedia_import_only": false
+     },
+     {
+      "stated_in": [
+       "Q746368"
+      ],
+      "other": {
+       "P4342": [
+        {
+         "value": "Julius_Caesar"
+        }
+       ]
+      },
+      "retrieved": [
+       "17 October 2026"
+      ],
+      "wikimedia_import_only": false
+     }
+    ],
+    "referenced": true
+   },
+   {
+    "rank": "normal",
+    "value": {
+     "time": {
+      "raw": "-0102-00-00T00:00:00Z",
+      "calendar": "julian",
+      "precision": "year",
+      "as_written": "102 BC",
+      "edtf": "-0101",
+      "jdn": [
+       1684168,
+       1684532
+      ],
+      "flags": [
+       "before 45 BC: Roman republican calendar date"
+      ]
+     }
+    },
+    "qualifiers": {
+     "P1480": [
+      {
+       "qid": "Q18912752"
+      }
+     ]
+    },
+    "sourcing_circumstances": [
+     "disputed"
+    ],
+    "references": [
+     {
+      "stated_in": [
+       "Q1420342"
+      ],
+      "other": {
+       "P888": [
+        {
+         "value": "295588"
+        }
+       ]
+      },
+      "wikimedia_import_only": false
+     }
+    ],
+    "referenced": true
+   },
+   {
+    "rank": "normal",
+    "value": {
+     "time": {
+      "raw": "-0100-00-00T00:00:00Z",
+      "calendar": "gregorian",
+      "precision": "year",
+      "as_written": "100 BC",
+      "edtf": "-0099",
+      "jdn": [
+       1684901,
+       1685265
+      ],
+      "julian_reading": "100 BC",
+      "flags": [
+       "proleptic Gregorian value before 1582: check whether the source meant Julian",
+       "before 45 BC: Roman republican calendar date"
+      ]
+     }
+    },
+    "references": [
+     {
+      "stated_in": [
+       "Q100166489"
+      ],
+      "other": {
+       "P6863": [
+        {
+         "value": "1957"
+        }
+       ],
+       "P1810": [
+        {
+         "value": "C. Iulius (131) C. f. C. n. Fab. Caesar"
+        }
+       ]
+      },
+      "retrieved": [
+       "29 June 2021"
+      ],
+      "wikimedia_import_only": false
+     }
+    ],
+    "referenced": true
+   }
+  ]
+ },
+ "labels": {
+  "P1296": "Gran Enciclopèdia Catalana ID (former scheme)",
+  "P1319": "earliest date",
+  "P1326": "latest date",
+  "P1480": "sourcing circumstances",
+  "P1810": "subject named as",
+  "P1932": "object named as",
+  "P268": "Bibliothèque nationale de France ID",
+  "P4342": "Great Norwegian Encyclopedia ID",
+  "P5019": "Brockhaus Enzyklopädie online ID",
+  "P569": "date of birth",
+  "P675": "Google Books ID",
+  "P6863": "Digital Prosopography of the Roman Republic ID",
+  "P888": "JSTOR article ID",
+  "P950": "National Library of Spain SpMaBN ID",
+  "Q100166489": "Digital Prosopography of the Roman Republic",
+  "Q1048": "Julius Caesar",
+  "Q1420342": "JSTOR",
+  "Q18912752": "disputed",
+  "Q193563": "Bibliothèque nationale de France",
+  "Q206033": "Google Books",
+  "Q237227": "Brockhaus Enzyklopädie",
+  "Q24963317": "Caesar, Life of a Colossus",
+  "Q2664168": "Gran Enciclopèdia Catalana",
+  "Q50358336": "datos.bne.es",
+  "Q57255702": "The Oxford Encyclopedia of Ancient Greece and Rome",
+  "Q746368": "Great Norwegian Encyclopedia"
+ },
+ "notes": [
+  "P569 has 4 statements: a truthy (wdt:) read would show only the best-ranked one",
+  "P569 carries a disputed flag: report the alternatives and who holds each"
+ ],
+ "url": "https://www.wikidata.org/wiki/Q1048"
+}
+[exit 0]
+
+## verify-qid
+{
+ "ok": true,
+ "qid": "Q1048",
+ "exists": true,
+ "label": "Julius Caesar",
+ "label_match": true
+}
+[exit 0]
+
+## wp-refs
+{
+ "ok": true,
+ "title": "Microsoft",
+ "references_total": 341,
+ "url": "https://en.wikipedia.org/wiki/Microsoft",
+ "role": "finder: read each reference and cite it, not the article",
+ "sentence": "Gates and Allen established Microsoft on April 4, 1975, with Gates as CEO, and Allen suggested the name \"Micro-Soft\", short for micro-computer software.",
+ "references": [
+  {
+   "id": "cite_note-BBCTL-6",
+   "text": "\"Bill Gates: A Timeline\" . BBC News Online . BBC. July 15, 2006. Archived from the original on June 22, 2006 . Retrieved July 17, 2010 .",
+   "links": [
+    "https://news.bbc.co.uk/2/hi/business/5085630.stm",
+    "https://web.archive.org/web/20060622201711/http://news.bbc.co.uk/2/hi/business/5085630.stm"
+   ],
+   "dois": [],
+   "isbns": []
+  },
+  {
+   "id": "cite_note-7",
+   "text": "Schlender, Brent (October 2, 1995). \"Bill Gates & Paul Allen Talk Check Out The Ultimate Buddy Act in Business History\" . Fortune . Time Inc. Archived from the original on May 3, 2011 . Retrieved April 25, 2011 .",
+   "links": [
+    "https://web.archive.org/web/20110503155554/http://money.cnn.com/magazines/fortune/fortune_archive/1995/10/02/206528/index.htm",
+    "https://money.cnn.com/magazines/fortune/fortune_archive/1995/10/02/206528/index.htm"
+   ],
+   "dois": [],
+   "isbns": []
+  },
+  {
+   "id": "cite_note-8",
+   "text": "Allen, Paul (2011). Paul Allen: Idea Man . Penguin Group. p. 91. ISBN 978-0-14-196938-1 .",
+   "links": [
+    "https://books.google.com/books?isbn=0141969385"
+   ],
+   "dois": [],
+   "isbns": [
+    "978-0-14-196938-1"
+   ]
+  }
+ ]
+}
+[exit 0]
+
+## place-pleiades
+{
+ "ok": true,
+ "query": "Alesia",
+ "year": null,
+ "sources": [
+  "pleiades"
+ ],
+ "results": [
+  {
+   "source": "pleiades",
+   "id": "570063",
+   "name": "Alesiai",
+   "names": [
+    "Aghios Ioannis, Ag. Ioannis",
+    "Alesiai"
+   ],
+   "coord": [
+    22.40706598528756,
+    37.05047157349865
+   ],
+   "types": [
+    "settlement",
+    "settlement-modern"
+   ],
+   "periods": [
+    "twenty-first-ce"
+   ],
+   "description": "An ancient settlement of Lakonia, mentioned by Pausanias and placed by him to the southwest of Sparta. It is probably to be localized in the vicinity of modern Ag. Ioannis.",
+   "url": "https://pleiades.stoa.org/places/570063",
+   "licence": "CC BY 3.0 (Pleiades)"
+  },
+  {
+   "source": "pleiades",
+   "id": "573070",
+   "name": "Alesiaion/Aleision",
+   "names": [
+    "Alesiaion",
+    "Aleision"
+   ],
+   "coord": null,
+   "types": [
+    "settlement"
+   ],
+   "periods": [],
+   "description": "An ancient settlement, attested by literary or documentary sources, whose precise location cannot be determined today",
+   "url": "https://pleiades.stoa.org/places/573070",
+   "licence": "CC BY 3.0 (Pleiades)"
+  },
+  {
+   "source": "pleiades",
+   "id": "177434",
+   "name": "Alesia",
+   "names": [
+    "Alesia",
+    "Alise-Ste.-Reine"
+   ],
+   "coord": [
+    4.503884,
+    47.536622
+   ],
+   "types": [
+    "settlement"
+   ],
+   "periods": [],
+   "description": "A Gallic oppidum, the site of Caesar's defeat of Vercingetorix, and afterward a Gallo-Roman town.",
+   "url": "https://pleiades.stoa.org/places/177434",
+   "licence": "CC BY 3.0 (Pleiades)"
+  }
+ ],
+ "errors": [],
+ "note": "coordinates are [lon, lat]"
+}
+[exit 0]
+
+## place-chgis
+{
+ "ok": true,
+ "query": "長安",
+ "year": 700,
+ "sources": [
+  "chgis"
+ ],
+ "results": [
+  {
+   "source": "chgis",
+   "id": "hvd_70625",
+   "name": "长安县",
+   "transcription": "Changan Xian",
+   "years": "666 ~ 702",
+   "coord": [
+    108.90697,
+    34.24642
+   ],
+   "parent": "京兆府 (Jingzhaofu)",
+   "type": "县 (xian)",
+   "url": "https://chgis.hudci.org/tgaz/placename/hvd_70625",
+   "licence": "CHGIS terms (not redistributable); cite and link"
+  }
+ ],
+ "errors": [],
+ "note": "coordinates are [lon, lat]"
+}
+[exit 0]
+
+## oa-search
+{
+ "ok": true,
+ "api": "openalex",
+ "keyed": false,
+ "count": 6125,
+ "page": 1,
+ "works": [
+  {
+   "id": "https://openalex.org/W2970535291",
+   "title": "‘Portfolios of Power’: Julius Caesar in the Late Roman Republic",
+   "year": 2019,
+   "doi": "https://doi.org/10.20381/ruor-23791",
+   "type": "dissertation",
+   "cited_by": 0,
+   "authors": [
+    "Giuseppe L. Ficocelli"
+   ],
+   "venue": "uO Research (University of Ottawa)",
+   "oa_url": "http://hdl.handle.net/10393/39548"
+  },
+  {
+   "id": "https://openalex.org/W635603640",
+   "title": "Julius Caesar and the late roman republic in the literature of the late 16th century : with especial reference to Shakespeare's Julius Caesar",
+   "year": 1964,
+   "doi": null,
+   "type": "book",
+   "cited_by": 0,
+   "authors": [
+    "Remington Edward. Rose"
+   ],
+   "venue": "Medical Entomology and Zoology",
+   "oa_url": null
+  }
+ ]
+}
+[exit 0]
+
+## doi-match
+{
+ "ok": true,
+ "exists": true,
+ "record": {
+  "source": "openalex",
+  "doi": "10.20381/ruor-23791",
+  "title": "‘Portfolios of Power’: Julius Caesar in the Late Roman Republic",
+  "authors": [
+   "Giuseppe L. Ficocelli"
+  ],
+  "year": 2019,
+  "container": "uO Research (University of Ottawa)",
+  "type": "dissertation",
+  "url": "https://doi.org/10.20381/ruor-23791"
+ },
+ "match": {
+  "title": true,
+  "author": true,
+  "year": true
+ },
+ "all_match": true
+}
+[exit 0]
+
+## doi-blended
+{
+ "ok": true,
+ "exists": true,
+ "record": {
+  "source": "openalex",
+  "doi": "10.20381/ruor-23791",
+  "title": "‘Portfolios of Power’: Julius Caesar in the Late Roman Republic",
+  "authors": [
+   "Giuseppe L. Ficocelli"
+  ],
+  "year": 2019,
+  "container": "uO Research (University of Ottawa)",
+  "type": "dissertation",
+  "url": "https://doi.org/10.20381/ruor-23791"
+ },
+ "match": {
+  "title": false,
+  "author": true,
+  "year": true
+ },
+ "all_match": false,
+ "warning": "the DOI exists but does not match every detail given: a blended or wrong reference"
+}
+[exit 0]
+
+## verify-quote
+{
+ "found": true,
+ "match": "exact",
+ "ok": true,
+ "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Julius*.html",
+ "source_text": "fetched now"
+}
+[exit 0]
+
+## verify-url
+{
+ "ok": true,
+ "results": [
+  {
+   "url": "https://en.wikipedia.org/wiki/Julius_Caesar",
+   "label": "live",
+   "status": 200
+  },
+  {
+   "url": "https://en.wikipedia.org/wiki/The_Fourth_Gallic_Diary_of_Caesar",
+   "label": "unknown",
+   "status": 404,
+   "why": "Wayback check failed (HTTP 429)"
+  }
+ ]
+}
+[exit 0]
+
+## src-wayback
+{
+ "ok": true,
+ "source": "wayback",
+ "name": "Wayback Machine CDX",
+ "tier": 1,
+ "licence": "captures of third-party pages; per site",
+ "url": "https://web.archive.org/cdx/search/cdx?url=microsoft.com&output=json&limit=10&fl=timestamp,original,statuscode",
+ "count": 3,
+ "results": [
+  {
+   "date": "19961020014044",
+   "title": "http://www.microsoft.com:80/",
+   "original": "http://www.microsoft.com:80/",
+   "status": "200",
+   "link": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/",
+   "url": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/"
+  },
+  {
+   "date": "19961020014044",
+   "title": "http://www.microsoft.com:80/",
+   "original": "http://www.microsoft.com:80/",
+   "status": "200",
+   "link": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/",
+   "url": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/"
+  },
+  {
+   "date": "19961020014044",
+   "title": "http://www.microsoft.com:80/",
+   "original": "http://www.microsoft.com:80/",
+   "status": "200",
+   "link": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/",
+   "url": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/"
+  }
+ ],
+ "mirror_warning": null
+}
+[exit 0]
+
+## cal-caesar
+{
+ "ok": true,
+ "input": "12 July 100 BC",
+ "read_as": {
+  "astronomical_year": -99,
+  "month": 7,
+  "day": 12,
+  "calendar": "julian",
+  "label": "12 July 100 BC"
+ },
+ "precision": "day",
+ "jdn": [
+  1685091,
+  1685091
+ ],
+ "edtf": "-0099-07-12",
+ "day": {
+  "jdn": 1685091,
+  "weekday": "Wednesday",
+  "julian": {
+   "iso": "-0099-07-12",
+   "label": "12 July 100 BC",
+   "auc": 654
+  },
+  "gregorian": {
+   "iso": "-0099-07-10",
+   "label": "10 July 100 BC"
+  },
+  "notes": [
+   "before 1 January 45 BC: Rome used the republican calendar, so a Roman date as written does not map to this solar day; the Julian reading is proleptic",
+   "Gregorian reading before 15 October 1582 is proleptic"
+  ]
+ }
+}
+[exit 0]
+
+## cal-os-ru
+{
+ "ok": true,
+ "input": "1917-10-25 O.S.",
+ "read_as": {
+  "astronomical_year": 1917,
+  "month": 10,
+  "day": 25,
+  "calendar": "julian",
+  "label": "25 October 1917"
+ },
+ "precision": "day",
+ "jdn": [
+  2421540,
+  2421540
+ ],
+ "edtf": "1917-10-25",
+ "day": {
+  "jdn": 2421540,
+  "weekday": "Wednesday",
+  "julian": {
+   "iso": "1917-10-25",
+   "label": "25 October 1917",
+   "auc": 2670
+  },
+  "gregorian": {
+   "iso": "1917-11-07",
+   "label": "7 November 1917"
+  },
+  "islamic_tabular": {
+   "ah": "1336-01-22",
+   "note": "tabular; observed dates can differ by a day or two"
+  },
+  "civil_calendar": {
+   "country": "RU",
+   "calendar": "julian"
+  },
+  "os_ns": {
+   "old_style": "25 October 1917",
+   "new_style": "7 November 1917",
+   "difference_days": 13
+  }
+ }
+}
+[exit 0]
+
+## cal-os-gb
+{
+ "ok": true,
+ "input": "1732-02-11 O.S.",
+ "read_as": {
+  "astronomical_year": 1732,
+  "month": 2,
+  "day": 11,
+  "calendar": "julian",
+  "label": "11 February 1732"
+ },
+ "precision": "day",
+ "jdn": [
+  2353712,
+  2353712
+ ],
+ "edtf": "1732-02-11",
+ "day": {
+  "jdn": 2353712,
+  "weekday": "Friday",
+  "julian": {
+   "iso": "1732-02-11",
+   "label": "11 February 1732",
+   "auc": 2485
+  },
+  "gregorian": {
+   "iso": "1732-02-22",
+   "label": "22 February 1732"
+  },
+  "islamic_tabular": {
+   "ah": "1144-08-25",
+   "note": "tabular; observed dates can differ by a day or two"
+  },
+  "civil_calendar": {
+   "country": "GB",
+   "calendar": "julian",
+   "dual_year": "1731/32"
+  },
+  "os_ns": {
+   "old_style": "11 February 1732",
+   "new_style": "22 February 1732",
+   "difference_days": 11
+  },
+  "notes": [
+   "legal year began 25 March before 1752"
+  ]
+ }
+}
+[exit 0]
+
+## cal-span-kangxi
+{
+ "ok": true,
+ "start": "5 February 1661",
+ "end": "20 December 1722",
+ "days": 22597,
+ "years": 61,
+ "months": 10,
+ "rest_days": 15,
+ "calendar_for_y_m_d": "gregorian",
+ "crosses_bc_ad": false,
+ "note": null
+}
+[exit 0]
+
+## cal-span-bc-ad
+{
+ "ok": true,
+ "start": "44 BC",
+ "end": "AD 14",
+ "days": 20819,
+ "years": 57,
+ "months": 0,
+ "rest_days": 0,
+ "calendar_for_y_m_d": "julian",
+ "crosses_bc_ad": true,
+ "note": "no year 0 between 1 BC and AD 1; computed on astronomical years"
+}
+[exit 0]
+
+## cal-auc
+{
+ "ok": true,
+ "input": "709 AUC",
+ "read_as": {
+  "astronomical_year": -44,
+  "month": null,
+  "day": null,
+  "calendar": "julian",
+  "label": "45 BC"
+ },
+ "precision": "year",
+ "jdn": [
+  1704987,
+  1705352
+ ],
+ "edtf": "-0044",
+ "day": {
+  "jdn": 1704987,
+  "weekday": "Friday",
+  "julian": {
+   "iso": "-0044-01-01",
+   "label": "1 January 45 BC",
+   "auc": 709
+  },
+  "gregorian": {
+   "iso": "-0045-12-30",
+   "label": "30 December 46 BC"
+  },
+  "notes": [
+   "Gregorian reading before 15 October 1582 is proleptic"
+  ]
+ },
+ "notes": [
+  "AUC read as Varronian (AUC 1 = 753 BC)"
+ ]
+}
+[exit 0]
+
+## cal-ah
+{
+ "ok": true,
+ "input": "AH 1300",
+ "read_as": {
+  "astronomical_year": 1882,
+  "month": null,
+  "day": null,
+  "calendar": "gregorian",
+  "label": "1882"
+ },
+ "precision": "year",
+ "jdn": [
+  2408762,
+  2409116
+ ],
+ "edtf": "1882-11-12/1883-11-01",
+ "day": {
+  "jdn": 2408762,
+  "weekday": "Sunday",
+  "julian": {
+   "iso": "1882-10-31",
+   "label": "31 October 1882",
+   "auc": 2635
+  },
+  "gregorian": {
+   "iso": "1882-11-12",
+   "label": "12 November 1882"
+  },
+  "islamic_tabular": {
+   "ah": "1300-01-01",
+   "note": "tabular; observed dates can differ by a day or two"
+  },
+  "os_ns": {
+   "old_style": "31 October 1882",
+   "new_style": "12 November 1882",
+   "difference_days": 12
+  }
+ },
+ "notes": [
+  "tabular Islamic calendar (civil epoch); observed dates can differ by a day or two"
+ ]
+}
+[exit 0]
+
+## cal-jdn
+{
+ "ok": true,
+ "jdn": 2299161,
+ "weekday": "Friday",
+ "julian": {
+  "iso": "1582-10-05",
+  "label": "5 October 1582",
+  "auc": 2335
+ },
+ "gregorian": {
+  "iso": "1582-10-15",
+  "label": "15 October 1582"
+ },
+ "islamic_tabular": {
+  "ah": "990-09-17",
+  "note": "tabular; observed dates can differ by a day or two"
+ },
+ "os_ns": {
+  "old_style": "5 October 1582",
+  "new_style": "15 October 1582",
+  "difference_days": 10
+ }
+}
+[exit 0]
+
+## cal-setup
+{
+ "ok": true,
+ "db": "<home>/dila_time.sqlite",
+ "built": true,
+ "from": "https://authority.dila.edu.tw/downloads/authority_time.2012-02.zip",
+ "rows": {
+  "dynasty": 123,
+  "dynasty_name": 149,
+  "emperor": 692,
+  "emperor_name": 1040,
+  "era": 1503,
+  "era_name": 1984,
+  "month": 117428
+ },
+ "licence": "CC BY-SA 3.0 Unported; the table stays on this machine",
+ "attribution": "East Asian calendar data: DILA Time Authority Database, Dharma Drum Institute of Liberal Arts (authority.dila.edu.tw), CC BY-SA 3.0. Lookup design after kltng/humanities-skills cjk-calendar."
+}
+[exit 0]
+
+## cal-era
+{
+ "ok": true,
+ "era": "康熙",
+ "matches": [
+  {
+   "era_id": 660,
+   "era_name": "康熙",
+   "emperor_id": 332,
+   "emperor_name": "聖祖",
+   "dynasty_id": 92,
+   "dynasty_name": "清",
+   "country": "chinese",
+   "start_jdn": 2328142,
+   "end_jdn": 2350361,
+   "start": "18 February 1662",
+   "end": "20 December 1722"
+  },
+  {
+   "era_id": 1204,
+   "era_name": "康熙",
+   "emperor_id": 333,
+   "emperor_name": "世宗",
+   "dynasty_id": 92,
+   "dynasty_name": "清",
+   "country": "chinese",
+   "start_jdn": 2350362,
+   "end_jdn": 2350407,
+   "start": "21 December 1722",
+   "end": "4 February 1723"
+  }
+ ],
+ "attribution": "East Asian calendar data: DILA Time Authority Database, Dharma Drum Institute of Liberal Arts (authority.dila.edu.tw), CC BY-SA 3.0. Lookup design after kltng/humanities-skills cjk-calendar.",
+ "note": "every era with this name is listed; pick by dynasty and country"
+}
+[exit 0]
+
+## cal-cjk
+{
+ "ok": true,
+ "input": "崇禎三年四月初三",
+ "parsed": {
+  "era": "崇禎",
+  "year": 3,
+  "leap": false,
+  "month": 4,
+  "day": 3
+ },
+ "matches": [
+  {
+   "era": "崇禎",
+   "emperor": "思宗",
+   "dynasty": "明",
+   "country": "chinese",
+   "era_year": 3,
+   "year_ganzhi": "庚午",
+   "month_name": "四月",
+   "jdn": [
+    2316539,
+    2316539
+   ],
+   "western": [
+    "14 May 1630",
+    "14 May 1630"
+   ]
+  }
+ ],
+ "attribution": "East Asian calendar data: DILA Time Authority Database, Dharma Drum Institute of Liberal Arts (authority.dila.edu.tw), CC BY-SA 3.0. Lookup design after kltng/humanities-skills cjk-calendar.",
+ "note": "an ambiguous era name returns every match; DILA covers China c. 220 BCE-1912, Japan 593-1872, Korea 56 BCE-1885"
+}
+[exit 0]
+
+## err-year-zero
+{
+ "ok": false,
+ "error": "historical years start at 1 (there is no year 0 in BC/AD counting)"
+}
+[exit 1]
+
+## err-ides
+{
+ "ok": false,
+ "error": "cannot read 'Ides of March 44 BC': Roman day counts (Kalends, Nones, Ides) are not read; give the day of the month (the Ides of March are 15 March: '15 March 44 BC')"
+}
+[exit 1]
+
+## err-ah-month
+{
+ "ok": false,
+ "error": "cannot read '1 Muharram 1 AH': AUC and AH dates are a year ('AUC 709', '709 AUC', 'AH 1300') or a tabular year-month-day ('AH 1300-09-01'); month names of those calendars are not read"
+}
+[exit 1]
+
+## err-ignored-words
+{
+ "ok": true,
+ "input": "c. 100 BC",
+ "read_as": {
+  "astronomical_year": -99,
+  "month": null,
+  "day": null,
+  "calendar": "julian",
+  "label": "100 BC"
+ },
+ "precision": "year",
+ "jdn": [
+  1684899,
+  1685263
+ ],
+ "edtf": "-0099",
+ "day": {
+  "jdn": 1684899,
+  "weekday": "Sunday",
+  "julian": {
+   "iso": "-0099-01-01",
+   "label": "1 January 100 BC",
+   "auc": 654
+  },
+  "gregorian": {
+   "iso": "-0100-12-30",
+   "label": "30 December 101 BC"
+  },
+  "notes": [
+   "before 1 January 45 BC: Rome used the republican calendar, so a Roman date as written does not map to this solar day; the Julian reading is proleptic",
+   "Gregorian reading before 15 October 1582 is proleptic"
+  ]
+ },
+ "notes": [
+  "ignored words: c. (check the reading)"
+ ]
+}
+[exit 0]
+
+## err-not-a-qid
+{
+ "ok": false,
+ "error": "not a QID: 'Caesar' (discover it with wd search first; never invent one)"
+}
+[exit 1]
+
+## err-usage
+
+[stderr] usage: hw.py wd [-h] [--prop PROP] [--lang LANG] [--limit LIMIT] [--scholarly]
+                {search,claims,entity,sparql} value
+hw.py wd: error: the following arguments are required: value
+[exit 2]
+
+## cache
+{
+ "ok": true,
+ "file": "<home>/cache/when-was-julius-caesar-born.json"
+}
+[exit 0]
+{
+ "ok": true,
+ "hits": [
+  {
+   "score": 0.67,
+   "file": "<home>/cache/when-was-julius-caesar-born.json",
+   "question": "When was Julius Caesar born?",
+   "cached": "<today>",
+   "age_days": 0.0,
+   "answer": "12 or 13 July 100 BC",
+   "confidence": "medium",
+   "sources": [
+    {
+     "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Julius*.html",
+     "title": "Suetonius, Life of Julius Caesar 88 (LacusCurtius)",
+     "retrieved": "<today>",
+     "quote": "He died in the fifty-sixth year of his age"
+    }
+   ]
+  }
+ ],
+ "note": "a hit is a lead, not an answer: re-read at least one source if it is older than 180 days"
+}
+[exit 0]
+{
+ "ok": true,
+ "count": 1,
+ "entries": [
+  {
+   "question": "When was Julius Caesar born?",
+   "cached": "<today>",
+   "file": "when-was-julius-caesar-born.json"
+  }
+ ]
+}
+[exit 0]
+
+## pack-init
+{
+ "ok": true,
+ "pack": "legionary",
+ "created": [
+  "answer.md",
+  "sources.json",
+  "entities.json",
+  "places.geojson",
+  "timeline.json",
+  "refs/index.json",
+  "anachronism.md",
+  "manifest.json"
+ ]
+}
+[exit 0]
+
+## pack-init-files
+legionary/anachronism.md
+legionary/answer.md
+legionary/entities.json
+legionary/manifest.json
+legionary/places.geojson
+legionary/refs/index.json
+legionary/sources.json
+legionary/timeline.json
+
+## validate-good
+{
+ "ok": true,
+ "pack": "pack-good",
+ "problems": [],
+ "warnings": []
+}
+[exit 0]
+
+## validate-bad
+{
+ "ok": false,
+ "pack": "pack-bad",
+ "problems": [
+  "missing anachronism.md",
+  "completeness: places is empty without a reason",
+  "answer.md has no 'Confidence:' line",
+  "answer.md has no 'Sources disagree' / 'Sources agree' note",
+  "answer.md does not say it was AI-researched",
+  "s2: claim 'Caesar was born in 100 BC' has no supporting quote",
+  "s3: https://en.wikipedia.org/wiki/Julius_Caesar is Wikipedia or a mirror; mark it tertiary and cite the source beneath it",
+  "entity Julius Caesar: '1048' is not a QID",
+  "entity Julius Caesar birth: a disputed date is a set or a range, never a point",
+  "entity Julius Caesar birth: source s9 not in sources.json",
+  "places.geojson has a 'crs' member (RFC 7946 removed it; coordinates are WGS 84 [lon, lat])",
+  "feature 0 (Rome): coordinates are swapped relative to expected_coord",
+  "feature 1 (open ring): a ring needs at least four positions",
+  "timeline row 0: missing sentence",
+  "timeline row 0: missing jdn",
+  "timeline row 0: 'July 100 BC' is not EDTF",
+  "ref refs/missing.jpg: missing object_date",
+  "ref refs/missing.jpg: missing place",
+  "ref refs/missing.jpg: missing accession",
+  "ref refs/missing.jpg: missing institution",
+  "ref refs/missing.jpg: non-commercial licence without nc: true",
+  "ref refs/missing.jpg: non-commercial image in a pack marked commercial",
+  "ref refs/missing.jpg: file missing",
+  "ref refs/gen.png: missing url",
+  "ref refs/gen.png: missing object_date",
+  "ref refs/gen.png: missing place",
+  "ref refs/gen.png: missing accession",
+  "ref refs/gen.png: missing institution",
+  "ref refs/gen.png: missing retrieved",
+  "ref refs/gen.png: file missing",
+  "ref refs/gen.png: generated images are not references (label them reconstructions elsewhere)"
+ ],
+ "warnings": []
+}
+[exit 1]
+
+## sources-offline
+{
+ "ok": false,
+ "problems": [
+  "s1: https://example.org/caesar-source was not fetched in this run (fetch-log); cite only what was read",
+  "s2: https://example.org/badian was not fetched in this run (fetch-log); cite only what was read"
+ ],
+ "warnings": [],
+ "quote_checks": [],
+ "independent_sources": [
+  "s1",
+  "s2"
+ ],
+ "corroborated": true
+}
+[exit 1]
+
+## sources-offline-any-url
+{
+ "ok": true,
+ "problems": [],
+ "warnings": [],
+ "quote_checks": [],
+ "independent_sources": [
+  "s1",
+  "s2"
+ ],
+ "corroborated": true
+}
+[exit 0]
+
+## pack-csl
+{
+ "ok": true,
+ "file": "pack-good/sources.csl.json",
+ "items": 2
+}
+[exit 0]
+
+## lint
+{
+ "ok": true,
+ "sources": 85,
+ "by_tier": {
+  "3": 5,
+  "1": 53,
+  "2": 27
+ },
+ "by_route": {
+  "wd": 2,
+  "wp": 1,
+  "place": 3,
+  "link-out": 54,
+  "src": 22,
+  "cal": 1,
+  "oa": 1,
+  "doi": 1
+ },
+ "era_outline_bytes": 6303,
+ "era_outline_band": "green",
+ "problems": [],
+ "warnings": [],
+ "ids": null
+}
+[exit 0]
+
+## probe
+{
+ "ok": true,
+ "date": "<today>",
+ "summary": {
+  "ok": 2
+ },
+ "problems": [],
+ "probed": 2
+}
+[exit 0]
+
+## recipe-script
+formal reign: 61 years, 10 months, 15 days (22597 days)
+era name 康熙: 60 years, 10 months, 2 days (22219 days)
+[exit 0]
+
+## keys-contact
+{
+ "ok": true,
+ "contact": "you@example.com",
+ "user_agent": "historywright/0.1.0 (https://github.com/m4bwav/historywright; you@example.com)"
+}
+[exit 0]
+
