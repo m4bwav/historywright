@@ -154,6 +154,15 @@ def jdn_to_islamic(j):
     return y, m, j - islamic_to_jdn(y, m, 1) + 1
 
 
+def ah_year_range(text):
+    """First and last JDN of a year-only AH date ('AH 1300', '1300 AH'), else None: an AH year is not a Western one."""
+    m = re.fullmatch(r"(?i)\s*(?:a\.?h\.?\s*(\d{1,4})|(\d{1,4})\s*a\.?h\.?)\s*", text)
+    if not m:
+        return None
+    y = int(m.group(1) or m.group(2))
+    return islamic_to_jdn(y, 1, 1), islamic_to_jdn(y + 1, 1, 1) - 1
+
+
 def auc(y):
     """Varronian ab urbe condita year for an astronomical year (AUC 1 = 753 BC)."""
     return y + 753
@@ -181,6 +190,9 @@ def parse_date(text, cal="auto"):
     elif re.search(r"\bn\.?s\.?$|new style", low):
         cal = "gregorian"
         t = re.sub(r"(?i)\s*(n\.?s\.?|\(?new style\)?)$", "", t).strip()
+    m = re.fullmatch(r"(?i)(\d{1,4})\s*(a\.?u\.?c\.?|a\.?h\.?)", t)
+    if m:  # '709 AUC', '1300 AH': the suffix forms read as the prefix forms
+        t = m.group(2) + " " + m.group(1)
     m = re.fullmatch(r"(?i)a\.?u\.?c\.?\s*(\d{1,4})", t)
     if m:
         y = int(m.group(1)) - 753
@@ -202,6 +214,12 @@ def parse_date(text, cal="auto"):
         if y <= 0:
             notes.append("ISO/EDTF years are astronomical: %s is %s" % (t, year_label(y)))
         return y, mo, d, _auto_cal(y, mo, d, cal), notes
+    if re.search(r"(?i)(^|\s)(a\.?u\.?c|a\.?h)\.?(\s|$)", t):
+        raise ValueError("cannot read %r: AUC and AH dates are a year ('AUC 709', '709 AUC', 'AH 1300') or a "
+                         "tabular year-month-day ('AH 1300-09-01'); month names of those calendars are not read" % text)
+    if re.search(r"(?i)\b(kalends|calends|nones|ides)\b", t):
+        raise ValueError("cannot read %r: Roman day counts (Kalends, Nones, Ides) are not read; give the day of the "
+                         "month (the Ides of March are 15 March: '15 March 44 BC')" % text)
     era = None
     if re.search(_BC + r"\s*$", low):
         era, t = "bc", re.sub(r"(?i)\s*" + _BC + r"\s*$", "", t)
@@ -212,10 +230,13 @@ def parse_date(text, cal="auto"):
     t = t.replace(",", " ").strip()
     toks = t.split()
     day = mon = year = None
+    ignored = []
     for tok in toks:
         k = tok.lower().rstrip(".")
         if k[:3] in MONTH_ABBR and not k.isdigit():
             mon = MONTH_ABBR[k[:3]]
+        elif re.search(r"[^\W\d_]", k) and not re.fullmatch(r"\d{1,2}(st|nd|rd|th)", k):
+            ignored.append(tok)
         elif re.fullmatch(r"\d{1,2}(st|nd|rd|th)?", k) and day is None and (year is not None or mon is not None or len(toks) == 3):
             day = int(re.sub(r"\D", "", k))
         elif k.isdigit():
@@ -225,6 +246,8 @@ def parse_date(text, cal="auto"):
                 day, year = year, int(k)
     if year is None:
         raise ValueError("cannot read a year in %r" % text)
+    if ignored:
+        notes.append("ignored words: %s (check the reading)" % ", ".join(ignored))
     y = hist_to_astro(year, era == "bc")
     return y, mon, day, _auto_cal(y, mon, day, cal), notes
 

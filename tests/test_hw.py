@@ -58,6 +58,20 @@ class Dates(unittest.TestCase):
         with self.assertRaises(ValueError):
             D.parse_date("0 BC")
 
+    def test_suffix_forms_and_refusals(self):
+        self.assertEqual(D.parse_date("709 AUC")[0], -44)  # 45 BC, not AD 709
+        self.assertEqual(D.parse_date("1300 AH")[0], D.parse_date("AH 1300")[0])
+        for text in ("1 Muharram 1 AH", "Ides of March 44 BC"):
+            with self.assertRaises(ValueError):
+                D.parse_date(text)
+        self.assertIn("ignored words: c.", D.parse_date("c. 100 BC")[4][0])
+
+    def test_ah_year_is_its_own_range(self):
+        code, d = run("cal", "date", "AH 1300")
+        self.assertEqual(code, 0)
+        self.assertEqual(d["edtf"], "1882-11-12/1883-11-01")
+        self.assertEqual(d["jdn"][1] - d["jdn"][0] + 1, 355)
+
     def test_no_year_zero_span(self):
         s = D.span((-99, 1, 1, "julian"), (100, 1, 1, "julian"))
         self.assertEqual(s["years"], 199)
