@@ -42,3 +42,4 @@ Append-only, newest last.
 - Rulings: [decisions/2026-10-18-session-rulings.md](decisions/2026-10-18-session-rulings.md). The live-API verification departs from wikiwright's L-122; recorded there as L-160 `live-public-sources` (wikiwright PR #20, merged), waiting for Mark.
 - Doc errors left for the first release (README, plugin.json and the sources skill say "about 60 sources", 85 is right; the README's Caesar table is not literal output; cli.md misses the exit 2 case and seven options). Not fixed now because each is in a packaged file that the first release will carry anyway; listed in the wiki note.
 - Not done: Step 2 of the kickoff (eval cache isolation, `worth --probe`, trim) and Step 3 (open items). Next prompt rewritten.
+## [2026-10-18] index | rebuilt (8 entries)
