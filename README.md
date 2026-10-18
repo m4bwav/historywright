@@ -1,6 +1,6 @@
 # historywright
 
-![A historian's research desk at golden hour: a parchment scroll, a leather ledger, a bronze Roman bust, a Chinese calendar scroll with red seals and index cards, with red threads running from each document to brass pins along a long wooden timeline rail](https://raw.githubusercontent.com/m4bwav/historywright/main/.github/images/banner.jpg)
+![A painted historian's desk: a bronze Roman bust, a hanging Chinese ink landscape scroll with red seals, an unrolled parchment, a magnifying glass and an open ledger, with red threads running from the documents to brass pins along a wooden timeline rail of index cards](https://raw.githubusercontent.com/m4bwav/historywright/main/.github/images/banner.jpg)
 
 Three self-maintaining ("evergreen") skills and a command-line tool that make an AI agent answer history
 questions from sources instead of from memory. Ask "When was Caesar born?" and it reads Wikidata's full
