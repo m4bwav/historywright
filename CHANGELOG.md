@@ -10,6 +10,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261018-2 · 2026-10-18 · cal date: suffix AUC and AH, AH years as their own range, refusals instead of silent misreadings
+- because: found while writing the wiki (ai-docs/notes/2026-10-18-github-wiki.md): `cal date "709 AUC"` answered AD 709 (it is 45 BC), `"AH 1300"` gave the days of 1882 rather than those of AH 1300, and `"1 Muharram 1 AH"` and `"Ides of March 44 BC"` were misread with no warning
+- files: skills/historywright/scripts/hw_dates.py (`parse_date`, `ah_year_range`), skills/historywright/scripts/hw.py (`cal date`), skills/historywright/references/dates.md (rows Kalends, AUC, Islamic), tests/test_hw.py (two tests)
+- `709 AUC` and `1300 AH` read as the prefix forms; a year-only AH date covers its own 354 or 355 days, with an EDTF interval; AUC or AH in a form the parser cannot read, and Kalends, Nones or Ides, are refused with the form to use; other words the parser skips are listed in `notes`.
+
 ### C-20261018-1 · 2026-10-18 · HW_RECORD no longer writes key values into fixtures
 - because: found while writing the wiki (ai-docs/notes/2026-10-18-github-wiki.md): `_record` wrote the raw URL as the fixture pattern, and `tests/check_skills.py` exempts `tests/fixtures/`, so a recording with a URL key (Smithsonian's `api_key`) would have committed it
 - files: skills/historywright/scripts/hw_net.py (`record_pattern`, `_record`), tests/test_hw.py (test_record_pattern_hides_keys)

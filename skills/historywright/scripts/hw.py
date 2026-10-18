@@ -95,10 +95,16 @@ def cmd_cal(a):
         except ValueError as e:
             return fail(str(e))
         first, last = D.span_range(y, m, d, cal)
+        edtf = D.edtf_for(y, m, d)
+        ah = D.ah_year_range(a.value)
+        if ah:  # the AH year's own days, which straddle two Western years
+            first, last = ah
+            edtf = "%s/%s" % tuple(D.describe_jdn(j)["gregorian" if j >= D.GREGORIAN_START else "julian"]["iso"]
+                                   for j in ah)
         res = {"ok": True, "input": a.value, "read_as": {"astronomical_year": y, "month": m, "day": d,
                                                           "calendar": cal, "label": D.date_label(y, m, d)},
                "precision": "day" if d else ("month" if m else "year"), "jdn": [first, last],
-               "edtf": D.edtf_for(y, m, d), "day": D.describe_jdn(first, a.country)}
+               "edtf": edtf, "day": D.describe_jdn(first, a.country)}
         if notes:
             res["notes"] = notes
         _cjk_extra(res, first, a)
