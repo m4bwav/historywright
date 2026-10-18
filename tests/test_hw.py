@@ -294,6 +294,15 @@ class FailSoft(unittest.TestCase):
         self.assertIn("café", hw_net.decode_body(body, "text/html"))
         self.assertEqual(hw_net.decode_body("Ünïcode".encode("utf-8"), ""), "Ünïcode")
 
+    def test_record_pattern_hides_keys(self):
+        import re
+        import hw_net
+        url = "https://api.si.edu/openaccess/api/v1.0/search?q=helmet&api_key=SECRET123"
+        pat = hw_net.record_pattern(url)
+        self.assertNotIn("SECRET123", pat)
+        self.assertTrue(re.search(pat, url))
+        self.assertFalse(re.search(pat, url.replace("helmet", "sword")))
+
     def test_src_skip_and_link(self):
         code, d = run("src", "wayback", "microsoft.com", "--limit", "3")
         self.assertTrue(d["ok"], d)
