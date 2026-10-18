@@ -26,6 +26,8 @@ The folder `historywright.wiki` beside this clone (outside this repository), bra
 
 Preflight state: placeholder (the owner's first page, commit 094650f). The pages were committed on top of it and pushed with a plain `git push` (fast-forward): wiki commit 5f89b34. `wikiwright.py live m4bwav/historywright <wiki dir>`: 12 pages, 0 failures, sidebar (15 of 15) and footer render, anchors 33 links to 8 pages, 0 broken. Before the push: `check` 12 pages, 0 errors, 0 warnings; `outputs` 55 checked, 0 missing, 2 skipped (the answer shape, the slash commands); `snippets` 1 block checked (the Recipes script), 0 missing, 3 skipped (install links, `HW_RECORD`), 52 commands; everwrite `tells.py` 0 strong, 15 weak (long sentences).
 
+A second wiki commit, 8adde3c, moved Versions-and-Upgrading's "Known doc errors" to "Doc errors fixed on 2026-10-18" after PR #5, with FAQ and Home following; `live` again 12 pages, 0 failures.
+
 Ruling recorded in wikiwright as L-160 `live-public-sources`: the verifier calls keyless public APIs live, which departs from wikiwright's L-122 (never call the real service). It waits for the owner's ruling; if he refuses it, re-verify against recorded fixtures labelled as recorded.
 
 ## Updating the wiki later
@@ -70,7 +72,7 @@ Repository tests at 29bc397: `check_skills.py` 0 problems, `test_hw.py` 34 tests
 - `read_as` for an AH year shows the Western year it starts in.
 - The pace file keeps per-host gaps across runs and waits at most 30 seconds.
 
-## Inaccuracies found in the shipped docs (wait for the first release)
+## Inaccuracies found in the shipped docs (fixed in b3b4193, PR #5)
 
 1. README ("The skills" table), `.claude-plugin/plugin.json` (description) and `skills/historywright-sources/SKILL.md` ("Files"): "about 60 sources"; the registry holds 85 (`hw.py lint`).
 2. README ("What a run looks like"): presents a four-line table as what `hw.py wd claims Q1048 --prop P569` prints; the command prints JSON, and the table summarises it.
