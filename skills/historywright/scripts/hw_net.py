@@ -249,7 +249,7 @@ def _record(url, method, resp):
         index = json.loads(ip.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         index = []
-    index.append({"match": "^" + re.escape(url) + "$", "method": method, "file": name, "status": resp.status,
+    index.append({"match": record_pattern(url), "method": method, "file": name, "status": resp.status,
                   "content_type": resp.headers.get("content-type", "")})
     write_text(ip, json.dumps(index, indent=1) + "\n")
 
@@ -260,6 +260,11 @@ _SECRET_PARAM = re.compile(r"(?i)([?&](?:api_key|apikey|wskey|key|token|access_t
 def redact(url):
     """Hide key and token query values so logs and outputs never carry them."""
     return _SECRET_PARAM.sub(r"\1***", url)
+
+
+def record_pattern(url):
+    """The fixture pattern for a recorded URL: key and token values match anything, so no key is written down."""
+    return "^" + re.escape(redact(url)).replace(re.escape("***"), "[^&#]+") + "$"
 
 
 def _log(url, method, resp):
