@@ -97,7 +97,7 @@
         "tool": "Bash|PowerShell|WebFetch",
         "input_match": "wd claims|wbgetclaims|psv:P569|p:P569"
       },
-      "baseline": "not yet run",
+      "baseline": "without the skill 0 of 3 passed (T-20261017-5, 2026-10-17, sonnet)",
       "runs": 3,
       "_skill": "historywright",
       "tools": [
@@ -121,7 +121,7 @@
         "tool": "Bash|PowerShell",
         "input_match": "hw\\.py.*cache put"
       },
-      "baseline": "not yet run",
+      "baseline": "without the skill 0 of 3 passed (T-20261018-1, 2026-10-18, sonnet)",
       "runs": 3,
       "_skill": "historywright",
       "tools": [
@@ -148,7 +148,7 @@
         "tool": "Bash|PowerShell",
         "input_match": "validate-pack"
       },
-      "baseline": "not yet run",
+      "baseline": "without the skill 2 of 3 passed (T-20261017-4, 2026-10-17, sonnet)",
       "runs": 3,
       "files": [
         "tests/fixtures/pack-good",
@@ -178,7 +178,7 @@
         "regex on the answer: Mommsen|102 BC",
         "regex on the answer: ^(?!.*\\b99 BCE?\\b)(?!.*\\b11 July)(?!.*July 11\\b)"
       ],
-      "baseline": "not yet run",
+      "baseline": "without the skill 0 of 3 passed (T-20261017-4, 2026-10-17, sonnet)",
       "runs": 3,
       "max_turns": 30,
       "_skill": "historywright",
@@ -205,7 +205,7 @@
         "regex on the answer: Qianlong",
         "regex on the answer: 1799"
       ],
-      "baseline": "not yet run",
+      "baseline": "without the skill 0 of 3 passed (T-20261017-4, 2026-10-17, sonnet)",
       "runs": 3,
       "max_turns": 30,
       "_skill": "historywright",
@@ -229,7 +229,7 @@
         "regex on the answer: April 4,? 1975|4 April,? 1975",
         "regex on the answer: Albuquerque"
       ],
-      "baseline": "not yet run",
+      "baseline": "without the skill 0 of 3 passed (T-20261017-4, 2026-10-17, sonnet)",
       "runs": 3,
       "max_turns": 30,
       "_skill": "historywright",
@@ -252,7 +252,7 @@
         "regex on the answer: 7 November|November 7",
         "regex on the answer: Julian|Old Style|O\\.S\\."
       ],
-      "baseline": "not yet run",
+      "baseline": "without the skill 3 of 3 passed (T-20261017-4, 2026-10-17, sonnet)",
       "runs": 3,
       "max_turns": 25,
       "_skill": "historywright",
@@ -276,7 +276,7 @@
         "regex on the answer: 1913",
         "regex on the answer: stroke|incapacit|regen"
       ],
-      "baseline": "not yet run",
+      "baseline": "without the skill 2 of 3 passed (T-20261017-4, 2026-10-17, sonnet)",
       "runs": 3,
       "max_turns": 30,
       "_skill": "historywright",
@@ -298,7 +298,7 @@
         "no invented title: every listed book matches a fetched catalogue record on title, author and year",
         "regex on the answer: (?:.*?\\b(?:19|20)\\d\\d\\b){5}"
       ],
-      "baseline": "not yet run",
+      "baseline": "without the skill 1 of 3 passed (T-20261017-4, 2026-10-17, sonnet)",
       "runs": 3,
       "max_turns": 35,
       "evidence": {
@@ -325,7 +325,7 @@
         "regex on the answer: Rousseau",
         "regex on the answer: no (reliable |contemporary |historical )?(evidence|record|source)|never said|misattribut|apocryphal|did not say|didn't say"
       ],
-      "baseline": "not yet run",
+      "baseline": "without the skill 3 of 3 passed (T-20261017-4, 2026-10-17, sonnet)",
       "runs": 3,
       "max_turns": 25,
       "_skill": "historywright",
@@ -347,7 +347,7 @@
         "regex on the answer: hoax",
         "regex on the answer: not (the )?(real |actual )?inventor|no evidence|fabricat|invented by a|made up|false"
       ],
-      "baseline": "not yet run",
+      "baseline": "without the skill 2 of 3 passed (T-20261017-4, 2026-10-17, sonnet)",
       "runs": 3,
       "max_turns": 25,
       "_skill": "historywright",
