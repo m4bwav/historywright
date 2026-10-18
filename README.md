@@ -24,7 +24,7 @@ decades. Each of these is a rule in the skills, with its source in [RESEARCH.md]
 Wikidata holds four statements for Caesar's birth. The preferred one is July 100 BC, flagged disputed, with
 12 and 13 July as the earliest and latest dates; another statement says 102 BC. A plain query shows only the
 first, and the SPARQL form prints `-0099-07-11` because it counts a year 0 and converts to the Gregorian
-calendar. `hw.py wd claims Q1048 --prop P569` prints all four, decoded:
+calendar. `hw.py wd claims Q1048 --prop P569` prints all four as JSON; in short:
 
 ```
 preferred  July 100 BC  (julian, month precision, disputed; earliest 12 July 100 BC, latest 13 July 100 BC)
@@ -43,7 +43,7 @@ for 102 BC noted and the consensus named. Every source in the answer is one it f
 | Skill | Job |
 |---|---|
 | [`historywright`](skills/historywright/SKILL.md) | The hub: a short reference interview (formal reign or actual power? founding or incorporation? which calendar?), structured sources first, footnotes followed to scholarship and primary texts, two independent sources, dates in code, the answer with citations, a confidence line and a classified "sources disagree" note, then a cache entry |
-| [`historywright-sources`](skills/historywright-sources/SKILL.md) | The knowledge base: a registry of about 60 sources by era, region, tier, licence, access and pace, an era outline that routes questions, query recipes, and an endpoint probe run at every refresh |
+| [`historywright-sources`](skills/historywright-sources/SKILL.md) | The knowledge base: a registry of 85 sources by era, region, tier, licence, access and pace, an era outline that routes questions, query recipes, and an endpoint probe run at every refresh |
 | [`historywright-pack`](skills/historywright-pack/SKILL.md) | Research packs for 3D, film and images: sources with exact quotes, entities with QIDs and EDTF dates, places as GeoJSON, a timeline, reference images from museum collection records with licences and accession numbers, and a period anachronism checklist. A pack is also a [polywright](https://github.com/m4bwav/polywright) asset folder |
 
 All three share one evergreen unit at the repository root: [RESEARCH.md](RESEARCH.md) (dated findings and a
