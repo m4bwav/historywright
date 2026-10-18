@@ -8,6 +8,11 @@ Entry shape: `### T-YYYYMMDD-n · date · harness · env · passed/total`, then 
 
 ## Runs
 
+### T-20261018-1 · 2026-10-18 · evergreen.py worth --ab --case action-cache-entry, sonnet, empty cache · Windows 11 dev machine · with 3/3, without 0/3
+- Every with run ran `hw.py cache put` after researching; no without run saved anything. +100 points (noise margin 33), cost x5.04, $2.14 for six runs. With this run every case in `evals/evals.json` has passed with the skill (19 of 19), recorded with `evergreen.py tested`.
+- Side effects: the eval wrote one entry to the real cache (moved to ~/.historywright/cache-from-evals-2026-10-18/).
+- led to: none
+
 ### T-20261017-5 · 2026-10-17 · evergreen.py worth --ab, sonnet, cache cleared first · Windows 11 dev machine · action-wikidata-full-statements with 3/3, without 0/3
 - With a clean cache, every with run read Wikidata full statements (wd claims / wbgetclaims) before answering; the without arm never did. action-cache-entry did not run (the second call's --case matched nothing): still owed.
 - led to: none
