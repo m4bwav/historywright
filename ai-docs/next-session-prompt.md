@@ -1,107 +1,63 @@
-# Kickoff: build historywright (Step 2), an evergreen historical-research plugin
+# Kickoff: historywright after the build (Step 3: wiki, eval follow-ups, polish)
 
-Written 2026-10-17, after Step 1 and Mark's answers to its forks. Paste this into a fresh session started in the folder that holds this repository.
-
-## The goal
-
-Build `historywright`, a public evergreen plugin that answers history questions by researching sources, not by reciting what the model remembers. Examples: "When was Caesar born?", "Who was the longest-ruling emperor in Chinese history?", "When did Bill Gates found Microsoft, and with whom?" Each answer has inline citations, a confidence line that says what is uncertain and why, and a "sources disagree" note. The plugin's knowledge base is about **how to find historical answers**: sources by era, region and kind of question; query recipes; reliability and access notes; cached answers with sources and retrieval dates. Model knowledge routes questions and sanity-checks results, and is never the answer. Research packs feed polywright (3D) and cinewright and comfyui-gen (video).
+Written 2026-10-17 at the end of the Step 2 build session. Paste this into a fresh session started in the folder
+that holds this repository (the historywright clone).
 
 ## Where things stand
 
-Step 1, the evergreen creation pass, is done (2026-10-17): seven parallel research passes covering subject, tooling, practice and testing. Mark has answered the three forks. Nothing is built yet. There is no repo and no git.
-
-Mark's keys are live and tested (2026-10-17): the OpenAlex key ($1 a day) and the World Historical Gazetteer token are in `~/.historywright/config.json` under `keys.openalex.api_key` and `keys.whg.token`. Read them from there and never copy them anywhere else. The repo's `.gitignore` and CI should both guard against leaks: CI fails on any 40-plus-character token-like string outside test fixtures. Mark asked that the token stay out of the repo.
+- historywright is built, public and installed: https://github.com/m4bwav/historywright, installed locally as
+  historywright@mark-local 0.1.0. Three skills (`historywright`, `historywright-sources`, `historywright-pack`),
+  hw.py (five stdlib modules), an 85-source registry, the era outline, the pack contract, 31 offline tests, CI
+  green on Linux, macOS and Windows with Python 3.9 and 3.14. No tag, no release.
+- Evals (TESTS.md, T-20261017-2 to -4): triggers 15 of 15, decoys 9 of 9; the with/without A/B on 11 value cases
+  scored 82% with the skill against 39% without (+42 points, noise margin 22, cost 3.1x), harness verdict TRIM. All
+  eight outcome cases pass 3 of 3 with the skill. With a clean cache, action-wikidata-full-statements passed 3/3 with the skill and 0/3 without (T-20261017-5).
+- The first A/B (CUT) measured the harness: the runner's default tools blocked shell and web, and eval runs shared
+  the user's real cache (L-005, and the cache note in TESTS.md). Value cases now grant Bash, PowerShell,
+  WebFetch, WebSearch and Edit; the eval-written cache entries were moved to
+  `~/.historywright/cache-from-evals-2026-10-17/`.
+- Keys: OpenAlex and WHG are live in `~/.historywright/config.json`. Read them from there; never copy them
+  anywhere else. `tests/check_skills.py` fails on key-like strings, home paths and AI credit lines.
 
 ## Read first
 
-1. `historywright/ai-docs/HANDOFF.md`, then `ai-docs/research/2026-10-17-creation-pass.md`. §7 of the synthesis is the proposed layout, §8 the forks, §5 the practice guards and §6 the testing plan.
-2. `historywright/RESEARCH.md`: Current understanding, Open questions, and R-20261017-1 to -24. Every guard in the skill text cites its `R-` entry.
-3. `ai-docs/decisions/2026-10-17-step1-rulings.md` (nine rulings) and `ai-docs/decisions/2026-10-17-forks-mark.md` (Mark's answers).
-4. `ai-docs/notes/api-keys-setup.md`: every optional key and how to get it. This becomes the README's "Optional keys" section and the spec for `hw.py keys`.
-5. Check that the installed evergreen is 0.17.0 or later (`claude plugin list`). Read the evergreen-new skill (Steps 3 to 5) and PROTOCOL §8 and §11.
-6. Mark's rules in the vault user PROFILE (`<vault>/user/PROFILE.md`, section "Code and repos"; `everlast.py vault where` prints the vault).
-7. Patterns to copy (README and HANDOFF of each):
-   - `Ai/polywright`: a hub skill with siblings, a stdlib CLI, and the asset contract in `skills/polywright/references/contract.md`.
-   - `Ai/everscout`: user data in `~/.<tool>/`, seed data in the repo.
-   - `Ai/readwright`, `Ai/fetchwright`, `Ai/chartwright`.
-   - Prior art to read before writing hw.py:
-     - kltng/humanities-skills: `cjk-calendar`, `wikidata-search` and their `evals/evals.json`;
-     - fuzheado/wikipedia-ai-skills: `wikimedia-api-access` and `wikidata-reconciliation`.
+1. `ai-docs/HANDOFF.md`, then `ai-docs/log.md` (the 2026-10-17 Step 2 entry).
+2. `ai-docs/decisions/2026-10-17-step2-build.md` (nine build rulings).
+3. `AGENTS.md` (repository rules), `README.md`, `TESTS.md`, `LEARNINGS.md` (L-001 to L-005).
+4. The owner's rules: the vault user PROFILE (`<vault>/user/PROFILE.md`, section "Code and repos";
+   `everlast.py vault where` prints the vault). The owner's private notes for this project are in the vault's
+   `projects/historywright/private/`.
 
-## The forks (settled 2026-10-17)
+## Next steps, in order
 
-1. **Keys: optional and free, automated where possible.** Everything works keyless. hw.py reads keys from `~/.historywright/config.json`, with environment variables (`OPENALEX_API_KEY`, `WHG_TOKEN`, `HW_CONTACT`) taking precedence. `hw.py keys` gives every user the route the notes describe:
-   - `keys openalex --email ADDR` posts the documented API request, but only after the user has given their address and said yes;
-   - `keys whg` opens the ORCID sign-in page with a per-OS branch and saves the token the user pastes;
-   - `keys status` checks each key.
-2. **East Asian eras.** On first use, `hw.py cal` downloads DILA's own `authority_time.2012-02.zip` (1.34 MB; from authority.dila.edu.tw or github.com/DILA-edu/Authority-Databases) and builds the SQLite table in `~/.historywright/`.
-   - Licence: CC BY-SA 3.0, so attribute DILA in answers and in the README.
-   - Do not fetch kltng's prebuilt `calendar.db`; its repository has no licence.
-   - Follow kltng's design and credit it.
-3. **Paid sources: none.** Gated sources are link-out only.
+0. **Uncommitted work from the last session** (it ran out of session time): branch `docs/evals-banner` was pushed with the banner (`.github/images/banner.jpg`, seed 505), the eval fixes (tools field, `_skill`, regexes, exported `evals/cases/`), TESTS.md T-2 to T-5, LEARNINGS L-005, the log, HANDOFF and this prompt. Open a PR from it (`gh pr create`), let CI pass, merge it yourself. Also owed: `evergreen.py tested . --passed ... --failed ...` to record the suite in evergreen.json, and the action-cache-entry A/B (its run never started; clear `~/.historywright/cache` first).
 
-## Step 2: design and build
-
-Build to §7 of the synthesis unless the build shows a better shape; record any change in `ai-docs/decisions/`.
-
-- **`historywright` (hub)**:
-  - Intake: a short reference interview that states which reading of the question is answered.
-  - Route with the era outline.
-  - Wikidata full statements and place sources first, then follow references to scholarship and primary texts.
-  - Corroborate with two independent sources (no Wikipedia mirrors, no shared `derived_from`), one of them primary or scholarly.
-  - Dates in hw.py; cite only what the run fetched and read.
-  - Write the answer, the confidence line and the classified "sources disagree" note, then the cache entry.
-  - "Unverified" when sources cannot be reached.
-- **`historywright-sources`**: the source registry (seeded from the four subject reports, about 60 sources with route, licence, access, tier and per-host pace), the era outline (from the routing articles and PeriodO; within the size budget), query recipes, and `hw.py probe` at every refresh.
-- **`historywright-pack`**: `answer.md`, `sources.json` (with supporting quotes), `entities.json` (QIDs, the EDTF date object of synthesis §2), `places.geojson`, `timeline.json` (source sentence and range per row), and `references/`. References are CC0-first museum records with licence, URL, date, place and accession number, plus a per-period anachronism checklist. The layout matches polywright's asset contract.
-- **`hw.py`** (stdlib): `wd`, `wp`, `place`, `oa`, `doi`, `cal`, `cache`, `verify` (quote span, URL health, DOI, QID), `validate-pack`, `probe`, `keys` and `lint`. One shared HTTP layer: a contact User-Agent, per-host throttles, concurrency 3, Retry-After. `HW_HOME` overrides `~/.historywright` for evals.
-- **End-to-end example**: research a Roman legionary of 50 BC, export the pack, have polywright read its references, and record the result. Expect CC0 museum APIs to return Greek and Etruscan helmets. Late-Republican kit comes from Commons and Europeana with per-file licences.
-
-## Tests (evergreen-test)
-
-Use the corrected gold in RESEARCH.md R-20261017-12:
-
-- **Outcome, Caesar**: "12 or 13 July 100 BC", with 12 July from Macrobius and 13 July from a disputed reading of Dio, Mommsen's 102 BC argument noted, and two sources. It fails on "99 BC" or "11 July".
-- **Outcome, Kangxi**: 61 years, 1661–1722, plus Qianlong's abdication in 1796 and de facto rule to 1799.
-- **Outcome, Microsoft**: Gates and Allen, 4 April 1975, Albuquerque; do not require an official page that names the day.
-- **Action cases**:
-  - the trace shows `wbgetclaims` or `psv:` before the answer, not a lone `wdt:`;
-  - a cache entry with sources and a retrieval date;
-  - a pack that passes `validate-pack`, and a negative fixture pack that fails.
-- **Cases the research adds**:
-  - October Revolution O.S./N.S.;
-  - a non-Western reign;
-  - "five key books on X" checked in a catalogue;
-  - a planted misattributed quote;
-  - a question with only Wikipedia-mirror support (it must come back unverified).
-- **Decoys**:
-  - "write a story set in ancient Rome";
-  - "summarise this history PDF" (that is readwright's job);
-  - "what happened in today's news".
-- **Baseline without the skill**: the worth check must show the skill beats memory; expect the disputed-date and reign cases to show it.
-- **Harness**: `claude plugin eval`, with fixture mocks of the Wikidata JSON for the Caesar case. Bash needs WSL2 on Windows, otherwise use `EG worth --ab`.
-
-## Launch set (PROTOCOL §8 and Mark's PROFILE)
-
-- Public repo `m4bwav/historywright`.
-- README with a hero banner (comfyui-gen, 1536x640, four seeds, a contact sheet, `.github/images/banner.jpg`).
-- Install and quick-start sections, LICENSE, the tiered SECURITY.md with private vulnerability reporting on, CI, AGENTS.md plus a CLAUDE.md whose first line is `@AGENTS.md`, and the description and topics.
-- An ai-docs doc set via everlast-setup. The current `ai-docs/` files (log, HANDOFF, decisions, research, this prompt) carry over into it.
-- A GitHub wiki via wikiwright. The first page must be saved in the web interface, and that click is Mark's: ask him.
-- Registered in the evergreen catalog (`evergreen.py init`, which keeps the existing RESEARCH.md) and installed through the mark-local marketplace.
+1. **Wiki.** Ask Mark whether he has saved the first wiki page at https://github.com/m4bwav/historywright/wiki
+   (GitHub creates the wiki repository only then; `git ls-remote https://github.com/m4bwav/historywright.wiki.git`
+   tells). Then run the wikiwright skill on the repository. If he has not, ask once and move on.
+2. **Evals follow-up.** Isolate the cache for eval runs: give hw.py a project-scoped home (for example a
+   `.historywright/` folder in the working directory that `HW_HOME` lookups prefer) or run the action cases under
+   `claude plugin eval` in WSL2 with `HW_HOME` set. Then re-run the action cases. Run `evergreen.py worth
+   skills/historywright --probe` for trim candidates (TRIM verdict); trim only what the probe shows the model
+   already knows, then re-run the A/B on the with arm only (`--append`, arms with).
+3. **Open items** (README and HANDOFF list them): quote checks on PDFs (OpenAlex often links PDFs only), OHM
+   queries in `hw.py place`, WHG v3 docs, the Seshat licence page, polywright-references reading
+   `refs/index.json` notes, an `evergreen` plugin issue (its A/B environment check could match "requires approval").
+4. Keep every change in a pull request; merge it yourself once CI passes (Mark's merge-by-default rule), unless it
+   changes the release workflow or a public API, which waits for him.
 
 ## Rules
 
 - Commit with `git -c user.email=156112+m4bwav@users.noreply.github.com`. No AI attribution anywhere.
-- Merge your own PRs once checks pass. Tagging a release and directory submissions wait for Mark's go-ahead.
-- Parallel researchers share about 200 WebSearch calls a turn. If you run several, cap each one (about 25) and prefer direct API fetches.
-- Never index or walk AppData. Kill processes only by PID.
+- Research beats recall: a changed endpoint, limit, licence or gold answer needs an `R-` entry with its source.
+- hw.py stays standard library, one JSON object per command, LF endings (`write_text` helper), tested offline.
+- Never index or walk AppData. Kill processes only by PID. Parallel researchers share about 200 WebSearch calls a
+  turn: cap each.
 
 ## When to stop and ask
 
-- Before signing up for or paying for any source, and before installing a large dependency.
-- Before the first release tag.
-- Before requesting a key for anyone. Mark's keys are already handled.
+- Before the first release tag (v0.1.0) and any directory submission: Mark's go-ahead.
+- Before signing up for or paying for any source, installing a large dependency, or requesting a key for anyone.
 
 Decide small design rulings yourself, record each in `ai-docs/decisions/`, and flag it in one line.
 

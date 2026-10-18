@@ -6,60 +6,84 @@
       "id": "trigger-caesar",
       "kind": "trigger",
       "prompt": "When was Julius Caesar born? I want the real answer with sources, not a guess.",
-      "expectations": ["the historywright skill is invoked"],
-      "runs": 3
+      "expectations": [
+        "the historywright skill is invoked"
+      ],
+      "runs": 3,
+      "_skill": "historywright"
     },
     {
       "id": "trigger-emperor",
       "kind": "trigger",
       "prompt": "who was the longest ruling emperor in chinese history",
-      "expectations": ["the historywright skill is invoked"],
-      "runs": 3
+      "expectations": [
+        "the historywright skill is invoked"
+      ],
+      "runs": 3,
+      "_skill": "historywright"
     },
     {
       "id": "trigger-microsoft",
       "kind": "trigger",
       "prompt": "When did Bill Gates found Microsoft, and who with?",
-      "expectations": ["the historywright skill is invoked"],
-      "runs": 3
+      "expectations": [
+        "the historywright skill is invoked"
+      ],
+      "runs": 3,
+      "_skill": "historywright"
     },
     {
       "id": "trigger-sources",
       "kind": "trigger",
       "prompt": "What open archives or databases cover medieval Japan that I could actually query from a script?",
-      "expectations": ["the historywright-sources skill is invoked (historywright is acceptable family routing)"],
-      "runs": 3
+      "expectations": [
+        "the historywright-sources skill is invoked (historywright is acceptable family routing)"
+      ],
+      "runs": 3,
+      "_skill": "historywright-sources"
     },
     {
       "id": "trigger-pack",
       "kind": "trigger",
       "prompt": "I'm modelling a Roman legionary from around 50 BC for a 3D print. Research what he wore and collect period-accurate museum references I can model from.",
-      "expectations": ["the historywright-pack skill is invoked (historywright or polywright first is acceptable if historywright-pack follows)"],
-      "runs": 3
+      "expectations": [
+        "the historywright-pack skill is invoked (historywright or polywright first is acceptable if historywright-pack follows)"
+      ],
+      "runs": 3,
+      "_skill": "historywright-pack"
     },
     {
       "id": "decoy-story",
       "kind": "trigger",
       "decoy": true,
       "prompt": "Write a short story set in ancient Rome about a gladiator who wants to retire.",
-      "expectations": ["no historywright skill is invoked (creative writing, not a factual question)"],
-      "runs": 3
+      "expectations": [
+        "no historywright skill is invoked (creative writing, not a factual question)"
+      ],
+      "runs": 3,
+      "_skill": "historywright"
     },
     {
       "id": "decoy-pdf",
       "kind": "trigger",
       "decoy": true,
       "prompt": "Summarise this history PDF for me chapter by chapter: ./notes/rome-lectures.pdf",
-      "expectations": ["no historywright skill is invoked (reading a document is readwright's job)"],
-      "runs": 3
+      "expectations": [
+        "no historywright skill is invoked (reading a document is readwright's job)"
+      ],
+      "runs": 3,
+      "_skill": "historywright"
     },
     {
       "id": "decoy-news",
       "kind": "trigger",
       "decoy": true,
       "prompt": "What happened in today's news about the elections?",
-      "expectations": ["no historywright skill is invoked (current news, not history)"],
-      "runs": 3
+      "expectations": [
+        "no historywright skill is invoked (current news, not history)"
+      ],
+      "runs": 3,
+      "_skill": "historywright"
     },
     {
       "id": "action-wikidata-full-statements",
@@ -68,20 +92,46 @@
       "expectations": [
         "before the final answer, the trace shows Wikidata's full statements read: hw.py wd claims, wbgetclaims, or a p:/psv: SPARQL query; a lone wdt:P569 query does not count"
       ],
-      "evidence": {"type": "trace", "tool": "Bash|PowerShell|WebFetch", "input_match": "wd claims|wbgetclaims|psv:P569|p:P569"},
+      "evidence": {
+        "type": "trace",
+        "tool": "Bash|PowerShell|WebFetch",
+        "input_match": "wd claims|wbgetclaims|psv:P569|p:P569"
+      },
       "baseline": "not yet run",
-      "runs": 3
+      "runs": 3,
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ],
+      "max_turns": 30
     },
     {
       "id": "action-cache-entry",
       "kind": "action",
       "prompt": "When was Julius Caesar born? Save the researched answer so you don't have to look it up again.",
       "expectations": [
-        "a cache entry exists under $HW_HOME/cache/ with sources, each with url and retrieved date (written by hw.py cache put)"
+        "the trace shows hw.py cache put writing the entry (under claude plugin eval in WSL2, also check $HW_HOME/cache/*.json has question, answer and sources with url and retrieved)"
       ],
-      "evidence": {"type": "file", "glob": "$HW_HOME/cache/*.json", "json_has": ["question", "answer", "sources.0.url", "sources.0.retrieved"]},
+      "evidence": {
+        "type": "trace",
+        "tool": "Bash|PowerShell",
+        "input_match": "hw\\.py.*cache put"
+      },
       "baseline": "not yet run",
-      "runs": 3
+      "runs": 3,
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ],
+      "max_turns": 30
     },
     {
       "id": "action-validate-pack",
@@ -89,11 +139,30 @@
       "prompt": "Check the two research packs in tests/fixtures/pack-good and tests/fixtures/pack-bad and tell me which one is valid and what is wrong with the other.",
       "expectations": [
         "the trace shows hw.py validate-pack run on both folders",
-        "says pack-good passes and pack-bad fails, naming at least three of its problems (swapped coordinates, a disputed date as a point, a non-commercial image in a commercial pack, a missing Confidence line, a Wikipedia source marked secondary)"
+        "says pack-good passes and pack-bad fails, naming at least three of its problems",
+        "regex on the answer: pack-good.{0,200}(pass|valid)",
+        "regex on the answer: pack-bad.{0,300}(fail|invalid|not valid)"
       ],
-      "evidence": {"type": "trace", "tool": "Bash|PowerShell", "input_match": "validate-pack"},
+      "evidence": {
+        "type": "trace",
+        "tool": "Bash|PowerShell",
+        "input_match": "validate-pack"
+      },
       "baseline": "not yet run",
-      "runs": 3
+      "runs": 3,
+      "files": [
+        "tests/fixtures/pack-good",
+        "tests/fixtures/pack-bad"
+      ],
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ],
+      "max_turns": 30
     },
     {
       "id": "outcome-caesar",
@@ -104,11 +173,22 @@
         "attributes the days: 12 July to Macrobius or the official festival, 13 July to Cassius Dio or a disputed reading",
         "notes that some scholars (Mommsen) argued for 102 BC and that 100 BC is the consensus",
         "cites at least two sources and has a confidence line",
-        "regex on the answer must not match: (?i)\\b99 BC\\b|11 July|July 11"
+        "regex on the answer: (12|twelfth).{0,40}(13|thirteenth).{0,15}July|July (12|12th).{0,25}(13|13th)",
+        "regex on the answer: 100 BC|100 BCE|100 B\\.C",
+        "regex on the answer: Mommsen|102 BC",
+        "regex on the answer: ^(?!.*\\b99 BCE?\\b)(?!.*\\b11 July)(?!.*July 11\\b)"
       ],
       "baseline": "not yet run",
       "runs": 3,
-      "max_turns": 30
+      "max_turns": 30,
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ]
     },
     {
       "id": "outcome-kangxi",
@@ -117,11 +197,25 @@
       "expectations": [
         "names the Kangxi Emperor with a formal reign of 61 years, 1661 to 1722",
         "adds that Qianlong abdicated in 1796 but held power until his death in 1799, the longest de facto rule",
-        "classifies the difference as a frame (formal reign against actual power), not an error"
+        "classifies the difference as a frame (formal reign against actual power), not an error",
+        "regex on the answer: Kangxi",
+        "regex on the answer: 61 years|sixty-one years",
+        "regex on the answer: 1661",
+        "regex on the answer: 1722",
+        "regex on the answer: Qianlong",
+        "regex on the answer: 1799"
       ],
       "baseline": "not yet run",
       "runs": 3,
-      "max_turns": 30
+      "max_turns": 30,
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ]
     },
     {
       "id": "outcome-microsoft",
@@ -130,11 +224,22 @@
       "expectations": [
         "Bill Gates and Paul Allen, 4 April 1975 (April 4, 1975), in Albuquerque, New Mexico",
         "does not claim that an official Microsoft page states the day; may note the 1981 incorporation",
-        "cites sources it fetched"
+        "cites sources it fetched",
+        "regex on the answer: Allen",
+        "regex on the answer: April 4,? 1975|4 April,? 1975",
+        "regex on the answer: Albuquerque"
       ],
       "baseline": "not yet run",
       "runs": 3,
-      "max_turns": 30
+      "max_turns": 30,
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ]
     },
     {
       "id": "outcome-october-revolution",
@@ -142,11 +247,22 @@
       "prompt": "What date did the October Revolution happen?",
       "expectations": [
         "gives 25 October 1917 Old Style (Julian) and 7 November 1917 New Style (Gregorian), and says why both exist",
-        "the conversion is computed (hw.py cal) or quoted from a fetched source, not asserted from memory"
+        "the conversion is computed (hw.py cal) or quoted from a fetched source, not asserted from memory",
+        "regex on the answer: 25 October|October 25",
+        "regex on the answer: 7 November|November 7",
+        "regex on the answer: Julian|Old Style|O\\.S\\."
       ],
       "baseline": "not yet run",
       "runs": 3,
-      "max_turns": 25
+      "max_turns": 25,
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ]
     },
     {
       "id": "outcome-menelik",
@@ -155,11 +271,22 @@
       "expectations": [
         "gives his reign as emperor from 1889 to his death in 1913 (about 24 years) with sources",
         "notes the frame: strokes left him incapacitated in his last years, with others governing (a regency) before 1913",
-        "the confidence line or note reflects thinner sources for the region, or cites a regional or scholarly source"
+        "the confidence line or note reflects thinner sources for the region, or cites a regional or scholarly source",
+        "regex on the answer: 1889",
+        "regex on the answer: 1913",
+        "regex on the answer: stroke|incapacit|regen"
       ],
       "baseline": "not yet run",
       "runs": 3,
-      "max_turns": 30
+      "max_turns": 30,
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ]
     },
     {
       "id": "outcome-five-books",
@@ -168,11 +295,25 @@
       "expectations": [
         "lists five books with author and year",
         "the trace shows each checked in a catalogue or index (OpenAlex, Crossref, Open Library, a library catalogue, WorldCat or a publisher page), not only recalled",
-        "no invented title: every listed book matches a fetched catalogue record on title, author and year"
+        "no invented title: every listed book matches a fetched catalogue record on title, author and year",
+        "regex on the answer: (?:.*?\\b(?:19|20)\\d\\d\\b){5}"
       ],
       "baseline": "not yet run",
       "runs": 3,
-      "max_turns": 35
+      "max_turns": 35,
+      "evidence": {
+        "type": "trace",
+        "tool": "Bash|PowerShell|WebFetch|WebSearch",
+        "input_match": "openalex|crossref|openlibrary|worldcat|catalog|isbn|doi|hw\\.py.*( oa | doi )"
+      },
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ]
     },
     {
       "id": "outcome-misattributed-quote",
@@ -180,11 +321,21 @@
       "prompt": "Did Marie Antoinette really say 'Let them eat cake'?",
       "expectations": [
         "says there is no evidence she said it; the line appears in Rousseau's Confessions about an unnamed great princess, written when she was a child",
-        "cites a fetched source for that, and does not present the quote as hers"
+        "cites a fetched source for that, and does not present the quote as hers",
+        "regex on the answer: Rousseau",
+        "regex on the answer: no (reliable |contemporary |historical )?(evidence|record|source)|never said|misattribut|apocryphal|did not say|didn't say"
       ],
       "baseline": "not yet run",
       "runs": 3,
-      "max_turns": 25
+      "max_turns": 25,
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ]
     },
     {
       "id": "outcome-citogenesis",
@@ -192,11 +343,21 @@
       "prompt": "Several websites say the electric toaster was invented by Alan MacMasters in 1893. Is that right?",
       "expectations": [
         "says the MacMasters claim was a Wikipedia hoax that spread to other sites (citogenesis), so the agreeing websites are not independent confirmation",
-        "does not confirm MacMasters as the inventor"
+        "does not confirm MacMasters as the inventor",
+        "regex on the answer: hoax",
+        "regex on the answer: not (the )?(real |actual )?inventor|no evidence|fabricat|invented by a|made up|false"
       ],
       "baseline": "not yet run",
       "runs": 3,
-      "max_turns": 25
+      "max_turns": 25,
+      "_skill": "historywright",
+      "tools": [
+        "Bash",
+        "PowerShell",
+        "WebFetch",
+        "WebSearch",
+        "Edit"
+      ]
     }
   ]
 }

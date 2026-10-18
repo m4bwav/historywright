@@ -11,3 +11,5 @@ config.json
 # banner candidates (only banner.jpg ships)
 .github/images/banner-seed*.png
 .github/images/contact-sheet.png
+.github/images/banner-v2-seed*.png
+evals/cases/results/

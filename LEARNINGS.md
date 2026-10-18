@@ -6,6 +6,14 @@ Write an entry the moment a real signal happens: a user correction, the same err
 
 ## Active
 
+### L-005 · 2026-10-17 · A research skill's A/B must grant the research tools to both arms
+- Trigger: the first `evergreen.py worth --ab` run scored 48% with the skill against 33% without (verdict CUT). Most with-arm failures ended "requires approval": the runner's default outcome tools are Skill, Read, Glob, Grep and Write, so hw.py, WebFetch and WebSearch were blocked; the skill then refused to answer from memory, as its rules say, while the without arm answered from memory in 3 to 5 seconds.
+- Hypothesis: the default tool grant fits skills that edit files, not skills whose whole job is fetching sources; a blocked with arm measures the permission gate, and the harness's environment check does not look for "requires approval" in the answer.
+- Rule: every value case of this plugin lists `"tools": ["Bash", "PowerShell", "WebFetch", "WebSearch", "Edit"]` so both arms can research; read any A/B with many "requires approval" answers as an environment run, not a verdict.
+- Evidence: the run-1 transcripts (kangxi-with-3, menelik-with-1, microsoft-with-2, misattributed-quote-with-1/2/3) and the re-run in TESTS.md.
+- Scope: skill (evals); worth raising with the evergreen plugin (environment_fault could match PERMISSION_REFUSED in the answer)
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-17
+
 ### L-004 · 2026-10-17 · Some servers refuse a User-Agent that names python-urllib
 - Trigger: `hw.py probe` got 403 from the OpenHistoricalMap Overpass status page while the registry builder's curl got 200; the only difference was hw.py's agent ending in "python-urllib". SEC EDGAR, the other way round, refuses library-style agents and wants "name email".
 - Hypothesis: bot filters match library names in the agent string; an agent that names the tool, its repository and a contact passes.

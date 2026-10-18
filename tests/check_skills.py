@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TEXT = {".md", ".py", ".json", ".yml", ".yaml", ".txt", ".geojson", ".toml", ".cfg", ".gitignore", ".gitattributes"}
 SKIP_DIRS = {".git", "__pycache__", ".pytest_cache", "dist", "node_modules"}
+SKIP_PREFIXES = ("evals/cases/results/",)  # local eval output, git-ignored; it holds the runner's paths
 DESC_MAX = 700  # this repository's budget; the Agent Skills spec allows 1,024
 BODY_MAX = 200
 problems = []
@@ -22,7 +23,7 @@ problems = []
 
 def files():
     for p in ROOT.rglob("*"):
-        if p.is_file() and not (set(p.relative_to(ROOT).parts) & SKIP_DIRS):
+        if p.is_file() and not (set(p.relative_to(ROOT).parts) & SKIP_DIRS) and not rel(p).startswith(SKIP_PREFIXES):
             yield p
 
 
