@@ -68,3 +68,15 @@ Append-only, newest last.
 - Wiki: Versions-and-Upgrading lists the three new unreleased changes (wiki commit baff65f). The other pages wait for the release run.
 - Rulings: [decisions/2026-10-18-step5-rulings.md](decisions/2026-10-18-step5-rulings.md) (1 to 5).
 - Snag: the Bash hook refused a heredoc holding regex backslashes; the fixture builder went into a scratch .py file instead.
+
+## 2026-10-18 · Step 6 session: two live questions, 0.2.0 released
+
+- Mark asked "who ruled India exactly 2k years ago?" and said to release after recording improvements (the go-ahead for 0.2.0).
+- Answer (AD 26, cached in `~/.historywright/cache`): no single ruler. North-west: Gondophares, year 6 of his reign if the Takht-i-Bahi era (year 103 = his year 26) is the Vikrama era (Cribb 2017); on Falk and Bennett's Azes era start of 47/46 BC (Acta Orientalia 70, 2009) he took the throne c. AD 32, after AD 26. Kujula Kadphises later (c. AD 50-90, Cribb). The Deccan (Satavahanas) and the south were not verified in this run: the SOAS and UW theses would not download.
+- Follow-up question: what happened to India's records? Read Stein's Rajatarangini introduction (1900: Kalhana's eleven earlier chronicles are lost, and none like it survive elsewhere in India), Prinsep's 1837 Sanchi note in JASB (the pillar script had been "the wonder of the learned" until he read it), and Raverty's Tabakat-i-Nasiri (the Bihar fortress that "was a college", with its books). Cached.
+- Improvements (PR #16, C-20261018-10, L-004, L-005): `match_record` says "only the year differs" when title and author match (Crossref gives 1970 for Falk and Bennett 2009); eras.md South Asia covers 185 BCE to 320 CE and warns that the eras are disputed. 46 offline tests.
+- Released 0.2.0: plugin.json and VERSION bumped in PR #16, merged after six green CI jobs, tag v0.2.0 at f890f1c, release workflow green, `historywright-0.2.0.zip`: https://github.com/m4bwav/historywright/releases/tag/v0.2.0. historywright@mark-local reinstalled.
+- Snag: the first `git tag -a` push was refused with GH007 because an annotated tag carries the tagger's email. Re-tagged with `-c user.email=<no-reply>`.
+- Snag: brill.com `oa_url` downloads return an AWS WAF human-verification page (L-004).
+- Wiki: the verifier was re-run on Windows and WSL against f890f1c. The 9 changed sections are all expected (the released features). Pages updated to 0.2.0 by a subagent (wiki commit 9b024ba): outputs 55 checked, 0 missing; check 0 errors; live 12 pages, 0 failures. Four blocks were run by hand and marked skip (two refusals, one OHM call, one doi year-only example). The PDF paragraph is written from the code and tests; no PDF quote was run for it. The saved verifier outputs and the default commit now point at v0.2.0.
+- Vault: the `user/ENVIRONMENTS.md` line about annotated tags is written but not committed. The vault's `.git/index.lock` (18:49) belonged to another process, and it was left alone.
