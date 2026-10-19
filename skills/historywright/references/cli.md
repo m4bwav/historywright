@@ -22,7 +22,7 @@ command.
 | `place search "<name>" [--source pleiades\|chgis\|whg\|wikidata\|ohm] [--year N]` | gazetteer hits with `[lon, lat]`, names, periods, licence. `--year -44` is 44 BC. `ohm` (OpenHistoricalMap, only when named): dated boundaries and places matching the exact name or English name (`Kingdom of Prussia`), with `start_date`, `end_date` and the QID, kept to features that existed in `--year` |
 | `place pleiades <id>` | one Pleiades place |
 | `oa search "<topic>" [--page N] [--filter ...]` | OpenAlex works (page 2+ needs the free key) |
-| `doi <DOI> [--title --author --year]` | Crossref, then OpenAlex; `all_match` false means a blended or wrong reference |
+| `doi <DOI> [--title --author --year]` | Crossref, then OpenAlex; `all_match` false means a blended or wrong reference, unless the warning says only the year differs: then read the year printed on the work |
 | `src <id> "<query>" [--detail N]` | any registry source with a JSON search; `--detail` fetches records (museum objects) |
 | `cal date "<date>" [--cal julian\|gregorian] [--country GB] [--cjk]` | read a date (BC/AD, ISO astronomical, AUC, AH with Hijri month names, Kalends/Nones/Ides, O.S./N.S.; `c.` or `circa` adds EDTF `~`) to JDN, Julian, Gregorian, AUC, tabular Islamic, EDTF |
 | `cal jdn <n> [--cjk]` | every calendar's reading of one day |
