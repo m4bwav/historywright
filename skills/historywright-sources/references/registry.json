@@ -211,8 +211,8 @@
         "url": "https://whgazetteer.org/api/schema/",
         "expect": 200
       },
-      "notes": "Free token from the profile page (ORCID sign-in), sent as ?token= or Authorization: Bearer. The User-Agent must identify the client. 600/min and 5,000/day; 429 with Retry-After. Entity /entity/place:{id}/api (Linked Places v1.1), /reconcile (OpenRefine, at most 50 queries per POST), /suggest/entity. Records with redistributable false (chgis, nl, kain_par) return 451. The probe reads the keyless OpenAPI schema.",
-      "checked": "2026-10-17",
+      "notes": "Free token from the profile page (ORCID sign-in), sent as ?token= or Authorization: Bearer. The User-Agent must identify the client. 600/min and 5,000/day; 429 with Retry-After. Entity /entity/place:{id}/api (Linked Places v1.1), /reconcile (OpenRefine, at most 50 queries per POST), /suggest/entity. Records with redistributable false (chgis, nl, kain_par) return 451. The probe reads the keyless OpenAPI schema. Docs re-read 2026-10-18 (docs.whgazetteer.org, current with a v4.0 roadmap): limits and auth unchanged; also /api/sources/ (source licences with redistributable, permits_commercial, share_alike), /api/attribution/, persistent ids at w3id.org/whg/id/{id}; retry 429, 502, 503, 504 with backoff, other 4xx are final; permits_commercial null means no stated position, not yes. The Workbench API refuses ?token=.",
+      "checked": "2026-10-18",
       "research": "R-20261017-4"
     },
     {
@@ -308,7 +308,7 @@
         "all"
       ],
       "tier": 1,
-      "licence": "CC BY-NC-SA (non-commercial)",
+      "licence": "CC BY-SA 4.0 for Public Data (commercial use allowed; attribution and share-alike)",
       "access": "open",
       "key": null,
       "host": "seshat-db.com",
@@ -321,9 +321,9 @@
         "url": "https://seshat-db.com/api/?format=json",
         "expect": 200
       },
-      "notes": "Django REST API root opens keyless (groups core, general, sc, wf, rt, ec, crisisdb). /api/core/polities/ lists all 864 polities but ignored ?search= on 2026-10-17, so the generic search cannot drive it; page the lists or use the Polaris-2026 Excel (GitHub build_polaris_dataset). Python clients seshat_api and SeshatDatasetAnalysis.",
-      "checked": "2026-10-17",
-      "research": "R-20261017-4"
+      "notes": "Django REST API root opens keyless (groups core, general, sc, wf, rt, ec, crisisdb). /api/core/polities/ lists all 864 polities but ignored ?search= on 2026-10-17, so the generic search cannot drive it; page the lists or use the Polaris-2026 Excel (GitHub build_polaris_dataset). Python clients seshat_api and SeshatDatasetAnalysis. Licence (2026-10-18): seshat-db.com/terms/current/ (User Agreement & Data License, no date or version) licenses Public Data under CC BY-SA 4.0 'including for commercial purposes'; Private Data must not be redistributed; using the API means accepting the terms, and access may be limited or need a token. Older Seshat pages said CC BY-NC-SA; the current terms govern. The build_polaris_dataset repository (Polaris2026.xlsx) is MIT for its code.",
+      "checked": "2026-10-18",
+      "research": "R-20261018-4"
     },
     {
       "id": "getty-vocab",
