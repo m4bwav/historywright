@@ -28,7 +28,9 @@ Preflight state: placeholder (the owner's first page, commit 094650f). The pages
 
 A second wiki commit, 8adde3c, moved Versions-and-Upgrading's "Known doc errors" to "Doc errors fixed on 2026-10-18" after PR #5, with FAQ and Home following; `live` again 12 pages, 0 failures.
 
-Ruling recorded in wikiwright as L-160 `live-public-sources`: the verifier calls keyless public APIs live, which departs from wikiwright's L-122 (never call the real service). It waits for the owner's ruling; if he refuses it, re-verify against recorded fixtures labelled as recorded.
+Ruling recorded in wikiwright as L-160 `live-public-sources`: the verifier calls keyless public APIs live, which departs from wikiwright's L-122 (never call the real service). The owner allowed it on 2026-10-18 on condition that no source's terms are broken and no ban is risked; paces were tightened to meet it (PR #7, ../decisions/2026-10-18-owner-rulings-live-calls-and-tag.md).
+
+Third wiki commit, 17a9717 (2026-10-18, after the v0.1.0 release): every page re-run against v0.1.0 (6d06bb0) on Windows and WSL. diffout against the 29bc397 run: 3 sections changed, all expected: the pinned commit, Microsoft's Wikipedia reference total (341 to 345), and `verify url`, where the Wayback availability API now answers at the 4 s pace, so the invented page is labelled `likely_hallucinated` live (exit 1). Added: a Releases table and an "On main, not yet released" list in Versions-and-Upgrading, the release-zip install on Getting-Started, the footer and Home naming 0.1.0. `outputs` 55 checked, 0 missing; `check` 0 errors; `live` 12 pages, 0 failures. The saved outputs beside this note are now the 0.1.0 runs.
 
 ## Updating the wiki later
 
@@ -51,7 +53,7 @@ Ruling recorded in wikiwright as L-160 `live-public-sources`: the verifier calls
 
 The "At 954d6aa" column of Versions-and-Upgrading was run on 2026-10-18 from `git archive 954d6aa skills` against the same inputs.
 
-Not run for the wiki, and labelled on the pages: the Claude Code plugin install and the plain-skills links (Getting-Started), `HW_RECORD` (Development), the slash commands. Keyed services (WHG, OpenAlex with a key, Smithsonian, Europeana) were never called. The Wayback availability API answered 429 in every run, so the `likely_hallucinated` label is shown only by the offline test.
+Not run for the wiki, and labelled on the pages: the Claude Code plugin install and the plain-skills links (Getting-Started), `HW_RECORD` (Development), the slash commands. Keyed services (WHG, OpenAlex with a key, Smithsonian, Europeana) were never called. The Wayback availability API answered 429 in every run at 29bc397 (0.5 s pace), so the label was then shown only by the offline test; at 0.1.0 (4 s pace) it answered and the pages show the live label.
 
 Repository tests at 29bc397: `check_skills.py` 0 problems, `test_hw.py` 34 tests OK, `budget.py` all green; CI green on six jobs.
 
