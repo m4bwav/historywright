@@ -67,14 +67,33 @@ def today():
 
 # ---------------------------------------------------------------- home, config, keys
 
+def home_source():
+    """Where answers and fetches live: HW_HOME, else a .historywright folder in the working directory when one
+    exists (a project or an eval run keeps its own cache), else ~/.historywright."""
+    if os.environ.get("HW_HOME"):
+        return "HW_HOME", Path(os.environ["HW_HOME"])
+    p = Path.cwd() / ".historywright"
+    if p.is_dir():
+        return "project", p
+    return "user", Path.home() / ".historywright"
+
+
 def home():
+    h = home_source()[1]
+    h.mkdir(parents=True, exist_ok=True)
+    return h
+
+
+def user_home():
+    """Keys, the DILA table and the pace file: shared by every project, so pacing stays per host (HW_HOME wins)."""
     h = Path(os.environ.get("HW_HOME") or (Path.home() / ".historywright"))
     h.mkdir(parents=True, exist_ok=True)
     return h
 
 
 def config_path():
-    return home() / "config.json"
+    p = home() / "config.json"
+    return p if p.exists() else user_home() / "config.json"
 
 
 def load_config():
@@ -209,7 +228,7 @@ def _pace_wait(host):
     if os.environ.get("HW_FIXTURES"):
         return
     gap = pace_for(host)
-    p = home() / "pace.json"
+    p = user_home() / "pace.json"
     try:
         state = json.loads(p.read_text(encoding="utf-8"))
     except (OSError, ValueError):

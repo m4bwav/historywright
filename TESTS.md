@@ -8,6 +8,16 @@ Entry shape: `### T-YYYYMMDD-n · date · harness · env · passed/total`, then 
 
 ## Runs
 
+### T-20261018-3 · 2026-10-18 · evergreen.py worth --ab --case "action-*", sonnet, project-home fixture, SKILL.md full-path line · Windows 11 dev machine · with 9/9, without 1/9
+- action-cache-entry 3/3 (without 0/3), action-wikidata-full-statements 3/3 (0/3), action-validate-pack 3/3 (1/3). +89 points (noise margin 21), cost x2.77, about $4.8 for 18 runs. Harness verdict TRIM (cost); the probe found nothing the model already knows (ai-docs/decisions/2026-10-18-step4-rulings.md).
+- Every with run that changed folder went to its own run folder, and the real ~/.historywright/cache stayed empty: the isolation works. The harness again says the skill "never fired" in action-validate-pack's with arm; the case passes on the hw.py trace, so it measures hw.py use, not triggering.
+- led to: none
+
+### T-20261018-2 · 2026-10-18 · evergreen.py worth --ab --case "action-*", sonnet, project-home fixture (first try) · Windows 11 dev machine · with 7/9, without 1/9
+- action-wikidata-full-statements with 1/3 · harness · two with runs stopped at a cache hit. The with runs had run `cd <skill folder> && python scripts/hw.py ...`, so hw.py never saw the run folder's `.historywright/` and wrote action-cache-entry's answer to the real cache, which the later case then found.
+- Side effects: one entry in the real cache, moved to ~/.historywright/cache-from-evals-2026-10-18/.
+- led to: C-20261018-5 (SKILL.md full-path line, doctor `cwd_in_skill_folder`)
+
 ### T-20261018-1 · 2026-10-18 · evergreen.py worth --ab --case action-cache-entry, sonnet, empty cache · Windows 11 dev machine · with 3/3, without 0/3
 - Every with run ran `hw.py cache put` after researching; no without run saved anything. +100 points (noise margin 33), cost x5.04, $2.14 for six runs. With this run every case in `evals/evals.json` has passed with the skill (19 of 19), recorded with `evergreen.py tested`.
 - Side effects: the eval wrote one entry to the real cache (moved to ~/.historywright/cache-from-evals-2026-10-18/).

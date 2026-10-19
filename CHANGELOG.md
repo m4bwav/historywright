@@ -7,8 +7,15 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 ## Releases
 
 - 0.1.0 (2026-10-18): first release, C-20261017-1 to C-20261018-4. https://github.com/m4bwav/historywright/releases/tag/v0.1.0
+- unreleased: C-20261018-5 onward.
 
 ## Changes
+
+### C-20261018-5 · 2026-10-18 · Project-scoped home: a .historywright folder in the working directory keeps its own cache
+- because: T-20261018-1 and T-20261017-5 (eval runs shared the real cache, so an earlier run's entry ended a later run at Step 0); next-session prompt Step 1
+- files: skills/historywright/SKILL.md (intro), skills/historywright/scripts/hw_net.py (`home_source`, `home`, `user_home`, `config_path`, pace file), skills/historywright/scripts/hw.py (DILA table, `doctor`, `keys`, help), skills/historywright/references/cli.md (lead paragraph), README.md (Privacy), tests/test_hw.py (test_project_home), evals/evals.json and evals/fixtures/project-home (the three action cases)
+- Home is `HW_HOME`, else `./.historywright` when it exists, else `~/.historywright`; keys, the DILA table and the pace file stay in the user home (the pace stays per host across projects) unless the project folder has its own config.json; `doctor` reports `home_from` and `config`.
+- The first A/B after this change (T-20261018-2) showed agents `cd` into the skill folder before running hw.py, so the project folder was never seen: SKILL.md (intro) now says to run hw.py by its full path from the working folder, and `doctor` reports `cwd_in_skill_folder` with a fix in `todo`.
 
 ### C-20261018-4 · 2026-10-18 · Keyless request paces held under each source's public limit
 - because: R-20261018-1 (the owner's ruling on live keyless calls: no broken terms, no ban risk)
