@@ -11,6 +11,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261018-9 · 2026-10-18 · Registry: Seshat is CC BY-SA 4.0, not non-commercial; WHG notes from the current docs
+- because: R-20261018-4 (HANDOFF "Next" 2: the Seshat licence page and the WHG docs)
+- files: skills/historywright-sources/references/registry.json (seshat: licence, notes; whg: notes)
+- The pack licence gate reads Seshat as open (attribution and share-alike) instead of non-commercial; WHG's limits are unchanged and its notes name the source-licence endpoints.
+
 ### C-20261018-8 · 2026-10-18 · place search queries OpenHistoricalMap
 - because: HANDOFF "Next" 2 (OHM queries in `hw.py place`); R-20261018-3
 - files: skills/historywright/scripts/hw_sources.py (`_ohm`, `_ohm_year`, `PLACE_SOURCES`), skills/historywright/scripts/hw.py (`place --source`), skills/historywright-sources/references/registry.json (ohm), skills/historywright/SKILL.md (Step 3, Places), skills/historywright/references/cli.md (place search), tests/test_hw.py (test_ohm_place_years), tests/fixtures/http (ohm-roman-republic.json, two index rows)

@@ -37,10 +37,10 @@ Topic: answering history questions from sources, not model memory; a source regi
 
 ## Open questions
 
-- Resolved 2026-10-17 (R-20261017-26): WHG's `suggest/entity?prefix=` and `api/index/?name=` answer with a Bearer token; `api/places/` is 404. v3 documentation pages still unchecked.
+- Resolved 2026-10-17 (R-20261017-26): WHG's `suggest/entity?prefix=` and `api/index/?name=` answer with a Bearer token; `api/places/` is 404. Current docs re-read 2026-10-18 (R-20261018-4).
 - Resolved 2026-10-17: the DILA Time Authority data is CC BY-SA 3.0 Unported (COPYING.rst in github.com/DILA-edu/Authority-Databases; the site footer says CC BY-SA 2.5 Taiwan). hw.py may download it on demand and build the table locally, with attribution. kltng/calendar_converter's repository has no licence, so do not fetch its prebuilt db.
 - Resolved 2026-10-17 (R-20261017-25): `action=parse` HTML gives every footnote as `<li id="cite&#95;note-...">` with a `reference-text` span; `hw.py wp refs --near` maps a sentence to its footnotes. Parsoid untested.
-- Seshat Polaris-2026 licence page not read (site states CC BY-NC-SA).
+- Resolved 2026-10-18 (R-20261018-4): Seshat Public Data is CC BY-SA 4.0, commercial use allowed. WHG's current docs were re-read: limits unchanged.
 - Do Gallica, DPLA, QDL and HathiTrust 403s clear with an honest User-Agent? Test with hw.py's own agent.
 - Islamic AH conversion beyond tabular, Japanese nengō before 1873, the Wanli reign figure, current CMOS edition, Smithsonian Human Origins terms, Paris Musées and National Palace Museum image terms: unsearched (budget ran out).
 - Is the IntCal20 successor out (hoped 2026–2027)?
@@ -91,6 +91,13 @@ Best sources (primary first): the Wikimedia API changelog and rate-limit pages, 
 ## Findings log
 
 Newest first within the day. Track is subject, tooling, practice, or testing. Creation-pass magnitudes are `n/a (initial)`. Their `Applied:` lines name where the Step 2 build (2026-10-17) used them: SKILL.md guards cite the `R-` id in place.
+
+### R-20261018-4 · 2026-10-18 · Refresh: Seshat Public Data is CC BY-SA 4.0; WHG docs unchanged on limits
+- Summary: Seshat's current User Agreement & Data License (seshat-db.com/terms/current/, linked from every page footer; no version or date) licenses Public Data under "Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0)", sharing and adapting allowed "including for commercial purposes", with attribution, a link to the licence and share-alike; Private Data may not be redistributed; programmatic access means accepting the terms, and Seshat may limit or revoke it. This replaces the CC BY-NC-SA the creation pass took from older pages. The Polaris-2026 spreadsheet sits in github.com/Seshat-Global-History-Databank/build_polaris_dataset, whose repository licence is MIT (code). WHG's API documentation (docs.whgazetteer.org technical/apis, notes dated 2026-09-21 and 2026-10-09, a v4.0 roadmap) keeps the token methods, 600 queries a minute, 5,000 requests a day, reconcile batches of 50 and the identifying User-Agent rule; it adds `/api/sources/` and `/api/attribution/` (per-source `redistributable`, `permits_commercial`, `share_alike`; null means no stated position), w3id persistent ids, and retry guidance (429, 502-504 with backoff; other 4xx final).
+- Track: subject
+- Sources: https://seshat-db.com/terms/current/, https://seshat-db.com/downloads_page, https://github.com/Seshat-Global-History-Databank/build_polaris_dataset, https://docs.whgazetteer.org/content/technical/apis.html
+- Magnitude: moderate (Seshat licence: a commercial pack may now use Seshat data, with share-alike)
+- Applied: skills/historywright-sources/references/registry.json (seshat licence and notes; whg notes)
 
 ### R-20261018-3 · 2026-10-18 · Build: OpenHistoricalMap's Overpass terms, limits and date convention
 - Summary: OHM publishes no rate limit or usage policy for its Overpass API: the OpenHistoricalMap/Overpass wiki page gives only the endpoint and examples, and openhistoricalmap.org/copyright covers the data (CC0 except features with a `license` tag; attribution appreciated, not required). The endpoint's `/api/status` reported "Rate limit: 2" (slots per client) on 2026-10-18. With no OHM figure, hw.py follows the general Overpass guidance (about 10,000 requests and 1 GB a day per client; after a 429 wait at least 30 s, since repeat 429s get clients banned): one attempt per query, a 5 s pace, exact tag matches only, `[timeout:25]`. OHM dates: YYYY, YYYY-MM or YYYY-MM-DD in proleptic Gregorian with astronomical years (1 BC = 0000, 2 BC = -0001); qualifiers go in `start_date:edtf`. Live 2026-10-18: "Kingdom of Prussia" year 1800 returned the 1795-10-24 to 1802-10-08 boundary (Q27306); "Roman Republic" year -44 returned the -0058 to -0042 boundary and the -0509 to -0027 chronology (Q17167), each query under 3 s.
