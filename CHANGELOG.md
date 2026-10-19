@@ -11,6 +11,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261018-6 · 2026-10-18 · cal date reads Kalends, Nones, Ides and Hijri month names, labels AH in AH, writes circa as EDTF ~; src wayback drops repeated captures
+- because: found while writing the wiki (ai-docs/notes/2026-10-18-github-wiki.md, "Facts verified"); R-20261018-2
+- files: skills/historywright/scripts/hw_dates.py (`ah_parts`, `ah_range`, `ah_label`, `hijri_month`, `qualifier_of`, `_roman_day`, `parse_date`), skills/historywright/scripts/hw.py (`cal date`), skills/historywright/references/dates.md (rows Kalends, Islamic), skills/historywright/references/cli.md (cal date), skills/historywright-sources/references/registry.json (wayback: `collapse=digest`), tests/test_hw.py (three tests; refusals updated), tests/fixtures/http/index.json (the CDX fixture requires `collapse=digest`)
+- Roman day counts are read with inclusive counting (a warning before 45 BC); Hijri month names in common English spellings, with an AH month giving its own days; `read_as` for an AH date is labelled in AH with the Western start beside it; `c.`, `ca.`, `circa`, `about` add `~` to the EDTF and a `qualifier`; the CDX search collapses adjacent identical captures.
+
 ### C-20261018-5 · 2026-10-18 · Project-scoped home: a .historywright folder in the working directory keeps its own cache
 - because: T-20261018-1 and T-20261017-5 (eval runs shared the real cache, so an earlier run's entry ended a later run at Step 0); next-session prompt Step 1
 - files: skills/historywright/SKILL.md (intro), skills/historywright/scripts/hw_net.py (`home_source`, `home`, `user_home`, `config_path`, pace file), skills/historywright/scripts/hw.py (DILA table, `doctor`, `keys`, help), skills/historywright/references/cli.md (lead paragraph), README.md (Privacy), tests/test_hw.py (test_project_home), evals/evals.json and evals/fixtures/project-home (the three action cases)

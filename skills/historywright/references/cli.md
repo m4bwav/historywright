@@ -24,7 +24,7 @@ command.
 | `oa search "<topic>" [--page N] [--filter ...]` | OpenAlex works (page 2+ needs the free key) |
 | `doi <DOI> [--title --author --year]` | Crossref, then OpenAlex; `all_match` false means a blended or wrong reference |
 | `src <id> "<query>" [--detail N]` | any registry source with a JSON search; `--detail` fetches records (museum objects) |
-| `cal date "<date>" [--cal julian\|gregorian] [--country GB] [--cjk]` | read a date (BC/AD, ISO astronomical, AUC, AH, O.S./N.S.) to JDN, Julian, Gregorian, AUC, tabular Islamic, EDTF |
+| `cal date "<date>" [--cal julian\|gregorian] [--country GB] [--cjk]` | read a date (BC/AD, ISO astronomical, AUC, AH with Hijri month names, Kalends/Nones/Ides, O.S./N.S.; `c.` or `circa` adds EDTF `~`) to JDN, Julian, Gregorian, AUC, tabular Islamic, EDTF |
 | `cal jdn <n> [--cjk]` | every calendar's reading of one day |
 | `cal span "<start>" "<end>"` | exact days, years, months and days between two dates |
 | `cal era <name>`, `cal cjk <date>` | East Asian eras (every match) and era dates to Western dates; `cal setup` builds the table |

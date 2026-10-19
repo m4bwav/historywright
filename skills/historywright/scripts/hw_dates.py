@@ -154,13 +154,60 @@ def jdn_to_islamic(j):
     return y, m, j - islamic_to_jdn(y, m, 1) + 1
 
 
-def ah_year_range(text):
-    """First and last JDN of a year-only AH date ('AH 1300', '1300 AH'), else None: an AH year is not a Western one."""
-    m = re.fullmatch(r"(?i)\s*(?:a\.?h\.?\s*(\d{1,4})|(\d{1,4})\s*a\.?h\.?)\s*", text)
-    if not m:
+HIJRI_MONTHS = ["Muharram", "Safar", "Rabi al-Awwal", "Rabi al-Thani", "Jumada al-Ula", "Jumada al-Thaniya", "Rajab",
+                "Shaban", "Ramadan", "Shawwal", "Dhu al-Qada", "Dhu al-Hijja"]
+# Spellings seen in English sources, reduced to letters only (Rabi' I, Rabi ul-Awwal, Dhu'l-Hijjah, Ramazan ...)
+_HIJRI_KEYS = {
+    1: "muharram", 2: "safar", 3: "rabialawwal rabiulawwal rabielawwal rabii rabiawwal",
+    4: "rabialthani rabiuthani rabiulthani rabialakhir rabiulakhir rabiii rabiathani rabiussani",
+    5: "jumadaalula jumadaalawwal jumadiulawwal jumadalula jumadai jumadaula jumadiula jumadaawwal",
+    6: "jumadaalthaniya jumadaalthaniyah jumadaalthani jumadaalakhira jumadaalakhirah jumadiulakhir jumadiussani "
+       "jumadaii jumadathani jumadaakhira",
+    7: "rajab", 8: "shaban shaaban", 9: "ramadan ramadhan ramazan", 10: "shawwal shawal",
+    11: "dhualqada dhualqadah dhulqada dhulqadah dhualqida dhualqidah dhulqida dhulqidah zulqada zulqadah zilqad",
+    12: "dhualhijja dhualhijjah dhulhijja dhulhijjah zulhijja zulhijjah zilhaj zilhijja"}
+HIJRI_MONTH_NUM = {k: n for n, keys in _HIJRI_KEYS.items() for k in keys.split()}
+
+
+def hijri_month(word):
+    return HIJRI_MONTH_NUM.get(re.sub(r"[^a-z]", "", word.lower()))
+
+
+def ah_parts(text):
+    """(AH year, month or None, day or None) for an AH date, else None. Forms: 'AH 1300', '1300 AH',
+    'AH 1300-09-01', '15 Ramadan 1445 AH', 'Rajab 1300' (a Hijri month name implies AH)."""
+    t = text.strip()
+    m = re.fullmatch(r"(?i)(?:a\.?h\.?\s*(\d{1,4})|(\d{1,4})\s*a\.?h\.?)", t)
+    if m:
+        return int(m.group(1) or m.group(2)), None, None
+    m = re.fullmatch(r"(?i)a\.?h\.?\s*(\d{1,4})-(\d{1,2})-(\d{1,2})", t)
+    if m:
+        return int(m.group(1)), int(m.group(2)), int(m.group(3))
+    m = re.fullmatch(r"(?i)(?:(\d{1,2})(?:st|nd|rd|th)?\s+)?([a-z'‘’ʿʾ -]+?)[\s,]+"
+                     r"(?:a\.?h\.?\s*)?(\d{1,4})(?:\s*a\.?h\.?)?", t)
+    if m and hijri_month(m.group(2)):
+        d = int(m.group(1)) if m.group(1) else None
+        if d is not None and not 1 <= d <= 30:
+            raise ValueError("cannot read %r: a Hijri month has 29 or 30 days" % text)
+        return int(m.group(3)), hijri_month(m.group(2)), d
+    return None
+
+
+def ah_label(y, m=None, d=None):
+    return " ".join(([str(d)] if d else []) + ([HIJRI_MONTHS[m - 1]] if m else []) + ["AH %d" % y])
+
+
+def ah_range(text):
+    """First and last JDN of an AH year or month ('AH 1300', 'Ramadan 1445'), else None: neither is a Western
+    year or month. A full AH date is one day and returns None."""
+    p = ah_parts(text)
+    if not p or p[2]:
         return None
-    y = int(m.group(1) or m.group(2))
-    return islamic_to_jdn(y, 1, 1), islamic_to_jdn(y + 1, 1, 1) - 1
+    y, m, _ = p
+    if m is None:
+        return islamic_to_jdn(y, 1, 1), islamic_to_jdn(y + 1, 1, 1) - 1
+    nxt = islamic_to_jdn(y + 1, 1, 1) if m == 12 else islamic_to_jdn(y, m + 1, 1)
+    return islamic_to_jdn(y, m, 1), nxt - 1
 
 
 def auc(y):
@@ -169,6 +216,55 @@ def auc(y):
 
 
 # ---------------------------------------------------------------- parsing Western date expressions
+
+_CIRCA = r"(?i)^\s*(?:c\.|ca\.?|circa|about|approx\.?|approximately)\s*"
+# Roman day counts: Nones and Ides fall on the 7th and 15th in March, May, July and October, else the 5th and 13th
+_ROMAN_LATE = (3, 5, 7, 10)
+_ROMAN_NUM = {"i": 1, "v": 5, "x": 10, "l": 50}
+_LATIN_MONTH = {"ian": 1, "iun": 6, "iul": 7}
+
+
+def qualifier_of(text):
+    """'circa' when the date is written as approximate (c., ca., circa, about), else None."""
+    return "circa" if re.match(_CIRCA, text) else None
+
+
+def _count(tok):
+    tok = tok.lower().rstrip(".")
+    if tok.isdigit():
+        return int(tok)
+    n = 0
+    for a, b in zip(tok, tok[1:] + " "):
+        v = _ROMAN_NUM[a]
+        n += -v if b != " " and _ROMAN_NUM[b] > v else v
+    return n
+
+
+def _roman_day(t, cal, notes):
+    """'Ides of March 44 BC', 'pridie Kalendas Apriles 44 BC', 'a.d. IV Non. Oct. 1582', 'the day before the Ides of
+    March 44 BC'. Counting is inclusive, as the Romans counted: a.d. III Id. Mar. is 13 March."""
+    m = re.fullmatch(r"(?i)(?:(pridie|(?:the\s+)?day\s+before)|(?:a\.?\s*d\.?|ante\s+diem)\s*([ivxl]+|\d{1,2})\.?)?\s*"
+                     r"(?:the\s+)?(kal\w*|cal\w*|non\w*|id\w*)\.?\s+(?:of\s+)?([a-z]+)\.?\s+(.+)", t)
+    if not m:
+        return None
+    n = 2 if m.group(1) else (_count(m.group(2)) if m.group(2) else 1)
+    word = m.group(4).lower()
+    mon = MONTH_ABBR.get(word[:3]) or _LATIN_MONTH.get(word[:3])
+    if not mon:
+        raise ValueError("cannot read the month %r in a Roman day count" % m.group(4))
+    y = parse_date(m.group(5), "julian")[0]
+    kind = m.group(3)[0].lower()
+    late = mon in _ROMAN_LATE
+    base = 1 if kind in "kc" else ((7 if late else 5) if kind == "n" else (15 if late else 13))
+    yy, mm, dd = jdn_to_julian(julian_to_jdn(y, mon, base) - (n - 1))
+    name = {"k": "Kalends", "c": "Kalends", "n": "Nones", "i": "Ides"}[kind]
+    notes.append("Roman day count read as %d %s (%s of %s = %d %s, counted inclusively)"
+                 % (dd, MONTHS[mm - 1], name, MONTHS[mon - 1], base, MONTHS[mon - 1]))
+    if y < -44 and kind in "kc" and n > 1:
+        notes.append("before 45 BC the Republican months had other lengths: a count back from the Kalends is "
+                     "approximate")
+    return yy, mm, dd, "julian" if cal == "auto" else cal, notes
+
 
 _BC = r"(?:b\.?c\.?e?\.?|bce)"
 _AD = r"(?:a\.?d\.?|c\.?e\.?)"
@@ -183,6 +279,9 @@ def parse_date(text, cal="auto"):
     """
     t = text.strip()
     notes = []
+    if qualifier_of(t):
+        t = re.sub(_CIRCA, "", t)
+        notes.append("written as approximate (circa): EDTF gets ~")
     low = t.lower()
     if re.search(r"\bo\.?s\.?$|old style", low):
         cal = "julian"
@@ -198,13 +297,13 @@ def parse_date(text, cal="auto"):
         y = int(m.group(1)) - 753
         notes.append("AUC read as Varronian (AUC 1 = 753 BC)")
         return y, None, None, "julian" if cal == "auto" else cal, notes
-    m = re.fullmatch(r"(?i)(?:a\.?h\.?\s*(\d{1,4})(?:-(\d{1,2})-(\d{1,2}))?)", t)
-    if m:
-        y, mo, d = int(m.group(1)), int(m.group(2) or 1), int(m.group(3) or 1)
-        j = islamic_to_jdn(y, mo, d)
+    ah = ah_parts(t)
+    if ah:
+        y, mo, d = ah
+        j = islamic_to_jdn(y, mo or 1, d or 1)
         notes.append("tabular Islamic calendar (civil epoch); observed dates can differ by a day or two")
         yy, mm, dd = from_jdn(j, "julian" if j < GREGORIAN_START else "gregorian")
-        return yy, (mm if m.group(2) else None), (dd if m.group(3) else None), \
+        return yy, (mm if d else None), (dd if d else None), \
             ("julian" if j < GREGORIAN_START else "gregorian"), notes
     m = re.fullmatch(r"(-?)(\d{4,})(?:-(\d{2})(?:-(\d{2}))?)?", t)
     if m:
@@ -215,11 +314,15 @@ def parse_date(text, cal="auto"):
             notes.append("ISO/EDTF years are astronomical: %s is %s" % (t, year_label(y)))
         return y, mo, d, _auto_cal(y, mo, d, cal), notes
     if re.search(r"(?i)(^|\s)(a\.?u\.?c|a\.?h)\.?(\s|$)", t):
-        raise ValueError("cannot read %r: AUC and AH dates are a year ('AUC 709', '709 AUC', 'AH 1300') or a "
-                         "tabular year-month-day ('AH 1300-09-01'); month names of those calendars are not read" % text)
-    if re.search(r"(?i)\b(kalends|calends|nones|ides)\b", t):
-        raise ValueError("cannot read %r: Roman day counts (Kalends, Nones, Ides) are not read; give the day of the "
-                         "month (the Ides of March are 15 March: '15 March 44 BC')" % text)
+        raise ValueError("cannot read %r: AUC dates are a year ('AUC 709', '709 AUC'); AH dates are a year ('AH "
+                         "1300'), a tabular year-month-day ('AH 1300-09-01') or a Hijri month name ('15 Ramadan 1445 "
+                         "AH')" % text)
+    if re.search(r"(?i)\b(kal\w*|calends|non(?:es|is|ae)?|id(?:es|us|ibus)?)\b", t):
+        r = _roman_day(t, cal, notes)
+        if r is None:
+            raise ValueError("cannot read %r: write a Roman day count as 'Ides of March 44 BC', 'pridie Kalendas "
+                             "Apriles 44 BC' or 'a.d. III Id. Mar. 44 BC'" % text)
+        return r
     era = None
     if re.search(_BC + r"\s*$", low):
         era, t = "bc", re.sub(r"(?i)\s*" + _BC + r"\s*$", "", t)
