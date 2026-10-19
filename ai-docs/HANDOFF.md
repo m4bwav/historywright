@@ -1,6 +1,6 @@
 # historywright handoff
 
-Updated 2026-10-18 (end of the Step 3 session).
+Updated 2026-10-18 (Step 4 session: rulings, paces, v0.1.0 released).
 
 ## State
 
@@ -18,9 +18,9 @@ Updated 2026-10-18 (end of the Step 3 session).
 
 ## Waiting for Mark
 
-- The v0.1.0 tag and release (the workflow is ready), and any directory submission.
-- A ruling on wikiwright L-160 `live-public-sources`: the wiki verifier calls keyless public APIs live, which
-  departs from wikiwright's L-122. If he refuses, re-verify against recorded fixtures labelled as recorded.
+- Any directory submission (on hold anyway since 2026-10-17). Ruled on 2026-10-18: live keyless calls allowed
+  within each source's terms (paces tightened, PR #7); v0.1.0 released.
+  [decisions/2026-10-18-owner-rulings-live-calls-and-tag.md](decisions/2026-10-18-owner-rulings-live-calls-and-tag.md)
 
 ## Next
 
@@ -34,6 +34,8 @@ Updated 2026-10-18 (end of the Step 3 session).
    the Seshat licence page, polywright-references reading `refs/index.json` notes, the evergreen plugin issue
    (its A/B environment check could match "requires approval").
 4. After any packaged change: the wiki's update procedure (the note above), on Windows and WSL.
+   Post-release wiki follow-ups (the note): a 0.1.0 row in Versions-and-Upgrading, the release-zip install route
+   on Getting-Started, and the verifier's download switched to the release zip.
 
 ## Read first
 
