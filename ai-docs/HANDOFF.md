@@ -1,40 +1,40 @@
 # historywright handoff
 
-Updated 2026-10-18 (end of the Step 4 session).
+Updated 2026-10-18 (end of the Step 5 session).
 
 ## State
 
-- Public: https://github.com/m4bwav/historywright (main). Three skills, hw.py (five stdlib modules), 85-source
-  registry, 38 offline tests, CI green on three systems with Python 3.9 and 3.14.
-- Released: v0.1.0 on 2026-10-18 (tag at 6d06bb0), https://github.com/m4bwav/historywright/releases/tag/v0.1.0.
-  Main is ahead: project-scoped home (PR #9), Roman day counts, Hijri months, AH labels, circa, Wayback collapse
-  (PR #10). CHANGELOG "unreleased: C-20261018-5 onward".
-- Wiki live, pages run against v0.1.0 (wiki commit 17a9717). Update procedure and verifier:
-  [notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md).
-- Evals: the three action cases with a project-home fixture, 9/9 with, 1/9 without (T-20261018-3). The probe
-  found nothing to trim. TESTS.md has the record.
-- Owner rulings 2026-10-18: live keyless calls allowed while no terms are broken and no ban risked (paces tightened,
-  PR #7; wikiwright L-160 adopted); v0.1.0 yes.
-  [decisions/2026-10-18-owner-rulings-live-calls-and-tag.md](decisions/2026-10-18-owner-rulings-live-calls-and-tag.md),
-  small rulings in [decisions/2026-10-18-step4-rulings.md](decisions/2026-10-18-step4-rulings.md).
+- Public: https://github.com/m4bwav/historywright (main). Three skills, hw.py (six stdlib modules, `hw_pdf.py`
+  new), 85-source registry, 43 offline tests, CI green on three systems with Python 3.9 and 3.14.
+- Released: v0.1.0 on 2026-10-18 (tag at 6d06bb0). Main is ahead with CHANGELOG C-20261018-5 to -9: project
+  home, Roman and Hijri dates, Wayback collapse, PDF quote checks (PR #12), `place search --source ohm`
+  (PR #13), Seshat as CC BY-SA 4.0 (PR #14).
+- Wiki pages run against v0.1.0. Versions-and-Upgrading lists every unreleased change (wiki commit baff65f).
+  Update procedure and verifier: [notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md).
+- Installed: historywright@mark-local reinstalled from main after the merges (still says 0.1.0).
+- Evals: action cases 9/9 with the project-home fixture (T-20261018-3). Not re-run this session: no change
+  altered what a skill triggers on or decides.
+- Owner rulings: live keyless calls fine while no terms are broken and no ban risked
+  ([decisions/2026-10-18-owner-rulings-live-calls-and-tag.md](decisions/2026-10-18-owner-rulings-live-calls-and-tag.md)).
+  Small rulings: [decisions/2026-10-18-step5-rulings.md](decisions/2026-10-18-step5-rulings.md).
 - Keys stay in `~/.historywright/config.json` (OpenAlex, WHG). Never in the repository.
-- The installed copy (historywright@mark-local) has not been reinstalled since PR #9 and #10.
+- Elsewhere: polywright PR #22 merged (references skill reads a pack's refs/index.json); evergreen issues
+  m4bwav/evergreen-protocol#28 and #29 filed (A/B harness), not fixed.
 
 ## Waiting for Mark
 
-- A 0.2.0 tag for the unreleased changes on main (his go-ahead, as for 0.1.0).
+- A 0.2.0 tag for the unreleased changes (asked 2026-10-18, no answer yet).
 - Any directory submission (on hold since 2026-10-17).
 
 ## Next
 
-1. Reinstall historywright@mark-local from main.
-2. Open items: quote checks on PDFs (OpenAlex often links only PDFs), OHM queries in `hw.py place`, WHG v3 docs,
-   the Seshat licence page, polywright-references reading `refs/index.json` notes, the evergreen plugin issue
-   (its A/B environment check could match "requires approval"; it also says "the skill never fired" for
-   action-validate-pack, whose with runs pass on the hw.py trace).
-3. Optional: `evergreen.py worth --ab` on all 11 value cases with the project home, for a full fresh baseline.
-4. After any packaged change, and at each release: the wiki's update procedure, on Windows then WSL, one after
-   the other (never at once: each has its own pace file).
+1. If Mark says yes to 0.2.0: bump `.claude-plugin/plugin.json` and `VERSION` in hw_net.py in a PR, merge, tag
+   `v0.2.0`, check the release workflow, then the wiki update procedure against the tag (Commands gains
+   `--source ohm`; How-Claims-Are-Checked gains PDFs; a Releases row; empty "On main, not yet released").
+2. Open items left: the Gallica, DPLA, QDL and HathiTrust 403s with hw.py's honest User-Agent (RESEARCH open
+   questions); two-column PDFs read in stream order (a quote across columns can miss).
+3. Optional: `evergreen.py worth --ab` on all 11 value cases with the project home, for a fresh baseline.
+4. Wiki runs on Windows then WSL, one after the other (each has its own pace file).
 
 ## Read first
 
