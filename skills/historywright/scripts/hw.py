@@ -26,6 +26,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import sqlite3
 import sys
 import uuid
@@ -473,6 +474,7 @@ def cmd_doctor(a):
         "dila_table": db.exists(),
         "cache_entries": len(list((home() / "cache").glob("*.json"))) if (home() / "cache").exists() else 0,
         "user_agent": user_agent(),
+        "pdftotext": bool(shutil.which("pdftotext")),
     }
     todo = []
     if not checks["contact"]:

@@ -5,7 +5,7 @@ imports this file and `.github/copilot-instructions.md` points here.
 
 Read [README.md](README.md) first. The three skills live under [skills/](skills/); the hub is
 `skills/historywright`, which also holds the CLI (`scripts/hw.py` with its modules `hw_net.py`, `hw_dates.py`,
-`hw_sources.py`, `hw_check.py`). The source registry and era outline are in
+`hw_sources.py`, `hw_check.py`, `hw_pdf.py`). The source registry and era outline are in
 `skills/historywright-sources/references/`. The three skills share one evergreen unit at the repository root:
 RESEARCH, CHANGELOG, LEARNINGS, TESTS, `evals/evals.json`, MAINTENANCE and `evergreen.json`.
 

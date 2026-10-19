@@ -13,6 +13,7 @@ import urllib.parse
 from pathlib import Path
 
 import hw_dates as D
+import hw_pdf as P
 from hw_net import (write_text, decode_body, VERSION,fetch, fetched_urls, get_json, home, html_to_text, is_mirror, normalise,
                     stored_page, today)
 
@@ -56,14 +57,22 @@ def page_text(url, refetch=False):
         if not r.ok:
             return None, "fetch failed: %s" % (r.error or r.status)
         body, fetched, ctype = r.body, True, r.headers.get("content-type", "")
+    how = "fetched now" if fetched else "from this run's page store"
+    if P.is_pdf(body, ctype):
+        text, reader = P.pdf_text(body)
+        if text is None:
+            return None, "PDF with no readable text: " + reader
+        return text, "%s, PDF read by %s" % (how, reader)
     text = decode_body(body, ctype)
     if "<" in text[:2000] and re.search(r"(?i)<(html|body|div|p)\b", text[:5000]):
         text = html_to_text(text)
-    return text, ("fetched now" if fetched else "from this run's page store")
+    return text, how
 
 
-def quote_in(quote, text):
-    """Exact, then normalised (case, quotes, dashes, spaces); '...' splits a quote into parts found in order."""
+def quote_in(quote, text, pdf=False):
+    """Exact, then normalised (case, quotes, dashes, spaces); '...' splits a quote into parts found in order.
+    For PDF text, last of all with spacing ignored: a reader without glyph widths splits drop caps and small
+    caps ('W E THE P EOPLE') and can run words together."""
     if quote in text:
         return {"found": True, "match": "exact"}
     nt = normalise(text)
@@ -72,10 +81,23 @@ def quote_in(quote, text):
     for p in parts:
         i = nt.find(p, pos)
         if i < 0:
+            squeezed = [re.sub(r"\s", "", q) for q in parts]
+            if pdf and sum(map(len, squeezed)) >= 20 and _in_order(squeezed, re.sub(r"\s", "", nt)):
+                return {"found": True, "match": "normalised, spacing ignored (PDF)"}
             near = _closest(p, nt)
             return {"found": False, "missing_part": p[:120], "closest": near}
         pos = i + len(p)
     return {"found": True, "match": "normalised" if len(parts) == 1 else "normalised, in parts"}
+
+
+def _in_order(parts, text):
+    pos = 0
+    for p in parts:
+        i = text.find(p, pos)
+        if i < 0:
+            return False
+        pos = i + len(p)
+    return True
 
 
 def _closest(part, text):
@@ -91,8 +113,10 @@ def verify_quote(url, quote, refetch=False):
     text, how = page_text(url, refetch)
     if text is None:
         return {"ok": False, "url": url, "found": None, "error": how}
-    res = quote_in(quote, text)
+    res = quote_in(quote, text, pdf="PDF read by" in how)
     res.update(ok=res["found"], url=url, source_text=how)
+    if not res["found"] and how.endswith("PDF read by built-in"):
+        res["note"] = "the built-in PDF reader can miss text; check the PDF by hand or install pdftotext (poppler)"
     return res
 
 
