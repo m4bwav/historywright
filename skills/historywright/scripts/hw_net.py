@@ -29,7 +29,7 @@ DEFAULT_PACE = {
     "en.wikipedia.org": 0.35, "commons.wikimedia.org": 0.35,
     "api.openalex.org": 0.2, "api.crossref.org": 0.2, "www.loc.gov": 3.0,
     "whgazetteer.org": 0.2, "pleiades.stoa.org": 1.0, "chgis.hudci.org": 1.0,
-    "archive.org": 1.0, "web.archive.org": 1.0, "authority.dila.edu.tw": 1.0,
+    "archive.org": 4.0, "web.archive.org": 4.0, "authority.dila.edu.tw": 1.0,
 }
 FALLBACK_PACE = 0.5
 MAX_RETRY_AFTER = 60
