@@ -386,6 +386,97 @@ class FailSoft(unittest.TestCase):
         self.assertEqual([p["t"] for p in hw_net.as_list(hw_net.dig(obj, "pages"))], ["x", "y"])
 
 
+def make_pdf(content, extra_fonts=True):
+    """A small valid PDF: Flate page content, a simple font F1, and a Type0 font F2 with a ToUnicode map that sits
+    in an object stream (PDF 1.5)."""
+    import zlib
+    cmap = (b"/CIDInit /ProcSet findresource begin 12 dict begin begincmap 1 begincodespacerange <0000> <FFFF> "
+            b"endcodespacerange 1 beginbfrange <0001> <0003> <0048> endbfrange 1 beginbfchar <0004> <FB01> "
+            b"endbfchar endcmap end end")
+    zc = zlib.compress(content)
+    f2 = b"<< /Type /Font /Subtype /Type0 /BaseFont /X /Encoding /Identity-H /ToUnicode 7 0 R >>"
+    objstm_body = b"5 0 " + f2
+    first = len(b"5 0 ")
+    objs = [
+        b"<< /Type /Catalog /Pages 2 0 R >>",
+        b"<< /Type /Pages /Kids [3 0 R] /Count 1 /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> >>",
+        b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 6 0 R >>",
+        b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
+        None,  # 5 lives in the object stream (8)
+        b"<< /Length %d /Filter /FlateDecode >>\nstream\n" % len(zc) + zc + b"\nendstream",
+        b"<< /Length %d >>\nstream\n" % len(cmap) + cmap + b"\nendstream",
+        b"<< /Type /ObjStm /N 1 /First %d /Length %d >>\nstream\n" % (first, len(objstm_body)) + objstm_body
+        + b"\nendstream",
+    ]
+    out = bytearray(b"%PDF-1.5\n")
+    for i, o in enumerate(objs, 1):
+        if o is not None and (extra_fonts or i not in (5, 7, 8)):
+            out += b"%d 0 obj\n" % i + o + b"\nendobj\n"
+    out += b"trailer\n<< /Root 1 0 R /Size 9 >>\n%%EOF\n"
+    return bytes(out)
+
+
+FILLER = b" ".join(b"0 -14 Td (This line is filler text so the page reads as prose, line %d.) Tj" % i
+                   for i in range(8))
+PDF_CONTENT = (b"BT /F1 11 Tf 72 720 Td (Caesar was born on 12 July 100 BC \\(Julian\\), in the Subura.) Tj "
+               b"0 -14 Td [(Gaius Ju) -40 (lius) -300 (Caesar) ] TJ 0 -14 Td (the dicta-) Tj 0 -14 Td "
+               b"(torship for life came in 44 BC; caf\\351 is a test.) Tj 0 -14 Td /F2 11 Tf <000100020003> Tj "
+               b"/F1 11 Tf ( and ) Tj /F2 11 Tf <0004> Tj /F1 11 Tf (nd the record.) Tj " + FILLER + b" ET")
+
+
+class Pdf(unittest.TestCase):
+    def setUp(self):
+        import hw_pdf
+        self.P = hw_pdf
+        os.environ["HW_PDFTOTEXT"] = "0"
+
+    def tearDown(self):
+        os.environ.pop("HW_PDFTOTEXT", None)
+
+    def test_builtin_reader(self):
+        text = self.P.builtin_text(make_pdf(PDF_CONTENT))
+        self.assertIn("Caesar was born on 12 July 100 BC (Julian), in the Subura.", text)
+        self.assertIn("Gaius Julius Caesar", text)
+        self.assertIn("café", text)
+        self.assertIn("HIJ and ﬁnd the record.", text)
+        self.assertTrue(self.P.readable(text))
+
+    def test_quotes_in_a_pdf(self):
+        import hashlib
+        import hw_net
+        url = "https://example.org/paper.pdf"
+        pages = hw_net.home() / "pages"
+        pages.mkdir(parents=True, exist_ok=True)
+        (pages / (hashlib.sha1(url.encode("utf-8")).hexdigest() + ".body")).write_bytes(make_pdf(PDF_CONTENT))
+        r = C.verify_quote(url, "born on 12 July 100 BC (Julian), in the Subura")
+        self.assertTrue(r["found"])
+        self.assertIn("PDF read by built-in", r["source_text"])
+        self.assertTrue(C.verify_quote(url, "the dictatorship for life came in 44 BC")["found"])  # line-end hyphen
+        self.assertTrue(C.verify_quote(url, "HIJ and find the record")["found"])  # ToUnicode, ligature
+        miss = C.verify_quote(url, "born on 13 July 100 BC")
+        self.assertFalse(miss["found"])
+        self.assertIn("pdftotext", miss["note"])
+
+    def test_spacing_ignored_only_for_pdf(self):
+        text = "Constitution of the United States W E THE P EOPLE of the United States, in Order to form"
+        q = "We the People of the United States, in Order"
+        self.assertFalse(C.quote_in(q, text)["found"])
+        self.assertEqual(C.quote_in(q, text, pdf=True)["match"], "normalised, spacing ignored (PDF)")
+        self.assertFalse(C.quote_in("WE THE PEOPLE", text, pdf=True)["found"])  # too short for the loose match
+
+    def test_unreadable_pdf_is_not_a_miss(self):
+        import hashlib
+        import hw_net
+        url = "https://example.org/scan.pdf"
+        body = make_pdf(b"q 612 0 0 792 0 0 cm /Im1 Do Q", extra_fonts=False)
+        (hw_net.home() / "pages").mkdir(parents=True, exist_ok=True)
+        (hw_net.home() / "pages" / (hashlib.sha1(url.encode("utf-8")).hexdigest() + ".body")).write_bytes(body)
+        r = C.verify_quote(url, "anything at all in this scan")
+        self.assertIsNone(r["found"])
+        self.assertIn("no readable text", r["error"])
+        self.assertEqual(self.P.pdf_text(b"%PDF-1.4 garbage", external=False)[0], None)
+
+
 if __name__ == "__main__":
     try:
         unittest.main(verbosity=1)

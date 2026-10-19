@@ -11,6 +11,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261018-7 · 2026-10-18 · Quote checks read PDFs
+- because: HANDOFF "Next" 2 (OpenAlex often links only a PDF; a PDF decoded as a web page made a real quote look absent); live trial in ai-docs/notes/2026-10-18-pdf-quotes.md
+- files: skills/historywright/scripts/hw_pdf.py (new), skills/historywright/scripts/hw_check.py (`page_text`, `quote_in`, `verify_quote`), skills/historywright/scripts/hw.py (`doctor`), skills/historywright/SKILL.md (intro; "Open the cited source"), skills/historywright/references/cli.md (verify quote, doctor), AGENTS.md, tests/test_hw.py (class Pdf, four tests)
+- A PDF body goes to pdftotext when it is on PATH, else to a stdlib reader (Flate streams, object streams, ToUnicode maps, TJ spacing, inline images skipped, 20 MB per stream); line-end hyphens match joined or not; for PDF text a quote of 20 or more letters may match with spacing ignored (drop caps, small caps); a PDF with no readable text answers `found: null` with the reason, so `verify sources` warns instead of failing; a miss from the built-in reader carries a note. `doctor` reports `pdftotext`.
+
 ### C-20261018-6 · 2026-10-18 · cal date reads Kalends, Nones, Ides and Hijri month names, labels AH in AH, writes circa as EDTF ~; src wayback drops repeated captures
 - because: found while writing the wiki (ai-docs/notes/2026-10-18-github-wiki.md, "Facts verified"); R-20261018-2
 - files: skills/historywright/scripts/hw_dates.py (`ah_parts`, `ah_range`, `ah_label`, `hijri_month`, `qualifier_of`, `_roman_day`, `parse_date`), skills/historywright/scripts/hw.py (`cal date`), skills/historywright/references/dates.md (rows Kalends, Islamic), skills/historywright/references/cli.md (cal date), skills/historywright-sources/references/registry.json (wayback: `collapse=digest`), tests/test_hw.py (three tests; refusals updated), tests/fixtures/http/index.json (the CDX fixture requires `collapse=digest`)

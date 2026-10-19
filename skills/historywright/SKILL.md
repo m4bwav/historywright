@@ -9,7 +9,7 @@ Answers history questions by researching sources. Model memory routes the questi
 it is never the answer. Every claim in the reply rests on a page this run fetched and read.
 
 Script: `scripts/hw.py` in this folder (Python 3.9+, standard library, one JSON object per command; its modules
-`hw_net.py`, `hw_dates.py`, `hw_sources.py` and `hw_check.py` sit beside it and are never run alone). Run
+`hw_net.py`, `hw_dates.py`, `hw_sources.py`, `hw_check.py` and `hw_pdf.py` sit beside it and are never run alone). Run
 `python <this folder>/scripts/hw.py doctor` once per session; it says what works here (contact for the
 User-Agent, optional keys, the East Asian calendar table). Run it by that full path from the user's working
 folder, never after `cd` into this folder: a `.historywright/` folder there holds that project's own cache.
@@ -55,7 +55,7 @@ lower the default confidence. On a contested topic, search in each party's langu
 - Wikidata references name the work (`stated_in`); Wikipedia is a finder:
   `hw.py wp refs "<Title>" --near "<phrase from the sentence>"` returns the footnotes cited in that sentence.
 - Open the cited source and read the passage (WebFetch, or `hw.py verify quote --url U --quote "..."`, which
-  stores the page for the pack). Primary texts: LacusCurtius, Perseus, Fordham, Avalon, archives; scholarship:
+  stores the page for the pack and reads PDFs; `found: null` means unreadable, not absent). Primary texts: LacusCurtius, Perseus, Fordham, Avalon, archives; scholarship:
   `hw.py oa search "<topic>"`; company history: SEC EDGAR filings, the Wayback Machine.
 - A book or article appears in the answer only after its title, author and year match together in Crossref,
   OpenAlex or a library catalogue (`hw.py doi <DOI> --title --author --year`). A real DOI with the wrong title is

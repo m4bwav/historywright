@@ -11,7 +11,7 @@ command.
 
 | Command | Does |
 |---|---|
-| `doctor [--net]` | Python, home, contact, keys, registry, era outline, DILA table, cache size |
+| `doctor [--net]` | Python, home, contact, keys, registry, era outline, DILA table, cache size, pdftotext on PATH |
 | `wd search "<name>" [--lang en] [--limit 7]` | Wikidata items for a name (QID, label, description) |
 | `wd claims <QID> [--prop P569,P570]` | every statement with rank, decoded date (calendar, precision, EDTF, JDN range, flags), qualifiers, references; notes on disputes and unreferenced values |
 | `wd entity <QID>` | label, description, aliases, Wikipedia titles; proves a QID exists |
@@ -30,7 +30,7 @@ command.
 | `cal era <name>`, `cal cjk <date>` | East Asian eras (every match) and era dates to Western dates; `cal setup` builds the table |
 | `cache get "<question>" [--max-age DAYS]`, `cache put <entry.json>`, `cache list` | researched answers with sources and retrieval dates |
 | `verify url <url>...` | live, dead (with archived copy), likely_hallucinated, unknown |
-| `verify quote --url U --quote "..." [--refetch]` | is the quote a span of the page (exact or normalised; `...` splits) |
+| `verify quote --url U --quote "..." [--refetch]` | is the quote a span of the page (exact or normalised; `...` splits). PDFs: pdftotext when on PATH, else a built-in reader; spacing is ignored as a last step for quotes of 20+ letters; `found: null` = no readable text (a scan) |
 | `verify doi <DOI> --title --author --year`, `verify qid <QID> [--label]` | does the reference exist and match |
 | `verify sources <sources.json> [--offline] [--any-url]` | every source fetched this run, every quote in its page, independence and corroboration |
 | `pack init <dir> --question "..." [--name] [--period] [--commercial]` | scaffold a research pack (historywright-pack) |
