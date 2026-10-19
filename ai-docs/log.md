@@ -43,3 +43,10 @@ Append-only, newest last.
 - Doc errors the wiki found, fixed in PR #5 (C-20261018-3): README, plugin.json and the sources skill said "about 60 sources" (85 is right); the README presented its Caesar summary as literal output; cli.md missed the exit 2 case and seven options.
 - Not done: Step 2 of the kickoff (eval cache isolation, `worth --probe`, trim) and Step 3 (open items). Next prompt rewritten.
 ## [2026-10-18] index | rebuilt (8 entries)
+
+## 2026-10-18 · Step 4 session: owner rulings, paces, v0.1.0 released
+
+- Mark's rulings ([decisions/2026-10-18-owner-rulings-live-calls-and-tag.md](decisions/2026-10-18-owner-rulings-live-calls-and-tag.md)): the wiki verifier may keep calling keyless public APIs live "if this doesn't break terms or will result in them banning us"; the v0.1.0 tag, yes.
+- Checked the condition against the recorded limits. Wikimedia's 0.3 s pace was exactly its 200/min, Crossref's 0.1 s was double the public pool's 5/s (the verifier sends no mailto), OpenAlex keyless sat at its 10/s cap, and the Wayback availability API answered 429 on every verifier run at 0.5 s. PR #7 set 0.35 s, 0.2 s, 0.15 s and 4 s (R-20261018-1, C-20261018-4); merged after CI.
+- wikiwright PR #21: L-160 `live-public-sources` adopted with the owner's condition (check each source's limit and User-Agent rule; slow any host that answered 429); merged.
+- Tagged v0.1.0 on main at 6d06bb0; the release workflow passed and published historywright-0.1.0.zip (94,510 bytes): https://github.com/m4bwav/historywright/releases/tag/v0.1.0
