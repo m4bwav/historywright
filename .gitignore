@@ -5,6 +5,7 @@ dist/
 *-workspace/
 # local state and secrets never belong here
 .historywright/
+!evals/fixtures/project-home/.historywright/
 config.json
 *.sqlite
 .env

@@ -323,6 +323,34 @@ class FailSoft(unittest.TestCase):
         self.assertEqual(d["count"], 1)  # the CDX header row is skipped
         self.assertEqual(d["results"][0]["url"], "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/")
 
+    def test_project_home(self):
+        import hw_net as N
+        saved_env, saved_cwd = os.environ.pop("HW_HOME"), os.getcwd()
+        proj = Path(tempfile.mkdtemp(prefix="hw-proj-"))
+        fake_user = Path(tempfile.mkdtemp(prefix="hw-user-"))
+        real_home = Path.home
+        try:
+            Path.home = staticmethod(lambda: fake_user)
+            os.chdir(str(proj))
+            self.assertEqual(N.home_source()[0], "user")
+            (proj / ".historywright").mkdir()
+            src, h = N.home_source()
+            self.assertEqual((src, h.resolve()), ("project", (proj / ".historywright").resolve()))
+            # keys, the DILA table and the pace file stay in the user home unless the project has its own config
+            self.assertEqual(N.user_home().resolve(), (fake_user / ".historywright").resolve())
+            self.assertEqual(N.config_path().resolve(), (fake_user / ".historywright" / "config.json").resolve())
+            (proj / ".historywright" / "config.json").write_text("{}", encoding="utf-8")
+            self.assertEqual(N.config_path().resolve(), (proj / ".historywright" / "config.json").resolve())
+            os.environ["HW_HOME"] = saved_env
+            self.assertEqual(N.home_source()[0], "HW_HOME")
+            self.assertEqual(N.user_home().resolve(), Path(saved_env).resolve())
+        finally:
+            Path.home = real_home
+            os.environ["HW_HOME"] = saved_env
+            os.chdir(saved_cwd)
+            shutil.rmtree(str(proj), ignore_errors=True)
+            shutil.rmtree(str(fake_user), ignore_errors=True)
+
     def test_dig(self):
         import hw_net
         obj = {"a": {"b": [{"c": 1}, {"c": 2}]}, "pages": {"1": {"t": "x"}, "2": {"t": "y"}}}

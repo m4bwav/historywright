@@ -2,8 +2,10 @@
 
 Back to [SKILL.md](../SKILL.md). `python scripts/hw.py <command> ...`; every command prints one JSON object and
 exits 1 with `{"ok": false, "error": ...}` on failure; a missing argument or unknown option prints
-argparse's usage on stderr and exits 2. `HW_HOME` moves the home folder (default
-`~/.historywright`: config, cache, fetch log, page store, DILA table). `HW_FIXTURES=<dir>` answers HTTP from
+argparse's usage on stderr and exits 2. Home folder: `HW_HOME` when set; else a
+`.historywright/` folder in the working directory when one exists (that project's cache, fetch log and page store;
+keys, the DILA table and the pace file stay in `~/.historywright`, unless the folder has its own `config.json`); else
+`~/.historywright`. `doctor` shows which (`home_from`: HW_HOME, project or user). `HW_FIXTURES=<dir>` answers HTTP from
 `<dir>/index.json` (tests, evals); `HW_RECORD=<dir>` saves live responses in that shape. `--lang` (default `en`) works on every `wd` and `wp`
 command.
 

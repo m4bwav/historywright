@@ -3,7 +3,7 @@
 
 Every command prints one JSON object and fails soft ({"ok": false, "error": ...}, exit 1). Commands:
 
-  doctor                          what works here: Python, home folder, contact, keys, DILA table, registry
+  doctor                          what works here: Python, home folder and its source, contact, keys, DILA, registry
   wd search|claims|entity|sparql  Wikidata: full statements with precision, calendar, rank, qualifiers, references
   wp summary|refs|search|assess   Wikipedia as a finder: QID per title, the references under a sentence
   place search|pleiades           Pleiades, CHGIS, World Historical Gazetteer, Wikidata coordinates ([lon, lat])
@@ -18,7 +18,8 @@ Every command prints one JSON object and fails soft ({"ok": false, "error": ...}
   keys status|openalex|whg|contact   optional free keys, stored in ~/.historywright/config.json
   lint                            the source registry and the era outline
 
-HW_HOME overrides ~/.historywright; HW_FIXTURES serves HTTP from files; HW_RECORD saves responses as fixtures.
+HW_HOME overrides ~/.historywright; a .historywright folder in the working directory holds that project's cache.
+HW_FIXTURES serves HTTP from files; HW_RECORD saves responses as fixtures.
 """
 
 import argparse
@@ -36,8 +37,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import hw_check as C  # noqa: E402
 import hw_dates as D  # noqa: E402
 import hw_sources as S  # noqa: E402
-from hw_net import (write_text, REGISTRY_PATH, SKILLS, VERSION, contact, emit, fail, fetch, get_json, get_key,  # noqa: E402
-                    home, load_config, mask, qs, registry, save_config, today, user_agent, utf8_stdout)
+from hw_net import (write_text, REGISTRY_PATH, SKILLS, VERSION, config_path, contact, emit, fail, fetch,  # noqa: E402
+                    get_json, get_key, home, home_source, load_config, mask, qs, registry, save_config, today,
+                    user_agent, user_home, utf8_stdout)
 
 ERAS_PATH = SKILLS / "historywright-sources" / "references" / "eras.md"
 
@@ -49,7 +51,7 @@ def out(d):
 # ---------------------------------------------------------------- cal
 
 def dila_db(auto=True):
-    p = home() / "dila_time.sqlite"
+    p = user_home() / "dila_time.sqlite"
     if p.exists():
         return sqlite3.connect(str(p)), None
     if not auto:
@@ -61,7 +63,7 @@ def dila_db(auto=True):
 
 
 def dila_setup(force=False):
-    p = home() / "dila_time.sqlite"
+    p = user_home() / "dila_time.sqlite"
     if p.exists() and not force:
         return {"ok": True, "db": str(p), "built": False, "attribution": D.DILA_ATTRIBUTION}
     last = None
@@ -393,7 +395,7 @@ def cmd_keys(a):
         rows["whg"] = row
         for name in ("smithsonian", "europeana"):
             rows[name] = {"set": bool(get_key(name))}
-        return out({"ok": True, "config": str(home() / "config.json"), "keys": rows,
+        return out({"ok": True, "config": str(config_path()), "keys": rows,
                     "note": "every key is optional and free; historywright works without any"})
     if a.sub == "contact":
         if not a.set:
@@ -420,13 +422,13 @@ def cmd_keys(a):
         keys["openalex"] = {"api_key": key, "status": body.get("status", "pending_activation"), "requested": today()}
         cfg.setdefault("contact", a.email)
         save_config(cfg)
-        return out({"ok": True, "saved": str(home() / "config.json"), "key": mask(key),
+        return out({"ok": True, "saved": str(config_path()), "key": mask(key),
                     "next": "the user clicks 'Activate your OpenAlex API key' in their email, then: hw.py keys status"})
     if a.sub == "whg":
         if a.token:
             keys["whg"] = {"token": a.token, "saved": today()}
             save_config(cfg)
-            return out({"ok": True, "saved": str(home() / "config.json"), "token": mask(a.token),
+            return out({"ok": True, "saved": str(config_path()), "token": mask(a.token),
                         "next": "hw.py keys status"})
         opened = False
         if not a.no_browser:
@@ -445,11 +447,14 @@ def cmd_keys(a):
 def cmd_doctor(a):
     cfg = load_config()
     reg = registry()
-    db = home() / "dila_time.sqlite"
+    db = user_home() / "dila_time.sqlite"
+    src, _ = home_source()
     checks = {
         "python": sys.version.split()[0],
         "python_ok": sys.version_info >= (3, 9),
         "home": str(home()),
+        "home_from": src,
+        "config": str(config_path()),
         "contact": bool(contact()),
         "keys": {k: bool(get_key(k)) for k in ("openalex", "whg", "smithsonian", "europeana")},
         "registry": {"path": str(REGISTRY_PATH), "sources": len(reg.get("sources", []))},

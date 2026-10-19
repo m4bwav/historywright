@@ -143,7 +143,8 @@ historywright has no server and collects nothing. hw.py talks to the network onl
 needs it, and only to the public APIs that command names (Wikidata, Wikipedia, Pleiades, CHGIS, WHG, OpenAlex,
 Crossref, the Internet Archive, the registry's museums and libraries). Each request carries a User-Agent with
 the tool's name and, if you set one, your contact address. Keys, the answer cache, the fetch log and the pages
-read stay in `~/.historywright/` on your machine.
+read stay in `~/.historywright/` on your machine (or in a project's own `.historywright/` folder, which keeps that
+project's cache apart).
 
 ## Credits
 
