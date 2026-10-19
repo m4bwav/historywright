@@ -466,6 +466,10 @@ def cmd_doctor(a):
     todo = []
     if not checks["contact"]:
         todo.append("set a contact address for the User-Agent: hw.py keys contact --set ADDRESS (the user's own)")
+    checks["cwd_in_skill_folder"] = Path.cwd().resolve().is_relative_to(SKILLS.resolve())
+    if checks["cwd_in_skill_folder"]:
+        todo.append("the working directory is the skill folder: run hw.py by its full path from the project "
+                    "folder, or a project's .historywright/ cache is not used")
     if not checks["dila_table"]:
         todo.append("East Asian eras build on first use (hw.py cal setup, 1.3 MB download)")
     if not checks["registry"]["sources"]:

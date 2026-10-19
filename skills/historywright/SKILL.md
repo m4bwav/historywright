@@ -11,7 +11,9 @@ it is never the answer. Every claim in the reply rests on a page this run fetche
 Script: `scripts/hw.py` in this folder (Python 3.9+, standard library, one JSON object per command; its modules
 `hw_net.py`, `hw_dates.py`, `hw_sources.py` and `hw_check.py` sit beside it and are never run alone). Run
 `python <this folder>/scripts/hw.py doctor` once per session; it says what works here (contact for the
-User-Agent, optional keys, the East Asian calendar table). Commands: [references/cli.md](references/cli.md).
+User-Agent, optional keys, the East Asian calendar table). Run it by that full path from the user's working
+folder, never after `cd` into this folder: a `.historywright/` folder there holds that project's own cache.
+Commands: [references/cli.md](references/cli.md).
 
 ## Step 0: already answered?
 
