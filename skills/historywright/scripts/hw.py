@@ -97,16 +97,27 @@ def cmd_cal(a):
         except ValueError as e:
             return fail(str(e))
         first, last = D.span_range(y, m, d, cal)
-        edtf = D.edtf_for(y, m, d)
-        ah = D.ah_year_range(a.value)
-        if ah:  # the AH year's own days, which straddle two Western years
+        qual = D.qualifier_of(a.value)
+        edtf = D.edtf_for(y, m, d, qual)
+        read_as = {"astronomical_year": y, "month": m, "day": d, "calendar": cal, "label": D.date_label(y, m, d)}
+        precision = "day" if d else ("month" if m else "year")
+        parts = D.ah_parts(re.sub(D._CIRCA, "", a.value))
+        if parts:  # label it in AH; the Western reading is where it starts
+            read_as = {"calendar": "islamic (tabular)", "ah_year": parts[0], "ah_month": parts[1],
+                       "ah_day": parts[2], "label": D.ah_label(*parts),
+                       "western_start": dict(read_as, label=D.date_label(y, m, d))}
+            precision = "day" if parts[2] else ("month" if parts[1] else "year")
+        ah = D.ah_range(re.sub(D._CIRCA, "", a.value))
+        if ah:  # the AH year's or month's own days, which straddle Western years and months
             first, last = ah
             edtf = "%s/%s" % tuple(D.describe_jdn(j)["gregorian" if j >= D.GREGORIAN_START else "julian"]["iso"]
                                    for j in ah)
-        res = {"ok": True, "input": a.value, "read_as": {"astronomical_year": y, "month": m, "day": d,
-                                                          "calendar": cal, "label": D.date_label(y, m, d)},
-               "precision": "day" if d else ("month" if m else "year"), "jdn": [first, last],
+            if qual:
+                edtf = "/".join(x + "~" for x in edtf.split("/"))
+        res = {"ok": True, "input": a.value, "read_as": read_as, "precision": precision, "jdn": [first, last],
                "edtf": edtf, "day": D.describe_jdn(first, a.country)}
+        if qual:
+            res["qualifier"] = qual
         if notes:
             res["notes"] = notes
         _cjk_extra(res, first, a)

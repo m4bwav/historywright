@@ -61,10 +61,38 @@ class Dates(unittest.TestCase):
     def test_suffix_forms_and_refusals(self):
         self.assertEqual(D.parse_date("709 AUC")[0], -44)  # 45 BC, not AD 709
         self.assertEqual(D.parse_date("1300 AH")[0], D.parse_date("AH 1300")[0])
-        for text in ("1 Muharram 1 AH", "Ides of March 44 BC"):
+        for text in ("AUC 709 Martius", "Kalends 44 BC", "45 Ramadan 1445"):
             with self.assertRaises(ValueError):
                 D.parse_date(text)
-        self.assertIn("ignored words: c.", D.parse_date("c. 100 BC")[4][0])
+
+    def test_roman_day_counts(self):
+        for text, md in (("Ides of March 44 BC", (3, 15)), ("Idus Martias 44 BC", (3, 15)),
+                         ("the day before the Ides of March 44 BC", (3, 14)), ("a.d. III Id. Mar. 44 BC", (3, 13)),
+                         ("a.d. XIX Kal. Apr. 44 BC", (3, 14)), ("pridie Kalendas Apriles 44 BC", (3, 31)),
+                         ("Nones of May AD 14", (5, 7)), ("Nones of June AD 14", (6, 5)), ("Ides of April AD 14", (4, 13)),
+                         ("Kalends of January 45 BC", (1, 1))):
+            y, m, d, cal, notes = D.parse_date(text)
+            self.assertEqual((m, d, cal), md + ("julian",), text)
+        self.assertEqual(D.parse_date("Ides of March 44 BC")[0], -43)
+        self.assertEqual(D.parse_date("a.d. XVIII Kal. Ian. 50 BC")[:3], (-50, 12, 15))  # back into December 51 BC
+        self.assertTrue(any("Republican" in n for n in D.parse_date("a.d. XVIII Kal. Ian. 50 BC")[4]))
+
+    def test_hijri_month_names(self):
+        self.assertEqual(D.parse_date("1 Muharram 1 AH")[:3], (622, 7, 16))
+        self.assertEqual(D.ah_parts("Dhu'l-Hijjah 1445 AH"), (1445, 12, None))
+        self.assertEqual(D.ah_parts("12 Rabi' I 11"), (11, 3, 12))
+        code, d = run("cal", "date", "Ramadan 1445")
+        self.assertEqual((d["edtf"], d["precision"]), ("2024-03-11/2024-04-09", "month"))
+        self.assertEqual(d["read_as"]["label"], "Ramadan AH 1445")
+
+    def test_ah_label_and_circa(self):
+        code, d = run("cal", "date", "1300 AH")
+        self.assertEqual(d["read_as"]["label"], "AH 1300")  # not the Western year it starts in
+        self.assertEqual(d["read_as"]["western_start"]["astronomical_year"], 1882)
+        code, d = run("cal", "date", "c. 100 BC")
+        self.assertEqual((d["edtf"], d["qualifier"]), ("-0099~", "circa"))
+        self.assertEqual(D.parse_date("circa 12 July 100 BC")[:3], (-99, 7, 12))
+        self.assertTrue(D.edtf_valid(run("cal", "date", "c. AH 1300")[1]["edtf"]))
 
     def test_ah_year_is_its_own_range(self):
         code, d = run("cal", "date", "AH 1300")

@@ -47,7 +47,7 @@
   "body": "{\"url\": \"example.org/missing\", \"archived_snapshots\": {}}"
  },
  {
-  "match": "web\\.archive\\.org/cdx/search/cdx\\?url=microsoft\\.com",
+  "match": "web\\.archive\\.org/cdx/search/cdx\\?url=microsoft\\.com&.*collapse=digest",
   "method": "GET",
   "status": 200,
   "body": "[[\"timestamp\", \"original\", \"statuscode\"], [\"19961020014044\", \"http://www.microsoft.com:80/\", \"200\"]]"

@@ -2580,7 +2580,7 @@
       "route": "src",
       "url": "https://web.archive.org/",
       "search": {
-        "url": "https://web.archive.org/cdx/search/cdx?url={q}&output=json&limit=10&fl=timestamp,original,statuscode",
+        "url": "https://web.archive.org/cdx/search/cdx?url={q}&output=json&limit=10&fl=timestamp,original,statuscode&collapse=digest",
         "items": "",
         "fields": {
           "date": "0",
@@ -2596,7 +2596,7 @@
         "url": "https://web.archive.org/cdx/search/cdx?url=microsoft.com&output=json&limit=2",
         "expect": 200
       },
-      "notes": "{q} is a URL or domain, not free text. Also from=, to=, collapse=, filter= and resumeKey paging. The JSON output is a list of rows whose first row is the header (skip 1). No official limit; clients report 429 near 15/min. The availability API (archive.org/wayback/available) returned empty archived_snapshots for microsoft.com at 1996 on 2026-10-17, so CDX is the route.",
+      "notes": "{q} is a URL or domain, not free text. Also from=, to=, collapse=, filter= and resumeKey paging. The JSON output is a list of rows whose first row is the header (skip 1). collapse=digest drops adjacent captures with the same content (without it microsoft.com lists one 1996 capture six times; R-20261018-2). No official limit; clients report 429 near 15/min. The availability API (archive.org/wayback/available) returned empty archived_snapshots for microsoft.com at 1996 on 2026-10-17, so CDX is the route.",
       "checked": "2026-10-17",
       "research": "R-20261017-6"
     },
