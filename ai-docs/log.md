@@ -55,3 +55,16 @@ Append-only, newest last.
 - Step 3 (PR #10, C-20261018-6, R-20261018-2): `cal date` reads Kalends/Nones/Ides (inclusive, Julian) and Hijri month names, labels AH dates in AH, writes circa as EDTF `~`; `src wayback` uses `collapse=digest` (live test: six identical 1996 captures became six different ones). 38 offline tests.
 - Wiki: re-run against v0.1.0 on Windows and WSL (3 expected changes; the Wayback check now answers at the 4 s pace, so `likely_hallucinated` shows live); release row, zip install and an unreleased list added; wiki commit 17a9717, `live` 12 pages, 0 failures. The verifier now defaults to the v0.1.0 commit.
 - Snag: the Bash tool's hook refuses heredocs with doubled backslashes; regex-heavy edits went through the Edit tool.
+
+## 2026-10-18 · Step 5 session: reinstall, PDF quotes, OHM places, Seshat licence, two evergreen issues
+
+- Asked Mark about a 0.2.0 tag in the first message; no answer this session, so no tag.
+- Reinstalled historywright@mark-local from main (twice: at the start and after the merges; the version is still 0.1.0, so `uninstall` then `install`, since `update` sees no new version). `doctor` from a project folder: `home_from: project`, no todo, `pdftotext: true`.
+- PR #12 (C-20261018-7): quote checks read PDFs. New `hw_pdf.py` (pdftotext when on PATH, else a stdlib reader for Flate, object streams, ToUnicode). Unreadable PDFs answer `found: null`, and for PDF text a 20+ letter quote may match with spacing ignored (drop caps). Live trial on arXiv, govinfo and PLOS PDFs: [notes/2026-10-18-pdf-quotes.md](notes/2026-10-18-pdf-quotes.md).
+- PR #13 (C-20261018-8, R-20261018-3): `place search --source ohm`. OHM publishes no API limit, so the general Overpass rules apply: exact name matches, one attempt, a 5 s pace, and a 30 s wait after a 429. Dates are astronomical years, and a negative `--year` means BC. Live: Kingdom of Prussia 1800, Roman Republic 44 BC.
+- PR #14 (C-20261018-9, R-20261018-4): Seshat's current terms are CC BY-SA 4.0 with commercial use allowed (the registry said BY-NC-SA). The WHG docs were re-read and the limits are unchanged.
+- polywright PR #22 (merged): polywright-references starts from a pack's `refs/index.json` (object date, nc flag, anachronism.md).
+- evergreen issues: m4bwav/evergreen-protocol#28 (approval refusals are graded rather than left out as environment faults), #29 (`skill_fired` counts only Skill calls, so a with arm that runs the plugin's script gets "never fired").
+- Wiki: Versions-and-Upgrading lists the three new unreleased changes (wiki commit baff65f). The other pages wait for the release run.
+- Rulings: [decisions/2026-10-18-step5-rulings.md](decisions/2026-10-18-step5-rulings.md) (1 to 5).
+- Snag: the Bash hook refused a heredoc holding regex backslashes; the fixture builder went into a scratch .py file instead.
