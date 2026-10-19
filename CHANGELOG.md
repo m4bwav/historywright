@@ -10,6 +10,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261018-4 · 2026-10-18 · Keyless request paces held under each source's public limit
+- because: R-20261018-1 (the owner's ruling on live keyless calls: no broken terms, no ban risk)
+- files: skills/historywright-sources/references/registry.json (pace_s of wikidata, wikipedia, commons, openalex, crossref, internet-archive), skills/historywright/scripts/hw_net.py (DEFAULT_PACE)
+- Wikimedia 0.35 s, OpenAlex 0.15 s, Crossref 0.2 s, archive.org 4 s; no other behaviour changes.
+
 ### C-20261018-3 · 2026-10-18 · Docs: the registry holds 85 sources; the README's Caesar lines are a summary; cli.md exit 2 and the missing options
 - because: found while writing the wiki (ai-docs/notes/2026-10-18-github-wiki.md, inaccuracies 1 to 3)
 - files: README.md (The skills; What a run looks like), .claude-plugin/plugin.json (description), skills/historywright-sources/SKILL.md (Files), skills/historywright/references/cli.md (lead paragraph; table rows wd search, wp refs, cache, verify quote, pack init, keys)

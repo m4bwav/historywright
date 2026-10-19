@@ -92,6 +92,13 @@ Best sources (primary first): the Wikimedia API changelog and rate-limit pages, 
 
 Newest first within the day. Track is subject, tooling, practice, or testing. Creation-pass magnitudes are `n/a (initial)`. Their `Applied:` lines name where the Step 2 build (2026-10-17) used them: SKILL.md guards cite the `R-` id in place.
 
+### R-20261018-1 · 2026-10-18 · Build: keyless paces held under each source's documented public limit
+- Summary: The owner ruled on 2026-10-18 that live keyless calls are fine as long as they break no terms and risk no ban. Checked against the limits already recorded: Wikimedia allows 200 requests a minute to a client whose User-Agent names the tool, version and a contact (email or URL; hw.py always sends the repository URL), so 0.3 s (exactly 200/min) became 0.35 s for Wikidata, Wikipedia and Commons. Crossref's public pool (no `mailto`) allows 5 single-record requests a second, so 0.1 s became 0.2 s. OpenAlex keyless is capped at 10 a second, so 0.1 s became 0.15 s. The Wayback availability API (`archive.org/wayback/available`) answered 429 on every wiki-verifier run at 0.5 s, so `archive.org` now gets the same 4 s as the CDX host (about 15 a minute, the rate clients report). hw.py already honours Retry-After.
+- Track: tooling
+- Sources: https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits, https://www.mediawiki.org/wiki/Wikimedia_APIs/Access_policy, https://crossref.org/blog/announcing-changes-to-rest-api-rate-limits/, https://help.openalex.org/how-to-use-the-api/rate-limits-and-authentication; the 429s: ai-docs/notes/2026-10-18-wiki-verify.out.txt
+- Magnitude: minor
+- Applied: skills/historywright-sources/references/registry.json (pace_s of wikidata, wikipedia, commons, openalex, crossref, internet-archive), skills/historywright/scripts/hw_net.py (DEFAULT_PACE)
+
 ### R-20261017-27 · 2026-10-17 · Build: DILA's TLS certificate fails Python's strict X.509 check
 - Summary: `authority.dila.edu.tw` serves a certificate without a Subject Key Identifier. Python 3.13+ verifies in X.509 strict mode by default and refuses it ("Missing Subject Key Identifier"); curl accepts it. hw.py retries such a host once with only `VERIFY_X509_STRICT` cleared (chain and hostname still verified). The same SQL dump is on GitHub (DILA-edu/Authority-Databases, authority_time/SQL/authority_time.sql, CC BY-SA 3.0), which hw.py uses as the fallback. The built table: 123 dynasties, 692 emperors, 1,503 eras, 117,428 months (China, Japan, Korea; no Vietnamese data in DILA).
 - Track: tooling
