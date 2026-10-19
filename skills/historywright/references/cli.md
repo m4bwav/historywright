@@ -19,7 +19,7 @@ command.
 | `wp summary "<Title>"` | extract and the article's QID (finder only) |
 | `wp refs "<Title>" [--near "<phrase>"] [--limit 40]` | the footnotes (text, links, DOIs, ISBNs), or only those cited in the sentence holding the phrase |
 | `wp search "<query>"`, `wp assess "<Title>"` | article search; quality class and redirects |
-| `place search "<name>" [--source pleiades\|chgis\|whg\|wikidata] [--year N]` | gazetteer hits with `[lon, lat]`, names, periods, licence |
+| `place search "<name>" [--source pleiades\|chgis\|whg\|wikidata\|ohm] [--year N]` | gazetteer hits with `[lon, lat]`, names, periods, licence. `--year -44` is 44 BC. `ohm` (OpenHistoricalMap, only when named): dated boundaries and places matching the exact name or English name (`Kingdom of Prussia`), with `start_date`, `end_date` and the QID, kept to features that existed in `--year` |
 | `place pleiades <id>` | one Pleiades place |
 | `oa search "<topic>" [--page N] [--filter ...]` | OpenAlex works (page 2+ needs the free key) |
 | `doi <DOI> [--title --author --year]` | Crossref, then OpenAlex; `all_match` false means a blended or wrong reference |

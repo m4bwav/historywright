@@ -51,5 +51,19 @@
   "method": "GET",
   "status": 200,
   "body": "[[\"timestamp\", \"original\", \"statuscode\"], [\"19961020014044\", \"http://www.microsoft.com:80/\", \"200\"]]"
+ },
+ {
+  "match": "^https://overpass-api\\.openhistoricalmap\\.org/api/interpreter\\?data=.*Roman\\+Republic",
+  "method": "GET",
+  "file": "ohm-roman-republic.json",
+  "status": 200,
+  "content_type": "application/json"
+ },
+ {
+  "match": "^https://overpass-api\\.openhistoricalmap\\.org/api/interpreter\\?data=.*Busy\\+Place",
+  "method": "GET",
+  "body": "rate_limited",
+  "status": 429,
+  "content_type": "text/html"
  }
 ]

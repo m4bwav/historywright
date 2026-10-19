@@ -379,6 +379,21 @@ class FailSoft(unittest.TestCase):
             shutil.rmtree(str(proj), ignore_errors=True)
             shutil.rmtree(str(fake_user), ignore_errors=True)
 
+    def test_ohm_place_years(self):
+        # OHM dates are astronomical (-0043 = 44 BC); --year -44 means 44 BC (R-20261018-3)
+        code, d = run("place", "search", "Roman Republic", "--source", "ohm", "--year", "-44", "--limit", "9")
+        self.assertEqual(code, 0)
+        ids = [r["id"] for r in d["results"]]
+        self.assertEqual(ids, ["relation/2849155", "relation/2849156"])  # 58-42 BC boundary, 509-27 BC chronology
+        first = d["results"][0]
+        self.assertEqual((first["wikidata"], first["kind"]), ("Q17167", "boundary=administrative"))
+        self.assertEqual(first["coord"][0] < 40, True)
+        self.assertEqual(d["results"][1]["kind"], "type=chronology")
+        _, d = run("place", "search", "Roman Republic", "--source", "ohm", "--year", "1849")
+        self.assertEqual([r["id"] for r in d["results"]], ["node/2108620557"])
+        _, d = run("place", "search", "Busy Place", "--source", "ohm")
+        self.assertIn("wait at least 30 s", d["errors"][0])
+
     def test_dig(self):
         import hw_net
         obj = {"a": {"b": [{"c": 1}, {"c": 2}]}, "pages": {"1": {"t": "x"}, "2": {"t": "y"}}}

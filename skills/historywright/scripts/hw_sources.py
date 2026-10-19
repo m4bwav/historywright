@@ -400,7 +400,48 @@ def _wikidata_place(name, year, limit):
     return out
 
 
-PLACE_SOURCES = {"pleiades": _pleiades, "chgis": _chgis, "whg": _whg, "wikidata": _wikidata_place}
+def _ohm_year(value):
+    """The astronomical year at the start of an OHM date (ISO 8601: 0000 = 1 BC, -0043 = 44 BC)."""
+    m = re.match(r"^\s*(-?\d{1,4})", value or "")
+    return int(m.group(1)) if m else None
+
+
+def _ohm(name, year, limit):
+    """OpenHistoricalMap through its Overpass API: exact name matches only (no regex scans), one attempt; OHM
+    publishes no limit, so the registry pace and Overpass's own rule after a 429 (wait 30 s) apply (R-20261018-3)."""
+    esc = name.replace("\\", "\\\\").replace('"', '\\"')
+    q = '[out:json][timeout:25];(nwr["name"="%s"];nwr["name:en"="%s"];);out tags center 60;' % (esc, esc)
+    r = fetch("https://overpass-api.openhistoricalmap.org/api/interpreter?" + qs({"data": q}), retries=0, timeout=40)
+    if r.status == 429:
+        raise RuntimeError("OHM Overpass is busy (429): wait at least 30 s before another query")
+    if not r.ok:
+        raise RuntimeError(r.error or "HTTP %s" % r.status)
+    try:
+        elements = r.json().get("elements", [])
+    except ValueError:
+        raise RuntimeError("OHM answered something other than JSON")
+    astro = None if year is None else (year + 1 if year < 0 else year)
+    out = []
+    for el in elements:
+        t = el.get("tags", {})
+        start, end = _ohm_year(t.get("start_date")), _ohm_year(t.get("end_date"))
+        if astro is not None and ((start is not None and start > astro) or (end is not None and end < astro)):
+            continue
+        c = el.get("center") or el
+        kind = next(("%s=%s" % (k, t[k]) for k in ("boundary", "place", "admin_level", "historic", "building",
+                                                   "amenity", "landuse", "type") if k in t), None)
+        out.append({"source": "ohm", "id": "%s/%s" % (el.get("type"), el.get("id")), "name": t.get("name"),
+                    "name_en": t.get("name:en"), "start_date": t.get("start_date"), "end_date": t.get("end_date"),
+                    "kind": kind, "wikidata": t.get("wikidata"),
+                    "coord": [c["lon"], c["lat"]] if "lon" in c and "lat" in c else None,
+                    "url": "https://www.openhistoricalmap.org/%s/%s" % (el.get("type"), el.get("id")),
+                    "licence": t.get("license") or "CC0 (OpenHistoricalMap; a license tag on a feature overrides)"})
+        if len(out) >= limit:
+            break
+    return out
+
+
+PLACE_SOURCES = {"pleiades": _pleiades, "chgis": _chgis, "whg": _whg, "wikidata": _wikidata_place, "ohm": _ohm}
 
 
 # ---------------------------------------------------------------- scholarship

@@ -10,3 +10,8 @@ Decided in session under the "decide small rulings, flag them" rule. Mark can ov
    text. Removing whitespace from a long quote barely raises the chance of a false match; short quotes and HTML
    pages keep the strict match. The match label says "spacing ignored (PDF)" so the reader of the result knows.
 3. **The reader is a new module, `hw_pdf.py`,** not more lines in hw_check.py (now six modules).
+4. **OHM only when named (`--source ohm`), not in `auto`.** It is tier 3 (crowd-sourced), OHM publishes no limit,
+   and every client shares two Overpass slots; `auto` stays on the four gazetteers. Exact name or `name:en`
+   matches only: a regex over every name is the kind of query that loads a public Overpass server.
+5. **`--year` negative means BC in historical numbering** (`-44` = 44 BC, no year 0), the way people write it;
+   hw.py converts to OHM's astronomical years. CHGIS gets the year as before.
