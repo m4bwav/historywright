@@ -54,7 +54,11 @@ Hijri dates before 1924 convert by the tabular calendar (a day or two off); say 
 
 ## South Asia
 
-Indus Valley (c. 3300-1300 BCE), Maurya (c. 322-185 BCE), Gupta (c. 320-550 CE), Delhi Sultanate (1206-1526),
+Indus Valley (c. 3300-1300 BCE), Maurya (c. 322-185 BCE), then no single power until the Gupta: Shunga and Kanva
+in the Ganges basin; Indo-Greek, Indo-Scythian (Azes), Indo-Parthian (Gondophares) and Kushan kings in the north-west;
+the Northern Satraps at Mathura and the Western Satraps; the Satavahanas in the Deccan; Chera, Chola and Pandya in
+the south. Inscriptions there are dated in eras whose start years scholars dispute (the Azes era: 58/57 or 47/46 BCE),
+so compute each reading separately. Gupta (c. 320-550 CE), Delhi Sultanate (1206-1526),
 Mughal (1526-1857), British rule (to 1947). National archives (`abhilekh-patal`) are browse-only: rely on
 `openalex`, `wikidata` references, `internet-archive` scans, and name regional scholarship. Lower the default
 confidence; dates for early dynasties carry wide ranges.

@@ -22,6 +22,22 @@ Write an entry the moment a real signal happens: a user correction, the same err
 - Scope: skill
 - Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-17
 
+### L-005 · 2026-10-18 · "Who ruled X exactly N years ago" in early South Asia has several answers that depend on an era's start year
+- Trigger: "who ruled India exactly 2,000 years ago" (AD 26). The era outline went straight from the Maurya to the Gupta, so it gave no route for 185 BCE to 320 CE; Gondophares' accession (Takht-i-Bahi: year 26 of his reign = year 103 of an era) falls in AD 21 or AD 32 depending on whether the Azes era began 58/57 or 47/46 BCE.
+- Hypothesis: early Indian kings are dated by inscriptions in regional eras, and the start years of those eras are disputed; one date question becomes two or three answers, and "India" was not one realm.
+- Rule: answer by region (north-west, Mathura, Deccan, south), compute each era reading in code, and give each reading's answer with the scholar who holds it.
+- Evidence: Cribb 2017 (zenodo 3492002) and Falk and Bennett 2009 (Acta Orientalia 70), both read 2026-10-18; eras.md South Asia now lists the kingdoms between Maurya and Gupta (C-20261018-10).
+- Scope: skill
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-18
+
+### L-004 · 2026-10-18 · A wrong year in Crossref is not a blended reference; Brill PDFs sit behind a bot check
+- Trigger: `hw.py doi 10.5617/ao.5339 --year 2009` said "blended or wrong reference" because Crossref gives 1970 for Falk and Bennett, while the PDF's masthead prints "Acta Orientalia 2009: 70". OpenAlex repeats the 1970. Separately, an OpenAlex `oa_url` on brill.com returned an AWS WAF "Human Verification" page instead of the PDF.
+- Hypothesis: some journals deposited back issues with a placeholder year; registry metadata is not the printed record. Brill guards downloads against scripts.
+- Rule: when title and author match and only the year differs, read the year printed on the work before rejecting it (`match_record` now says so); treat a brill.com download as unreadable and look for another copy.
+- Evidence: the 2026-10-18 India question; DoiMatch tests.
+- Scope: skill
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-18
+
 ### L-003 · 2026-10-17 · British Old Style dates before 1752 need the January-start year
 - Trigger: the method reference first gave George Washington's birth as "11 February 1731 O.S." and fed 1731 to the converter, which would give 22 February 1731, a year early.
 - Hypothesis: before 1752 the English legal year began on 25 March, so a date between 1 January and 24 March carries the previous year's number; modern conversion needs the January-start year.

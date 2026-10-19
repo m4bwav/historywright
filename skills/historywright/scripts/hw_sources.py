@@ -499,17 +499,28 @@ def doi_lookup(doi, title=None, author=None, year=None):
                 "status": r.status}
     out = {"ok": True, "exists": True, "record": rec}
     if title or author or year:
-        checks = {}
-        if title:
-            checks["title"] = _sim(title, rec["title"]) >= 0.6
-        if author:
-            checks["author"] = any(author.casefold() in (a or "").casefold() for a in rec["authors"])
-        if year:
-            checks["year"] = str(year) == str(rec["year"])
-        out["match"] = checks
-        out["all_match"] = all(checks.values())
-        if not out["all_match"]:
-            out["warning"] = "the DOI exists but does not match every detail given: a blended or wrong reference"
+        out.update(match_record(rec, title, author, year))
+    return out
+
+
+def match_record(rec, title=None, author=None, year=None):
+    """Compare a registry record with the cited title, author and year. Only the year off is not a blend:
+    registries hold wrong years (Crossref gives 1970 for Falk and Bennett, Acta Orientalia 70, 2009)."""
+    checks = {}
+    if title:
+        checks["title"] = _sim(title, rec["title"]) >= 0.6
+    if author:
+        checks["author"] = any(author.casefold() in (a or "").casefold() for a in rec["authors"])
+    if year:
+        checks["year"] = str(year) == str(rec["year"])
+    out = {"match": checks, "all_match": all(checks.values())}
+    if out["all_match"]:
+        return out
+    if checks.get("year") is False and checks.get("title") and checks.get("author"):
+        out["warning"] = ("only the year differs: registry records sometimes carry a wrong year; check the year "
+                          "printed on the work itself (masthead, title page) before calling it a wrong reference")
+    else:
+        out["warning"] = "the DOI exists but does not match every detail given: a blended or wrong reference"
     return out
 
 

@@ -492,6 +492,25 @@ class Pdf(unittest.TestCase):
         self.assertEqual(self.P.pdf_text(b"%PDF-1.4 garbage", external=False)[0], None)
 
 
+
+class DoiMatch(unittest.TestCase):
+    REC = {"title": "Macedonian Intercalary Months and the Era of Azes", "authors": ["Harry Falk", "Chriss Bennet"],
+           "year": 1970}
+
+    def test_year_only_mismatch_is_not_a_blend(self):
+        r = S.match_record(self.REC, "Macedonian Intercalary Months and the Era of Azes", "Falk", 2009)
+        self.assertFalse(r["all_match"])
+        self.assertIn("only the year differs", r["warning"])
+
+    def test_wrong_title_is_a_blend(self):
+        r = S.match_record(self.REC, "The Greek Kingdom of Bactria", "Falk", 1970)
+        self.assertIn("blended", r["warning"])
+
+    def test_all_match_has_no_warning(self):
+        r = S.match_record(self.REC, "Macedonian intercalary months and the era of Azes", "Bennet", 1970)
+        self.assertTrue(r["all_match"])
+        self.assertNotIn("warning", r)
+
 if __name__ == "__main__":
     try:
         unittest.main(verbosity=1)

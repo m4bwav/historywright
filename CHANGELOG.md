@@ -7,9 +7,15 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 ## Releases
 
 - 0.1.0 (2026-10-18): first release, C-20261017-1 to C-20261018-4. https://github.com/m4bwav/historywright/releases/tag/v0.1.0
-- unreleased: C-20261018-5 onward.
+- 0.2.0 (2026-10-18): C-20261018-5 to C-20261018-10. https://github.com/m4bwav/historywright/releases/tag/v0.2.0
+- unreleased: none yet.
 
 ## Changes
+
+### C-20261018-10 · 2026-10-18 · doi says when only the year differs; the South Asia era outline covers 185 BCE to 320 CE
+- because: L-004, L-005 (the "who ruled India 2,000 years ago" question)
+- files: skills/historywright/scripts/hw_sources.py (`match_record`, `doi_lookup`), skills/historywright/references/cli.md (doi), skills/historywright-sources/references/eras.md (South Asia), tests/test_hw.py (class DoiMatch), LEARNINGS.md (L-004, L-005)
+- With title and author matching and only the year off, the warning tells the agent to read the year printed on the work instead of calling it a blend; the era outline names the kingdoms between the Maurya and the Gupta and warns that inscription eras such as the Azes era have disputed start years.
 
 ### C-20261018-9 · 2026-10-18 · Registry: Seshat is CC BY-SA 4.0, not non-commercial; WHG notes from the current docs
 - because: R-20261018-4 (HANDOFF "Next" 2: the Seshat licence page and the WHG docs)
