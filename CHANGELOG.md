@@ -11,6 +11,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261018-8 · 2026-10-18 · place search queries OpenHistoricalMap
+- because: HANDOFF "Next" 2 (OHM queries in `hw.py place`); R-20261018-3
+- files: skills/historywright/scripts/hw_sources.py (`_ohm`, `_ohm_year`, `PLACE_SOURCES`), skills/historywright/scripts/hw.py (`place --source`), skills/historywright-sources/references/registry.json (ohm), skills/historywright/SKILL.md (Step 3, Places), skills/historywright/references/cli.md (place search), tests/test_hw.py (test_ohm_place_years), tests/fixtures/http (ohm-roman-republic.json, two index rows)
+- `--source ohm` asks OHM's Overpass API for features whose name or name:en is the query, keeps those that existed in `--year` (a negative year is BC; OHM's astronomical years are converted), and returns dates, kind, QID, centre and licence; a 429 says to wait 30 s. Not in `auto`: OHM is tier 3 and shares two slots per client.
+
 ### C-20261018-7 · 2026-10-18 · Quote checks read PDFs
 - because: HANDOFF "Next" 2 (OpenAlex often links only a PDF; a PDF decoded as a web page made a real quote look absent); live trial in ai-docs/notes/2026-10-18-pdf-quotes.md
 - files: skills/historywright/scripts/hw_pdf.py (new), skills/historywright/scripts/hw_check.py (`page_text`, `quote_in`, `verify_quote`), skills/historywright/scripts/hw.py (`doctor`), skills/historywright/SKILL.md (intro; "Open the cited source"), skills/historywright/references/cli.md (verify quote, doctor), AGENTS.md, tests/test_hw.py (class Pdf, four tests)

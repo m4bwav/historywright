@@ -48,7 +48,7 @@ lower the default confidence. On a contested topic, search in each party's langu
    P1326, sourcing circumstances P1480) and references. Never rely on the truthy `wdt:` value alone: it hides
    disputed alternatives, and SPARQL shifts BCE years (R-20261017-2). Never invent a QID; discover it.
 2. Places: `hw.py place search "<name>" [--year N]` (Pleiades, CHGIS for China, World Historical Gazetteer
-   when a token is set, Wikidata coordinates). Coordinates are `[lon, lat]`.
+   when a token is set, Wikidata coordinates; `--source ohm` for dated borders). Coordinates are `[lon, lat]`.
 
 ## Step 4: follow the references to the sources beneath
 

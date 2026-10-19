@@ -283,8 +283,8 @@
       "access": "open",
       "key": null,
       "host": "overpass-api.openhistoricalmap.org",
-      "pace_s": 1.0,
-      "route": "link-out",
+      "pace_s": 5.0,
+      "route": "place",
       "url": "https://www.openhistoricalmap.org/",
       "search": null,
       "detail": null,
@@ -292,9 +292,9 @@
         "url": "https://overpass-api.openhistoricalmap.org/api/status",
         "expect": 200
       },
-      "notes": "Overpass API at overpass-api.openhistoricalmap.org/api/interpreter answered on 2026-10-17 (2 slots per client); ohm.overpass-ultra.us is a browser front end. Planet files at planet.openhistoricalmap.org (daily current, weekly history), vector tiles at vtiles.openhistoricalmap.org, QLever SPARQL at qlever.dev/ohm-planet. Crowd-sourced quality. 2026-10-17: Overpass refused a User-Agent ending in python-urllib (403) and accepted the plain historywright agent. hw.py place does not query OHM yet (Overpass QL), so the route is link-out with the probe kept.",
-      "checked": "2026-10-17",
-      "research": "R-20261017-4"
+      "notes": "Queried by `hw.py place search NAME --source ohm [--year N]` through the Overpass API at overpass-api.openhistoricalmap.org/api/interpreter: exact name or name:en matches only, [timeout:25], one attempt, 5 s pace; OHM publishes no API limit (2026-10-18), its status page shows 2 slots per client, and the general Overpass rule is to wait at least 30 s after a 429. Dates are ISO 8601 astronomical years (0000 = 1 BC, -0043 = 44 BC); hw.py filters by year itself. Names are usually the full polity name in the local language with name:en ('Kingdom of Prussia', not 'Prussia'). ohm.overpass-ultra.us is a browser front end; planet files at planet.openhistoricalmap.org, QLever SPARQL at qlever.dev/ohm-planet. Crowd-sourced quality. 2026-10-17: Overpass refused a User-Agent ending in python-urllib (403).",
+      "checked": "2026-10-18",
+      "research": "R-20261018-3"
     },
     {
       "id": "seshat",

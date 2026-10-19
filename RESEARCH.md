@@ -92,6 +92,13 @@ Best sources (primary first): the Wikimedia API changelog and rate-limit pages, 
 
 Newest first within the day. Track is subject, tooling, practice, or testing. Creation-pass magnitudes are `n/a (initial)`. Their `Applied:` lines name where the Step 2 build (2026-10-17) used them: SKILL.md guards cite the `R-` id in place.
 
+### R-20261018-3 · 2026-10-18 · Build: OpenHistoricalMap's Overpass terms, limits and date convention
+- Summary: OHM publishes no rate limit or usage policy for its Overpass API: the OpenHistoricalMap/Overpass wiki page gives only the endpoint and examples, and openhistoricalmap.org/copyright covers the data (CC0 except features with a `license` tag; attribution appreciated, not required). The endpoint's `/api/status` reported "Rate limit: 2" (slots per client) on 2026-10-18. With no OHM figure, hw.py follows the general Overpass guidance (about 10,000 requests and 1 GB a day per client; after a 429 wait at least 30 s, since repeat 429s get clients banned): one attempt per query, a 5 s pace, exact tag matches only, `[timeout:25]`. OHM dates: YYYY, YYYY-MM or YYYY-MM-DD in proleptic Gregorian with astronomical years (1 BC = 0000, 2 BC = -0001); qualifiers go in `start_date:edtf`. Live 2026-10-18: "Kingdom of Prussia" year 1800 returned the 1795-10-24 to 1802-10-08 boundary (Q27306); "Roman Republic" year -44 returned the -0058 to -0042 boundary and the -0509 to -0027 chronology (Q17167), each query under 3 s.
+- Track: tooling
+- Sources: https://wiki.openstreetmap.org/wiki/OpenHistoricalMap/Overpass, https://www.openhistoricalmap.org/copyright, https://overpass-api.openhistoricalmap.org/api/status, https://dev.overpass-api.de/overpass-doc/en/preface/commons.html, https://wiki.openstreetmap.org/wiki/Overpass_API, https://wiki.openstreetmap.org/wiki/OpenHistoricalMap/Tags/Key/start_date
+- Magnitude: minor
+- Applied: skills/historywright/scripts/hw_sources.py (`_ohm`, `_ohm_year`), skills/historywright-sources/references/registry.json (ohm: route, pace, notes)
+
 ### R-20261018-2 · 2026-10-18 · Build: Wayback CDX `collapse=digest` drops repeated captures
 - Summary: The CDX server's README: "Only show unique captures by digest (note that only adjacent digest are collapsed, duplicates elsewhere in the cdx are not affected)", example `cdx?url=archive.org&collapse=digest`. Tested live 2026-10-18 with hw.py's User-Agent: `url=microsoft.com&output=json&limit=6` returned the 19961020014044 capture six times; with `&collapse=digest` it returned six different captures (20, 22, 25 (two), 26 October 1996, then 5 December 1998).
 - Track: tooling

@@ -1,0 +1,73 @@
+{
+ "version": 0.6,
+ "generator": "Overpass API 0.7.62.11 87bfad18",
+ "osm3s": {
+  "timestamp_osm_base": "2026-10-19T01:57:27Z",
+  "copyright": "The data included in this document is from www.openhistoricalmap.org. The data is made available under CC0."
+ },
+ "elements": [
+  {
+   "type": "node",
+   "id": 2108620557,
+   "lat": 42.8518032,
+   "lon": 12.6562525,
+   "tags": {
+    "end_date": "1849-07-04",
+    "name": "Repubblica Romana",
+    "name:en": "Roman Republic",
+    "place": "country",
+    "start_date": "1849-02-09"
+   }
+  },
+  {
+   "type": "relation",
+   "id": 2849148,
+   "center": {
+    "lat": 41.8797419,
+    "lon": 12.4104628
+   },
+   "tags": {
+    "admin_level": "2",
+    "boundary": "administrative",
+    "end_date": "-0338",
+    "name": "Res Publica Romana",
+    "name:en": "Roman Republic",
+    "place": "country",
+    "start_date": "-0509",
+    "type": "boundary",
+    "wikidata": "Q17167"
+   }
+  },
+  {
+   "type": "relation",
+   "id": 2849155,
+   "center": {
+    "lat": 41.0154359,
+    "lon": 15.5191553
+   },
+   "tags": {
+    "admin_level": "2",
+    "boundary": "administrative",
+    "end_date": "-0042",
+    "name": "Res Publica Romana",
+    "name:en": "Roman Republic",
+    "place": "country",
+    "start_date": "-0058",
+    "type": "boundary",
+    "wikidata": "Q17167"
+   }
+  },
+  {
+   "type": "relation",
+   "id": 2849156,
+   "tags": {
+    "end_date": "-0027",
+    "name": "Res Publica Romana",
+    "name:en": "Roman Republic",
+    "start_date": "-0509",
+    "type": "chronology",
+    "wikidata": "Q17167"
+   }
+  }
+ ]
+}

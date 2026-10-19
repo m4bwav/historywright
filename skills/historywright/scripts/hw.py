@@ -525,7 +525,7 @@ def build():
     x = sp.add_parser("place")
     x.add_argument("sub", choices=["search", "pleiades"])
     x.add_argument("value")
-    x.add_argument("--source", default="auto", choices=["auto", "pleiades", "chgis", "whg", "wikidata"])
+    x.add_argument("--source", default="auto", choices=["auto", "pleiades", "chgis", "whg", "wikidata", "ohm"])
     x.add_argument("--year", type=int)
     x.add_argument("--limit", type=int, default=5)
     x.set_defaults(fn=cmd_place)
