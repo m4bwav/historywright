@@ -1,64 +1,55 @@
-# Kickoff: historywright Step 4 (eval cache isolation, trim, small hw.py follow-ups)
+# Kickoff: historywright Step 5 (reinstall, open items, 0.2.0 when Mark says)
 
-Written 2026-10-18 at the end of the Step 3 session. Paste this into a fresh session started in the folder that
+Written 2026-10-18 at the end of the Step 4 session. Paste this into a fresh session started in the folder that
 holds this repository (the historywright clone).
 
 ## Where things stand
 
-- historywright is public and installed: https://github.com/m4bwav/historywright, historywright@mark-local 0.1.0
-  (reinstalled from main on 2026-10-18). No tag, no release.
-- The wiki is live (12 pages, wiki commit 5f89b34), verified against main at 29bc397 on Windows and WSL Ubuntu.
-  Its note, `ai-docs/notes/2026-10-18-github-wiki.md`, holds the update procedure, the verifier and its outputs.
-- Evals: all 19 cases have passed with the skill; measured baselines are in `evals/evals.json`. The A/B verdict
-  was TRIM (82% with, 39% without, cost 3.1x).
-- Step 3 merged PR #1 to #5, including two hw.py fixes found by the wiki: `HW_RECORD` no longer writes key
-  values into fixtures, and `cal date` no longer misreads `709 AUC`, `1300 AH`, AH years, Hijri months or Roman
-  day counts.
-- Keys: OpenAlex and WHG are live in `~/.historywright/config.json`. Read them from there; never copy them
-  anywhere else.
+- v0.1.0 released 2026-10-18 (tag at 6d06bb0). Main is ahead with PR #9 (project-scoped `.historywright/` home)
+  and PR #10 (Kalends/Nones/Ides, Hijri month names, AH labels, circa as EDTF `~`, Wayback `collapse=digest`).
+- The wiki describes 0.1.0 (wiki commit 17a9717) and lists the unreleased changes on Versions-and-Upgrading.
+- Mark's rulings: live keyless API calls are fine while they break no source's terms and risk no ban; paces sit
+  under each documented public limit (R-20261018-1). wikiwright L-160 is adopted with that condition.
+- Evals: action cases 9/9 with the skill using a project-home fixture (T-20261018-3). The probe found nothing to
+  trim.
 
 ## Read first
 
-1. `ai-docs/HANDOFF.md`, then `ai-docs/log.md` (the 2026-10-18 entry).
-2. `ai-docs/decisions/2026-10-18-session-rulings.md` (six rulings) and `2026-10-17-step2-build.md`.
-3. `AGENTS.md`, `TESTS.md`, `LEARNINGS.md` (L-001 to L-005).
+1. `ai-docs/HANDOFF.md`, then `ai-docs/log.md` (the 2026-10-18 entries).
+2. `ai-docs/decisions/2026-10-18-owner-rulings-live-calls-and-tag.md` and `2026-10-18-step4-rulings.md`.
+3. `AGENTS.md`, `TESTS.md`, `LEARNINGS.md`.
 4. The owner's rules: the vault user PROFILE (`everlast.py vault where` prints the vault), section "Code and repos".
 
 ## Next steps, in order
 
-0. **Ask Mark two things in your first message, then carry on:** may the wiki verifier keep calling keyless
-   public APIs live (wikiwright L-160 `live-public-sources`, which departs from its L-122)? And is it time for the
-   v0.1.0 tag? Record his answers in `ai-docs/decisions/`. If he refuses L-160, re-verify the wiki against
-   fixtures recorded once and labelled as recorded (the note's update procedure), and set L-160's status.
-1. **Eval cache isolation.** Eval runs share the real `~/.historywright/cache`, so an earlier run's entry ends a
-   later run at Step 0. Give hw.py a project-scoped home: `HW_HOME` first, then a `.historywright/` folder in the
-   working directory when it exists, then `~/.historywright`. Test it offline, say it in cli.md and `doctor`,
-   and have the eval cases create the folder. Then re-run the three action cases (`evergreen.py worth ... --ab
-   --case "action-*"`), and record the results in TESTS.md.
-2. **Trim.** `evergreen.py worth skills/historywright --probe` for what the model already knows; trim only that
-   from SKILL.md, then re-run the A/B on the with arm only (`--append --arm with`). Every SKILL.md edit gets a
-   CHANGELOG entry and keeps the description under 700 characters.
-3. **Small hw.py follow-ups** (HANDOFF "Next" 2): Wayback capture repeats in `src wayback`, the AH `read_as`
-   label, circa as EDTF `~`, and parsing Kalends, Nones, Ides and Hijri month names. Each with a test.
-4. **Open items** (HANDOFF "Next" 3), as time allows.
-5. After any change to a packaged file, run the wiki's update procedure (the note), on Windows and in WSL.
+0. **Ask Mark in your first message, then carry on:** is it time for a 0.2.0 tag for the unreleased changes
+   (CHANGELOG C-20261018-5 and -6)? If yes: bump `.claude-plugin/plugin.json` and `VERSION` in hw_net.py in a PR,
+   merge, tag `v0.2.0`, check the release workflow, then run the wiki update procedure against the new tag (the
+   note), adding a Releases row and emptying "On main, not yet released".
+1. Reinstall historywright@mark-local from main and run `hw.py doctor` from a project folder.
+2. Open items (HANDOFF "Next" 2), each with a test where it changes hw.py and an `R-` entry where it rests on a
+   changed endpoint, limit or licence.
+3. Before any new live source or a faster pace: check that source's published terms and limits first (Mark's
+   condition on live calls). Slow any host that answers 429.
 
 ## Rules
 
 - Commit with `git -c user.email=156112+m4bwav@users.noreply.github.com`. No AI attribution anywhere.
-- Every change goes through a pull request; merge it yourself once CI passes (squash or merge as the repo's
-  history shows; this repo uses merge commits), unless it changes the release workflow or a public API.
+- Every change goes through a pull request; merge it yourself once CI passes (this repo uses merge commits),
+  unless it changes the release workflow or a public API.
 - Run `python tests/check_skills.py`, `python tests/test_hw.py` and `python scripts/budget.py` before every
-  commit, and stage files by name, not with `git add -A` (Step 3 pushed a failing commit that way).
-- Research beats recall: a changed endpoint, limit, licence or gold answer needs an `R-` entry with its source.
+  commit, and stage files by name, not with `git add -A`.
+- Every SKILL.md edit gets a CHANGELOG entry and keeps the description under 700 characters.
 - hw.py stays standard library, one JSON object per command, LF endings (`write_text` helper), tested offline.
 - The repository is public: no absolute paths from this machine, no names, no keys in any file, ai-docs included.
-- Never index or walk AppData. Kill processes only by PID. Eval runs write to the real cache until step 1 lands:
-  move `~/.historywright/cache` aside before an action case and put it back after.
+- The Bash tool's hook refuses heredocs holding a doubled backslash: make regex edits with the Edit tool.
+- Eval runs: the action cases carry the `project-home` fixture; still check `~/.historywright/cache` is empty
+  after a run, and move any entry aside.
+- Never index or walk AppData. Kill processes only by PID.
 
 ## When to stop and ask
 
-- Before the first release tag (v0.1.0) and any directory submission: Mark's go-ahead.
+- Before any release tag and any directory submission: Mark's go-ahead.
 - Before signing up for or paying for any source, installing a large dependency, or requesting a key for anyone.
 
 Decide small design rulings yourself, record each in `ai-docs/decisions/`, and flag it in one line.

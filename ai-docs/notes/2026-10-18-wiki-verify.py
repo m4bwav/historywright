@@ -1,9 +1,9 @@
-"""Wiki verification for historywright: every example on the wiki, run against a pinned commit of main.
+"""Wiki verification for historywright: every example on the wiki, run against a pinned commit (0.1.0 since the release).
 
     python ai-docs/notes/2026-10-18-wiki-verify.py [COMMIT] > ai-docs/notes/2026-10-18-wiki-verify.out.txt
 
-historywright has no release yet (0.1.0 is unreleased; users install main), so this downloads the repository zip
-at COMMIT from GitHub into a scratch folder (never the working tree) and runs each page's commands as the page
+The release zip holds only skills/ and three files, and the pages also use tests/fixtures, so this downloads the
+repository zip at COMMIT (default: the v0.1.0 tag's commit) from GitHub into a scratch folder (never the working tree) and runs each page's commands as the page
 shows them, from a scratch run folder, with HW_HOME pointing at a fresh scratch home: no keys, no contact, no cache.
 
 Network: the commands that read sources call the live public APIs that need no key (Wikidata, Wikipedia,
@@ -29,7 +29,7 @@ import urllib.request
 import zipfile
 
 sys.stdout.reconfigure(encoding="utf-8", newline="\n")  # the saved output stays LF on Windows too
-COMMIT = sys.argv[1] if len(sys.argv) > 1 else "29bc39771fd0f7cc9c12d9c0d55766d25ec5fddd"
+COMMIT = sys.argv[1] if len(sys.argv) > 1 else "6d06bb04f5fe29096c1253bc97fe9c0125879570"  # v0.1.0
 WORK = tempfile.mkdtemp(prefix="hwwiki_")
 url = "https://codeload.github.com/m4bwav/historywright/zip/" + COMMIT
 zipfile.ZipFile(io.BytesIO(urllib.request.urlopen(url, timeout=120).read())).extractall(WORK)

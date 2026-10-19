@@ -1,5 +1,5 @@
 ## installed
-historywright at 29bc397 from https://codeload.github.com/m4bwav/historywright/zip/29bc39771fd0f7cc9c12d9c0d55766d25ec5fddd
+historywright at 6d06bb0 from https://codeload.github.com/m4bwav/historywright/zip/6d06bb04f5fe29096c1253bc97fe9c0125879570
 
 ## version
 0.1.0
@@ -468,7 +468,7 @@ historywright at 29bc397 from https://codeload.github.com/m4bwav/historywright/z
 {
  "ok": true,
  "title": "Microsoft",
- "references_total": 341,
+ "references_total": 345,
  "url": "https://en.wikipedia.org/wiki/Microsoft",
  "role": "finder: read each reference and cite it, not the article",
  "sentence": "Gates and Allen established Microsoft on April 4, 1975, with Gates as CEO, and Allen suggested the name \"Micro-Soft\", short for micro-computer software.",
@@ -714,7 +714,7 @@ historywright at 29bc397 from https://codeload.github.com/m4bwav/historywright/z
 
 ## verify-url
 {
- "ok": true,
+ "ok": false,
  "results": [
   {
    "url": "https://en.wikipedia.org/wiki/Julius_Caesar",
@@ -723,13 +723,13 @@ historywright at 29bc397 from https://codeload.github.com/m4bwav/historywright/z
   },
   {
    "url": "https://en.wikipedia.org/wiki/The_Fourth_Gallic_Diary_of_Caesar",
-   "label": "unknown",
+   "label": "likely_hallucinated",
    "status": 404,
-   "why": "Wayback check failed (HTTP 429)"
+   "why": "no live page and no archived copy"
   }
  ]
 }
-[exit 0]
+[exit 1]
 
 ## src-wayback
 {
