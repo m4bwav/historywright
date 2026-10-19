@@ -1,40 +1,36 @@
 # historywright handoff
 
-Updated 2026-10-18 (end of the Step 5 session).
+Updated 2026-10-18 (end of the Step 6 session).
 
 ## State
 
-- Public: https://github.com/m4bwav/historywright (main). Three skills, hw.py (six stdlib modules, `hw_pdf.py`
-  new), 85-source registry, 43 offline tests, CI green on three systems with Python 3.9 and 3.14.
-- Released: v0.1.0 on 2026-10-18 (tag at 6d06bb0). Main is ahead with CHANGELOG C-20261018-5 to -9: project
-  home, Roman and Hijri dates, Wayback collapse, PDF quote checks (PR #12), `place search --source ohm`
-  (PR #13), Seshat as CC BY-SA 4.0 (PR #14).
-- Wiki pages run against v0.1.0. Versions-and-Upgrading lists every unreleased change (wiki commit baff65f).
-  Update procedure and verifier: [notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md).
-- Installed: historywright@mark-local reinstalled from main after the merges (still says 0.1.0).
-- Evals: action cases 9/9 with the project-home fixture (T-20261018-3). Not re-run this session: no change
-  altered what a skill triggers on or decides.
-- Owner rulings: live keyless calls fine while no terms are broken and no ban risked
-  ([decisions/2026-10-18-owner-rulings-live-calls-and-tag.md](decisions/2026-10-18-owner-rulings-live-calls-and-tag.md)).
-  Small rulings: [decisions/2026-10-18-step5-rulings.md](decisions/2026-10-18-step5-rulings.md).
+- Public: https://github.com/m4bwav/historywright (main). Three skills, hw.py (six stdlib modules), 85-source
+  registry, 46 offline tests, CI green on three systems with Python 3.9 and 3.14.
+- Released: v0.1.0 (6d06bb0) and **v0.2.0 on 2026-10-18 (tag at f890f1c)**, release zip published:
+  https://github.com/m4bwav/historywright/releases/tag/v0.2.0. Main has nothing unreleased beyond docs.
+- 0.2.0 = CHANGELOG C-20261018-5 to -10: project home, Roman and Hijri dates, Wayback collapse, PDF quotes,
+  `place search --source ohm`, Seshat CC BY-SA, doi "only the year differs", South Asia era outline 185 BCE-320 CE.
+- Wiki at 0.2.0 (wiki commit 9b024ba; live 12 pages, 0 failures). Procedure and verifier:
+  [notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md); the verifier defaults to v0.2.0.
+- Installed: historywright@mark-local reinstalled at 0.2.0.
+- Cache: two live answers in `~/.historywright/cache` (who ruled India in AD 26; what happened to India's records).
+  Move them aside before eval runs.
 - Keys stay in `~/.historywright/config.json` (OpenAlex, WHG). Never in the repository.
-- Elsewhere: polywright PR #22 merged (references skill reads a pack's refs/index.json); evergreen issues
-  m4bwav/evergreen-protocol#28 and #29 filed (A/B harness), not fixed.
+- Owner rulings: [decisions/2026-10-18-owner-rulings-live-calls-and-tag.md](decisions/2026-10-18-owner-rulings-live-calls-and-tag.md),
+  [decisions/2026-10-18-step5-rulings.md](decisions/2026-10-18-step5-rulings.md).
 
 ## Waiting for Mark
 
-- A 0.2.0 tag for the unreleased changes (asked 2026-10-18, no answer yet).
 - Any directory submission (on hold since 2026-10-17).
 
 ## Next
 
-1. If Mark says yes to 0.2.0: bump `.claude-plugin/plugin.json` and `VERSION` in hw_net.py in a PR, merge, tag
-   `v0.2.0`, check the release workflow, then the wiki update procedure against the tag (Commands gains
-   `--source ohm`; How-Claims-Are-Checked gains PDFs; a Releases row; empty "On main, not yet released").
-2. Open items left: the Gallica, DPLA, QDL and HathiTrust 403s with hw.py's honest User-Agent (RESEARCH open
-   questions); two-column PDFs read in stream order (a quote across columns can miss).
-3. Optional: `evergreen.py worth --ab` on all 11 value cases with the project home, for a fresh baseline.
-4. Wiki runs on Windows then WSL, one after the other (each has its own pace file).
+1. Open items: the Gallica, DPLA, QDL and HathiTrust 403s with hw.py's own User-Agent (RESEARCH open questions);
+   two-column PDFs read in stream order; brill.com PDFs sit behind a bot check (L-004).
+2. South Asia depth (L-005): the Deccan and Tamil answers for AD 26 went unverified because the SOAS and UW
+   theses would not download. Find a readable scholarly source on Satavahana chronology and add it to the registry or eras.md.
+3. Optional: `evergreen.py worth --ab` on the 11 value cases for a fresh baseline after 0.2.0.
+4. Evergreen refresh due 2026-11-16.
 
 ## Read first
 

@@ -1,18 +1,20 @@
 ## installed
-historywright at 6d06bb0 from https://codeload.github.com/m4bwav/historywright/zip/6d06bb04f5fe29096c1253bc97fe9c0125879570
+historywright at f890f1c from https://codeload.github.com/m4bwav/historywright/zip/f890f1c7172a91e5e5454f45f035affd3936df4f
 
 ## version
-0.1.0
+0.2.0
 [exit 0]
 
 ## doctor
 {
  "ok": true,
- "version": "0.1.0",
+ "version": "0.2.0",
  "checks": {
   "python": "<python>",
   "python_ok": true,
   "home": "<home>",
+  "home_from": "HW_HOME",
+  "config": "<home>/config.json",
   "contact": false,
   "keys": {
    "openalex": false,
@@ -27,7 +29,9 @@ historywright at 6d06bb0 from https://codeload.github.com/m4bwav/historywright/z
   "era_outline": true,
   "dila_table": false,
   "cache_entries": 0,
-  "user_agent": "historywright/0.1.0 (https://github.com/m4bwav/historywright)"
+  "user_agent": "historywright/0.2.0 (https://github.com/m4bwav/historywright)",
+  "pdftotext": false,
+  "cwd_in_skill_folder": false
  },
  "todo": [
   "set a contact address for the User-Agent: hw.py keys contact --set ADDRESS (the user's own)",
@@ -738,7 +742,7 @@ historywright at 6d06bb0 from https://codeload.github.com/m4bwav/historywright/z
  "name": "Wayback Machine CDX",
  "tier": 1,
  "licence": "captures of third-party pages; per site",
- "url": "https://web.archive.org/cdx/search/cdx?url=microsoft.com&output=json&limit=10&fl=timestamp,original,statuscode",
+ "url": "https://web.archive.org/cdx/search/cdx?url=microsoft.com&output=json&limit=10&fl=timestamp,original,statuscode&collapse=digest",
  "count": 3,
  "results": [
   {
@@ -750,20 +754,20 @@ historywright at 6d06bb0 from https://codeload.github.com/m4bwav/historywright/z
    "url": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/"
   },
   {
-   "date": "19961020014044",
+   "date": "19961022175331",
    "title": "http://www.microsoft.com:80/",
    "original": "http://www.microsoft.com:80/",
    "status": "200",
-   "link": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/",
-   "url": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/"
+   "link": "https://web.archive.org/web/19961022175331/http://www.microsoft.com:80/",
+   "url": "https://web.archive.org/web/19961022175331/http://www.microsoft.com:80/"
   },
   {
-   "date": "19961020014044",
+   "date": "19961025122722",
    "title": "http://www.microsoft.com:80/",
    "original": "http://www.microsoft.com:80/",
    "status": "200",
-   "link": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/",
-   "url": "https://web.archive.org/web/19961020014044/http://www.microsoft.com:80/"
+   "link": "https://web.archive.org/web/19961025122722/http://www.microsoft.com:80/",
+   "url": "https://web.archive.org/web/19961025122722/http://www.microsoft.com:80/"
   }
  ],
  "mirror_warning": null
@@ -977,11 +981,18 @@ historywright at 6d06bb0 from https://codeload.github.com/m4bwav/historywright/z
  "ok": true,
  "input": "AH 1300",
  "read_as": {
-  "astronomical_year": 1882,
-  "month": null,
-  "day": null,
-  "calendar": "gregorian",
-  "label": "1882"
+  "calendar": "islamic (tabular)",
+  "ah_year": 1300,
+  "ah_month": null,
+  "ah_day": null,
+  "label": "AH 1300",
+  "western_start": {
+   "astronomical_year": 1882,
+   "month": null,
+   "day": null,
+   "calendar": "gregorian",
+   "label": "1882"
+  }
  },
  "precision": "year",
  "jdn": [
@@ -1144,17 +1155,92 @@ historywright at 6d06bb0 from https://codeload.github.com/m4bwav/historywright/z
 
 ## err-ides
 {
- "ok": false,
- "error": "cannot read 'Ides of March 44 BC': Roman day counts (Kalends, Nones, Ides) are not read; give the day of the month (the Ides of March are 15 March: '15 March 44 BC')"
+ "ok": true,
+ "input": "Ides of March 44 BC",
+ "read_as": {
+  "astronomical_year": -43,
+  "month": 3,
+  "day": 15,
+  "calendar": "julian",
+  "label": "15 March 44 BC"
+ },
+ "precision": "day",
+ "jdn": [
+  1705426,
+  1705426
+ ],
+ "edtf": "-0043-03-15",
+ "day": {
+  "jdn": 1705426,
+  "weekday": "Wednesday",
+  "julian": {
+   "iso": "-0043-03-15",
+   "label": "15 March 44 BC",
+   "auc": 710
+  },
+  "gregorian": {
+   "iso": "-0043-03-13",
+   "label": "13 March 44 BC"
+  },
+  "notes": [
+   "Gregorian reading before 15 October 1582 is proleptic"
+  ]
+ },
+ "notes": [
+  "Roman day count read as 15 March (Ides of March = 15 March, counted inclusively)"
+ ]
 }
-[exit 1]
+[exit 0]
 
 ## err-ah-month
 {
- "ok": false,
- "error": "cannot read '1 Muharram 1 AH': AUC and AH dates are a year ('AUC 709', '709 AUC', 'AH 1300') or a tabular year-month-day ('AH 1300-09-01'); month names of those calendars are not read"
+ "ok": true,
+ "input": "1 Muharram 1 AH",
+ "read_as": {
+  "calendar": "islamic (tabular)",
+  "ah_year": 1,
+  "ah_month": 1,
+  "ah_day": 1,
+  "label": "1 Muharram AH 1",
+  "western_start": {
+   "astronomical_year": 622,
+   "month": 7,
+   "day": 16,
+   "calendar": "julian",
+   "label": "16 July AD 622"
+  }
+ },
+ "precision": "day",
+ "jdn": [
+  1948440,
+  1948440
+ ],
+ "edtf": "0622-07-16",
+ "day": {
+  "jdn": 1948440,
+  "weekday": "Friday",
+  "julian": {
+   "iso": "0622-07-16",
+   "label": "16 July AD 622",
+   "auc": 1375
+  },
+  "gregorian": {
+   "iso": "0622-07-19",
+   "label": "19 July AD 622"
+  },
+  "islamic_tabular": {
+   "ah": "1-01-01",
+   "note": "tabular; observed dates can differ by a day or two"
+  },
+  "notes": [
+   "Gregorian reading before 15 October 1582 is proleptic"
+  ]
+ },
+ "notes": [
+  "tabular Islamic calendar (civil epoch); observed dates can differ by a day or two"
+ ]
 }
-[exit 1]
+[exit 0]
 
 ## err-ignored-words
 {
@@ -1172,7 +1258,7 @@ historywright at 6d06bb0 from https://codeload.github.com/m4bwav/historywright/z
   1684899,
   1685263
  ],
- "edtf": "-0099",
+ "edtf": "-0099~",
  "day": {
   "jdn": 1684899,
   "weekday": "Sunday",
@@ -1190,8 +1276,9 @@ historywright at 6d06bb0 from https://codeload.github.com/m4bwav/historywright/z
    "Gregorian reading before 15 October 1582 is proleptic"
   ]
  },
+ "qualifier": "circa",
  "notes": [
-  "ignored words: c. (check the reading)"
+  "written as approximate (circa): EDTF gets ~"
  ]
 }
 [exit 0]
@@ -1381,14 +1468,14 @@ legionary/timeline.json
  "by_route": {
   "wd": 2,
   "wp": 1,
-  "place": 3,
-  "link-out": 54,
+  "place": 4,
+  "link-out": 53,
   "src": 22,
   "cal": 1,
   "oa": 1,
   "doi": 1
  },
- "era_outline_bytes": 6303,
+ "era_outline_bytes": 6747,
  "era_outline_band": "green",
  "problems": [],
  "warnings": [],
@@ -1417,7 +1504,7 @@ era name 康熙: 60 years, 10 months, 2 days (22219 days)
 {
  "ok": true,
  "contact": "you@example.com",
- "user_agent": "historywright/0.1.0 (https://github.com/m4bwav/historywright; you@example.com)"
+ "user_agent": "historywright/0.2.0 (https://github.com/m4bwav/historywright; you@example.com)"
 }
 [exit 0]
 
