@@ -1,7 +1,7 @@
 {
   "registry": "1",
-  "updated": "2026-10-17",
-  "notes": "Seed source registry for historywright, read by hw.py and the historywright-sources skill. tier: 1 primary or expert-curated, 2 curated reference or aggregator, 3 crowd-sourced tertiary (a finder, never the cited authority). access: open (no sign-up), ua-required (refuses clients without an identifying User-Agent), key-optional (works keyless at reduced depth; a free key goes further), key-required (needs a key: with route src it is a free instant key substituted for {key}; with route link-out it is gated by email or approval), paid (subscription), browse-only (web pages, no API), bulk-only (dumps or GitHub, no query API), link-out (only a link). route: wd, wp, place, oa, doi or cal when an hw.py command owns the source; src when the generic search block works; link-out when hw.py does not query it (paid, browse-only, bulk-only, bot-walled, or an open API the JSON search cannot drive, such as XML, SPARQL or identifier lookups; such an API keeps its probe). search: {q} is the URL-encoded query and {key} the user's key; items is a dotted path to the result list (empty means the response itself; an object's values are taken as a list); fields are dotted paths inside one item (numeric segments index lists; an empty path means the item itself); optional link is a URL template filled from the extracted fields; optional skip drops leading rows (a CDX header). detail: a second call per result, its url filled from the field named by id_field; items null means the response is the record. ua: plain means send 'historywright <contact email>' instead of the standard User-Agent. pace_s: minimum seconds between requests to the host, from the documented limit (0.5 when none is documented, never below 0.1). probe: one cheap keyless call (or a public demo key) and its expected status; null for paid, browse-only, bulk-only and bot-walled entries. mirrors: Wikipedia mirror and derivative domains (suffix match) that never count as independent corroboration.",
+  "updated": "2026-10-21",
+  "notes": "Seed source registry for historywright, read by hw.py and the historywright-sources skill. tier: 1 primary or expert-curated, 2 curated reference or aggregator, 3 crowd-sourced tertiary (a finder, never the cited authority). access: open (no sign-up), ua-required (refuses clients without an identifying User-Agent), key-optional (works keyless at reduced depth; a free key goes further), key-required (needs a key: with route src it is a free instant key substituted for {key}; with route link-out it is gated by email or approval), paid (subscription), browse-only (web pages, no API), bulk-only (dumps or GitHub, no query API), link-out (only a link). route: wd, wp, place, oa, doi or cal when an hw.py command owns the source; src when the generic search block works; link-out when hw.py does not query it (paid, browse-only, bulk-only, bot-walled, or an open API the JSON search cannot drive, such as XML, SPARQL or identifier lookups; such an API keeps its probe). search: {q} is the URL-encoded query and {key} the user's key; items is a dotted path to the result list (empty means the response itself; an object's values are taken as a list); fields are dotted paths inside one item (numeric segments index lists; an empty path means the item itself); optional link is a URL template filled from the extracted fields; optional skip drops leading rows (a CDX header); optional headers are sent with the search and with the probe (a header-gated API such as artic). detail: a second call per result, its url filled from the field named by id_field; items null means the response is the record. ua: plain means send 'historywright <contact email>' instead of the standard User-Agent. pace_s: minimum seconds between requests to the host, from the documented limit (0.5 when none is documented, never below 0.1). probe: one cheap keyless call (or a public demo key) and its expected status; null for paid, browse-only, bulk-only and bot-walled entries. mirrors: Wikipedia mirror and derivative domains (suffix match) that never count as independent corroboration.",
   "mirrors": [
     "academic-accelerator.com",
     "academic.ru",
@@ -2173,7 +2173,7 @@
       ],
       "tier": 1,
       "licence": "data CC0 except description and place fields (CC BY 4.0); images per is_public_domain",
-      "access": "open",
+      "access": "ua-required",
       "key": null,
       "host": "api.artic.edu",
       "pace_s": 1.0,
@@ -2181,6 +2181,9 @@
       "url": "https://www.artic.edu/collection",
       "search": {
         "url": "https://api.artic.edu/api/v1/artworks/search?q={q}&limit=10&fields=id,title,date_display,image_id,is_public_domain",
+        "headers": {
+          "AIC-User-Agent": "historywright (https://github.com/m4bwav/historywright)"
+        },
         "items": "data",
         "fields": {
           "title": "title",
@@ -2196,8 +2199,8 @@
         "url": "https://api.artic.edu/api/v1/artworks/search?q=helmet&limit=1&fields=id,title",
         "expect": 200
       },
-      "notes": "60 requests/min per IP; optional AIC-User-Agent header. Image URL: https://www.artic.edu/iiif/2/{image_id}/full/843,/0/default.jpg. Nightly dumps on GitHub art-institute-of-chicago/api-data.",
-      "checked": "2026-10-17",
+      "notes": "Cloudflare answers 403 unless the request carries an AIC-User-Agent header (checked 2026-10-21; the docs call it optional). 60 requests/min per IP. Image URL: https://www.artic.edu/iiif/2/{image_id}/full/843,/0/default.jpg. Nightly dumps on GitHub art-institute-of-chicago/api-data.",
+      "checked": "2026-10-21",
       "research": "R-20261017-8"
     },
     {
@@ -2692,6 +2695,278 @@
       "notes": "A transcription platform, not a source. The API comes only with paid plans (Scholar about €99 a year for 900 credits; Free is 50 credits a month without API); the pricing page contradicts itself. HTR is out of v1 scope.",
       "checked": "2026-10-17",
       "research": "R-20261017-14"
+    },
+    {
+      "id": "getty-provenance",
+      "name": "Getty Provenance Index (CSV exports)",
+      "use": "Art-market provenance: Knoedler and Goupil stock books and auction sales catalogue contents, with buyers, sellers and prices",
+      "kind": "catalogue",
+      "regions": [
+        "europe",
+        "us"
+      ],
+      "eras": [
+        "early-modern",
+        "modern"
+      ],
+      "tier": 1,
+      "licence": "CC0 1.0 per dataset README (Knoedler, Sales Catalogs, Goupil)",
+      "access": "bulk-only",
+      "key": null,
+      "host": "github.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://github.com/thegetty/provenance-index-csv",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Getty Research Institute. CSV files on S3, linked from each dataset README (knoedler.csv 18 MB, sales_contents_1-5.csv 107-260 MB each, goupil.csv 52.5 MB); S3 files last modified 2022-08-01, tags v1-v3 (v3 = 2022-06-01), repo last push 2026-01-26. README: 'These data will eventually be superseded by the Linked Open Data release' and 'rights may vary between datasets'. Search the live index at https://www.getty.edu/research-conservation/tools-databases/provenance/ (browse-only). Download once and grep locally; never page the S3 files per question.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
+    },
+    {
+      "id": "museo-egizio",
+      "name": "Museo Egizio, Turin: collection online",
+      "use": "Egyptian objects with dates, period, provenance and inventory number (Suppl., Cat., S.)",
+      "kind": "museum",
+      "regions": [
+        "africa",
+        "mediterranean"
+      ],
+      "eras": [
+        "prehistory",
+        "ancient"
+      ],
+      "tier": 1,
+      "licence": "images CC0 1.0 ('freely downloadable and reusable under a Creative Commons CC0 Public Domain licence'); data provided 'as is'",
+      "access": "browse-only",
+      "key": null,
+      "host": "collezioni.museoegizio.it",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://collezioni.museoegizio.it/en-GB/search/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "No JSON API found (/api/ redirects). HTML search works: /en-GB/search/?action=s&description={q}&searchLng=en-GB; record pages /en-GB/material/{id} (e.g. S_17138, the Gebelein painted linen, '3600-3350 BCE', Naqada II). robots.txt disallows only /xml/, /js/, /libs/, /Error.aspx.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
+    },
+    {
+      "id": "artnet-pdb",
+      "name": "artnet Price Database",
+      "use": "Auction results for fine and decorative art (subscription)",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "www.artnet.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.artnet.com/price-database/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Terms (last updated 2023-04-27): 'You may not use any robot, spider, other automatic device, or manual process to monitor or copy' the site; subscriptions forbid derivative products. robots.txt answered 403. Link out; the user reads it.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
+    },
+    {
+      "id": "artprice",
+      "name": "Artprice",
+      "use": "Auction results and artist price indices (subscription)",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "www.artprice.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.artprice.com/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "robots.txt opens '# BLOCK AI/Scrapers' and disallows anthropic-ai, ClaudeBot and Claude-Web by name. Link out only.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
+    },
+    {
+      "id": "mutualart",
+      "name": "MutualArt",
+      "use": "Auction results and artist data (subscription tiers)",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "www.mutualart.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.mutualart.com/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "FAQ: full results on Premium and VIP plans; Essentials covers recent results only. Link out only.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
+    },
+    {
+      "id": "invaluable",
+      "name": "Invaluable",
+      "use": "Online auctions and past results from many houses",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.invaluable.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.invaluable.com/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "robots.txt sets crawl delays (1-10 s by agent). Past-result detail often needs an account. Link out; cite the auction house's own lot page where open.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
+    },
+    {
+      "id": "liveauctioneers",
+      "name": "LiveAuctioneers",
+      "use": "Online auctions and price results from many houses",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.liveauctioneers.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.liveauctioneers.com/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "robots.txt Crawl-delay: 10. Link out only.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
+    },
+    {
+      "id": "sothebys-results",
+      "name": "Sotheby's lot pages and results",
+      "use": "Catalogue entries, estimates and results for Sotheby's sales",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.sothebys.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.sothebys.com/en/results",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Lot pages are open (title, period, estimate); results say 'Log in to view results'. robots.txt crawl delays up to 15 s. Never sign in. Cite the lot page for what it shows and trade press on the sale date for the price. Attribution terms: https://help.sothebys.com/en/support/solutions/articles/44002518846.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
+    },
+    {
+      "id": "christies-results",
+      "name": "Christie's lot pages and results",
+      "use": "Catalogue entries and results for Christie's sales",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "browse-only",
+      "key": null,
+      "host": "www.christies.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.christies.com/en/results",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "The web search tool refused christies.com ('not accessible to our user agent') on 2026-10-21; robots.txt answered 200. Link out; the user reads it.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
+    },
+    {
+      "id": "art-sales-index",
+      "name": "Art Sales Index",
+      "use": "Auction results database (subscription)",
+      "kind": "catalogue",
+      "regions": [
+        "world"
+      ],
+      "eras": [
+        "modern",
+        "contemporary"
+      ],
+      "tier": 2,
+      "licence": "proprietary",
+      "access": "paid",
+      "key": null,
+      "host": "www.artsalesindex.com",
+      "pace_s": 0.5,
+      "route": "link-out",
+      "url": "https://www.artsalesindex.com/",
+      "search": null,
+      "detail": null,
+      "probe": null,
+      "notes": "Unreachable on 2026-10-21 (https connect failed; http empty reply). Terms unchecked. Re-check before linking; drop to retired if still down at the next refresh.",
+      "checked": "2026-10-21",
+      "research": "R-20261021-1"
     }
   ],
   "retired": [

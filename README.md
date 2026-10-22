@@ -43,7 +43,7 @@ for 102 BC noted and the consensus named. Every source in the answer is one it f
 | Skill | Job |
 |---|---|
 | [`historywright`](skills/historywright/SKILL.md) | The hub: a short reference interview (formal reign or actual power? founding or incorporation? which calendar?), structured sources first, footnotes followed to scholarship and primary texts, two independent sources, dates in code, the answer with citations, a confidence line and a classified "sources disagree" note, then a cache entry |
-| [`historywright-sources`](skills/historywright-sources/SKILL.md) | The knowledge base: a registry of 85 sources by era, region, tier, licence, access and pace, an era outline that routes questions, query recipes, and an endpoint probe run at every refresh |
+| [`historywright-sources`](skills/historywright-sources/SKILL.md) | The knowledge base: a registry of 95 sources by era, region, tier, licence, access and pace, an era outline that routes questions, query recipes, and an endpoint probe run at every refresh |
 | [`historywright-pack`](skills/historywright-pack/SKILL.md) | Research packs for 3D, film and images: sources with exact quotes, entities with QIDs and EDTF dates, places as GeoJSON, a timeline, reference images from museum collection records with licences and accession numbers, and a period anachronism checklist. A pack is also a [polywright](https://github.com/m4bwav/polywright) asset folder |
 
 All three share one evergreen unit at the repository root: [RESEARCH.md](RESEARCH.md) (dated findings and a

@@ -290,8 +290,10 @@ def cmd_probe(a):
                 rows.append({"id": s["id"], "result": "skipped", "why": "needs key %s" % s.get("key")})
                 continue
             url = url.replace("{key}", k)
-        hdr = {"User-Agent": ("historywright " + contact()).strip()} if s.get("ua") == "plain" else None
-        r = fetch(url, accept=pr.get("accept", "application/json,*/*"), headers=hdr, retries=0)
+        hdr = dict((s.get("search") or {}).get("headers") or {})
+        if s.get("ua") == "plain":
+            hdr["User-Agent"] = ("historywright " + contact()).strip()
+        r = fetch(url, accept=pr.get("accept", "application/json,*/*"), headers=hdr or None, retries=0)
         want = pr.get("expect", 200)
         if r.status == want:
             res = "ok"

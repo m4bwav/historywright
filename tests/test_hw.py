@@ -313,6 +313,26 @@ class Registry(unittest.TestCase):
         for needle in ("tier", "link-out", "lacks {q}", "real key", "not http"):
             self.assertIn(needle, text)
 
+    def test_probe_sends_search_headers(self):
+        import hw_net
+        seen = []
+
+        def fake_fetch(url, accept=None, headers=None, retries=None, **kw):
+            seen.append(headers)
+            return hw_net.Response(200, {"content-type": "application/json"}, b'{"data": []}', url)
+
+        reg = {"sources": [{"id": "gated", "route": "src", "search": {"url": "https://x.example/s?q={q}",
+                                                                       "headers": {"X-Gate": "historywright"}},
+                            "probe": {"url": "https://x.example/s?q=helmet", "expect": 200}}]}
+        saved = hw.fetch, hw.registry
+        hw.fetch, hw.registry = fake_fetch, (lambda: reg)
+        try:
+            code, r = run("probe", "--only", "gated")
+        finally:
+            hw.fetch, hw.registry = saved
+        self.assertTrue(r["ok"], r)
+        self.assertEqual(seen, [{"X-Gate": "historywright"}])
+
     def test_mirror_detection(self):
         import hw_net
         self.assertTrue(hw_net.is_mirror("https://en.m.wikipedia.org/wiki/X"))

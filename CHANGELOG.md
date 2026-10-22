@@ -8,9 +8,14 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 - 0.1.0 (2026-10-18): first release, C-20261017-1 to C-20261018-4. https://github.com/m4bwav/historywright/releases/tag/v0.1.0
 - 0.2.0 (2026-10-18): C-20261018-5 to C-20261018-10. https://github.com/m4bwav/historywright/releases/tag/v0.2.0
-- unreleased: none yet.
+- unreleased: C-20261021-1.
 
 ## Changes
+
+### C-20261021-1 · 2026-10-21 · Registry: art sources from artwright; AIC needs its header; probe sends search headers
+- because: R-20261021-1, artwright ruling R6
+- files: skills/historywright-sources/references/registry.json (getty-provenance, museo-egizio, artnet-pdb, artprice, mutualart, invaluable, liveauctioneers, sothebys-results, christies-results, art-sales-index added; artic: access, search headers, notes; top notes: search headers), skills/historywright/scripts/hw.py (`cmd_probe`), tests/test_hw.py (test_probe_sends_search_headers), README.md and skills/historywright-sources/SKILL.md and .claude-plugin/plugin.json (95 sources)
+- `src artic` works again: the Art Institute's API refuses requests without an `AIC-User-Agent` header, which the search block now sends, and `probe` sends a source's search headers too, so header-gated sources no longer read as blocked. The ten new entries are link-out (bulk-only, browse-only or paid), so provenance, Egyptian object and auction-price questions find where to look without hw.py querying sites whose terms forbid it.
 
 ### C-20261018-10 · 2026-10-18 · doi says when only the year differs; the South Asia era outline covers 185 BCE to 320 CE
 - because: L-004, L-005 (the "who ruled India 2,000 years ago" question)
