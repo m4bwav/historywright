@@ -80,3 +80,9 @@ Append-only, newest last.
 - Snag: brill.com `oa_url` downloads return an AWS WAF human-verification page (L-004).
 - Wiki: the verifier was re-run on Windows and WSL against f890f1c. The 9 changed sections are all expected (the released features). Pages updated to 0.2.0 by a subagent (wiki commit 9b024ba): outputs 55 checked, 0 missing; check 0 errors; live 12 pages, 0 failures. Four blocks were run by hand and marked skip (two refusals, one OHM call, one doi year-only example). The PDF paragraph is written from the code and tests; no PDF quote was run for it. The saved verifier outputs and the default commit now point at v0.2.0.
 - Vault: the `user/ENVIRONMENTS.md` line about annotated tags is written but not committed. The vault's `.git/index.lock` (18:49) belonged to another process, and it was left alone.
+
+## 2026-10-21 · Art sources from artwright; AIC header fix
+
+- Applied artwright's reviewed proposal (its ruling R6: art fact questions route through this registry): ten link-out entries (getty-provenance, museo-egizio, artnet-pdb, artprice, mutualart, invaluable, liveauctioneers, sothebys-results, christies-results, art-sales-index), the registry now holds 95 sources.
+- `artic` was broken: the API answers 403 (Cloudflare) without an `AIC-User-Agent` header. The search block now sends one (access `ua-required`), and `hw.py probe` sends a source's search headers, with an offline test. Live `hw.py src artic helmet` returned 10 results after the fix.
+- Research R-20261021-1, change C-20261021-1 (unreleased). Not in this PR: Interpol, Art Loss Register, Lost Art, Proveana, IFAR and the Art Basel/UBS report (the proposal's "left out" list; each needs one direct request first); the optional `met` note on artistPrefix.

@@ -10,7 +10,7 @@ the era outline and the query recipes, and keeps them current. Answers are the h
 
 Files (in `references/`):
 
-- [registry.json](references/registry.json): 85 sources, each with `use`, `regions`, `eras`, `tier`
+- [registry.json](references/registry.json): 95 sources, each with `use`, `regions`, `eras`, `tier`
   (1 primary or expert-curated, 2 curated reference or aggregator, 3 crowd-sourced tertiary), `licence`,
   `access`, `key`, `host`, `pace_s`, `route`, a JSON `search` template where one works, a `probe`, `notes`,
   `checked` and the `R-` finding behind it; plus `mirrors` (Wikipedia copies that never count as corroboration)
