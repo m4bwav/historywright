@@ -65,5 +65,19 @@
   "body": "rate_limited",
   "status": 429,
   "content_type": "text/html"
+ },
+ {
+  "match": "www\\.loc\\.gov/collections/historic-american-buildings-landscapes-and-engineering-records/\\?q=sawmill&fo=json",
+  "method": "GET",
+  "file": "loc-habs-sawmill.json",
+  "status": 200,
+  "content_type": "application/json"
+ },
+ {
+  "match": "example\\.org/images/",
+  "method": "GET",
+  "file": "tiny.png",
+  "status": 200,
+  "content_type": "image/png"
  }
 ]

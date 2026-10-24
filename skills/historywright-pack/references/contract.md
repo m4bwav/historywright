@@ -33,6 +33,9 @@ checks everything below; `tests/fixtures/pack-good` passes and `tests/fixtures/p
 }
 ```
 
+`mechanism` (optional, set by `pack init --mechanism`): true when the subject is a machine or a building with
+machinery; anachronism.md must then have a Mechanism section with items (see anachronism.md below).
+
 `completeness` lists every part (answer, sources, entities, places, timeline, refs, anachronism) as `present`, or
 `empty` with a reason. An agent that stops early must say what it skipped (R-20261017-21).
 
@@ -89,11 +92,21 @@ Each feature's `properties` carry `name`, `source` (a source id or gazetteer URI
 - Only collection records: a museum, archive or Commons file with an accession number or file page and the
   object's own date. Never an image search result, a video still or a generated picture (R-20261017-20).
 - Licence on every image. CC0 and CC BY by default; non-commercial (British Museum, Science Museum Group) gets
-  `nc: true` and never enters a pack with `commercial: true`.
+  `nc: true` and never enters a pack with `commercial: true`: `pack add-ref` refuses it there. A licence counts
+  as non-commercial when it has "NC" as a word of its own or says non-commercial ("CC BY 4.0 licence" does not).
+- File names come from institution and accession; a long one keeps the accession's tail and a short hash, and a
+  name already taken by another image gets `-2`, `-3`.
 - `hw.py pack add-ref` downloads, hashes and records an image in both `refs/index.json` and the manifest.
 
 ## anachronism.md
 
 A checklist for the period, each item cited to a source in sources.json: what did not exist yet (stirrups in
 50 BC Rome, glazed windows in a 1300s cottage), what is often shown wrong (lorica segmentata in the late
-Republic), what the colour, material and shape evidence says. At least three items.
+Republic), what the colour, material and shape evidence says. At least three filled items; an empty item (the template's
+`- ` line) fails validation, and so does the answer template's `<answer with inline citations [s1]>` left in
+answer.md.
+
+When `historywright.mechanism` is true, a section headed `## Mechanism: what drives what, and where it must sit`
+lists the drive chain from the power source to the tool, one link per item: what the part is, where it must sit,
+what it drives, with sizes and citations. It is followed by what a picture or model must never show. Example:
+[mechanism-example.md](mechanism-example.md).

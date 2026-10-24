@@ -1,6 +1,6 @@
 {
   "registry": "1",
-  "updated": "2026-10-21",
+  "updated": "2026-10-23",
   "notes": "Seed source registry for historywright, read by hw.py and the historywright-sources skill. tier: 1 primary or expert-curated, 2 curated reference or aggregator, 3 crowd-sourced tertiary (a finder, never the cited authority). access: open (no sign-up), ua-required (refuses clients without an identifying User-Agent), key-optional (works keyless at reduced depth; a free key goes further), key-required (needs a key: with route src it is a free instant key substituted for {key}; with route link-out it is gated by email or approval), paid (subscription), browse-only (web pages, no API), bulk-only (dumps or GitHub, no query API), link-out (only a link). route: wd, wp, place, oa, doi or cal when an hw.py command owns the source; src when the generic search block works; link-out when hw.py does not query it (paid, browse-only, bulk-only, bot-walled, or an open API the JSON search cannot drive, such as XML, SPARQL or identifier lookups; such an API keeps its probe). search: {q} is the URL-encoded query and {key} the user's key; items is a dotted path to the result list (empty means the response itself; an object's values are taken as a list); fields are dotted paths inside one item (numeric segments index lists; an empty path means the item itself); optional link is a URL template filled from the extracted fields; optional skip drops leading rows (a CDX header); optional headers are sent with the search and with the probe (a header-gated API such as artic). detail: a second call per result, its url filled from the field named by id_field; items null means the response is the record. ua: plain means send 'historywright <contact email>' instead of the standard User-Agent. pace_s: minimum seconds between requests to the host, from the documented limit (0.5 when none is documented, never below 0.1). probe: one cheap keyless call (or a public demo key) and its expected status; null for paid, browse-only, bulk-only and bot-walled entries. mirrors: Wikipedia mirror and derivative domains (suffix match) that never count as independent corroboration.",
   "mirrors": [
     "academic-accelerator.com",
@@ -1566,6 +1566,49 @@
       "notes": "The legacy chroniclingamerica.loc.gov API is gone; since 2025-08-04 the collection is served only through the loc.gov JSON API, sharing loc's host and its 20/min budget. OCR as ALTO on tile.loc.gov; bulk OCR from the OCR Data page; data not fully synced since the migration.",
       "checked": "2026-10-17",
       "research": "R-20261017-6"
+    },
+    {
+      "id": "loc-habs",
+      "name": "HABS/HAER/HALS (Library of Congress)",
+      "use": "Measured drawings, large-format photographs and written data on US buildings, engineering works (mills, bridges, machinery) and landscapes, 1933 to now",
+      "kind": "archive",
+      "regions": [
+        "us"
+      ],
+      "eras": [
+        "early-modern",
+        "modern",
+        "contemporary"
+      ],
+      "tier": 1,
+      "licence": "public domain (US government documentation; LoC: no known restrictions)",
+      "access": "open",
+      "key": null,
+      "host": "www.loc.gov",
+      "pace_s": 3.0,
+      "route": "src",
+      "url": "https://www.loc.gov/collections/historic-american-buildings-landscapes-and-engineering-records/",
+      "search": {
+        "url": "https://www.loc.gov/collections/historic-american-buildings-landscapes-and-engineering-records/?q={q}&fo=json&c=10",
+        "items": "results",
+        "fields": {
+          "title": "title",
+          "url": "url",
+          "id": "id",
+          "call_number": "shelf_id",
+          "contents": "description.0",
+          "location": "location",
+          "image": "image_url.2"
+        }
+      },
+      "detail": null,
+      "probe": {
+        "url": "https://www.loc.gov/collections/historic-american-buildings-landscapes-and-engineering-records/?q=sawmill&fo=json&c=1",
+        "expect": 200
+      },
+      "notes": "The loc.gov JSON API scoped to the HABS/HAER/HALS collection: the general loc search buries these records among books and newspapers. Shares loc's host and its 20/min budget. date is usually empty: the building's dates are in the record's data pages. contents counts photos, measured drawings and data pages; image is the largest of the three thumbnails (about 1024 px). Each item page lists sheets as https://www.loc.gov/resource/<id>.sheet/?sp=N and data pages as PDFs on tile.loc.gov (read them with hw.py verify quote).",
+      "checked": "2026-10-23",
+      "research": "R-20261023-1"
     },
     {
       "id": "nara",

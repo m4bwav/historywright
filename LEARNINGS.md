@@ -6,6 +6,38 @@ Write an entry the moment a real signal happens: a user correction, the same err
 
 ## Active
 
+### L-010 · 2026-10-23 · A machine's pack needs a Mechanism section: what drives what, and where each part must sit
+- Trigger: a pack for a water-powered sash sawmill (1790-1840) feeding 3D and image work. The answer held every fact (flutter wheel on the crank shaft, pitman up through the floor, sash between fender posts), but the anachronism template only asked what did not exist yet; the drive chain and a list of placements a picture must never break (blade outside the building, wheel with no shaft into it, floating gears) had to be written by hand.
+- Hypothesis: for a machine the likeliest error in a picture or model is not a date but a part in the wrong place or connected to nothing; a prose answer does not say where each part sits, so nothing downstream can check it.
+- Rule: `pack init --mechanism` sets `historywright.mechanism: true` and gives anachronism.md the "Mechanism: what drives what, and where it must sit" section (numbered links from the power source to the tool, then what a picture must never show); `validate-pack` fails when the flag is set and the section is missing or has no items. Example: skills/historywright-pack/references/mechanism-example.md.
+- Evidence: the sawmill pack built 2026-10-23 (its anachronism.md, Mechanism and Prohibitions sections); test_mechanism_section_required_when_flagged.
+- Scope: skill
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-23
+
+### L-009 · 2026-10-23 · validate-pack passed an unedited template
+- Trigger: on the sawmill pack (2026-10-23), validate-pack was found to accept the files `pack init` writes: answer.md with `<answer with inline citations [s1]>` still in it passes, because the template already has a Confidence line, a "Sources agree" note and the AI-researched line; anachronism.md's three empty `- ` lines counted as three checklist items. On a fresh pack it also crashed (KeyError 'warnings') instead of reporting the empty sources.json.
+- Hypothesis: checks that look for required markers are satisfied by a template that contains those markers; the template is the one input every pack starts from, so the validator has to recognise it.
+- Rule: validate-pack fails on any template placeholder left in answer.md and on empty list items in anachronism.md, and counts only filled items towards the three; check_sources returns `warnings` on every path.
+- Evidence: the sawmill pack, 2026-10-23; test_validate_fails_on_unedited_templates.
+- Scope: skill
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-23
+
+### L-008 · 2026-10-23 · pack add-ref recorded a non-commercial image in a commercial pack instead of refusing it
+- Trigger: building the sawmill pack (2026-10-23), add-ref only set `nc: true` on a non-commercial image whatever the pack's licence, so the rule "never put a non-commercial image in a commercial pack" was enforced only later by validate-pack, after the file was downloaded and both indexes written.
+- Hypothesis: a rule that the writer does not enforce gets broken and then needs cleanup by hand in two files; refusing at the door is cheaper than detecting afterwards.
+- Rule: add-ref reads the manifest first and refuses (`ok: false`, a clear error, nothing written) a non-commercial licence when `historywright.commercial` is true; validate-pack keeps its check for hand-edited indexes.
+- Evidence: the sawmill pack, 2026-10-23; test_add_ref_refuses_nc_image_in_commercial_pack.
+- Scope: skill
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-23
+
+### L-007 · 2026-10-23 · The non-commercial licence check matched "nc" inside words
+- Trigger: on the sawmill pack (2026-10-23), the regex `(nc|non-?commercial)` flagged "CC BY 4.0 licence" (li-c-e-n-c-e) and a French "...de France" credit as non-commercial, which would mark open images `nc: true` and block them from commercial packs.
+- Hypothesis: an unanchored two-letter pattern matches inside ordinary English and French words; licence strings say NC as a separate token (CC BY-NC, BY-NC-SA).
+- Rule: NC_LICENCES is `\bnc\b` or `\bnon[- ]?commercial`; a new licence string gets a test case both ways.
+- Evidence: the sawmill pack, 2026-10-23; test_nc_licence_regex_is_anchored.
+- Scope: skill
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-23
+
 ### L-005 · 2026-10-17 · A research skill's A/B must grant the research tools to both arms
 - Trigger: the first `evergreen.py worth --ab` run scored 48% with the skill against 33% without (verdict CUT). Most with-arm failures ended "requires approval": the runner's default outcome tools are Skill, Read, Glob, Grep and Write, so hw.py, WebFetch and WebSearch were blocked; the skill then refused to answer from memory, as its rules say, while the without arm answered from memory in 3 to 5 seconds.
 - Hypothesis: the default tool grant fits skills that edit files, not skills whose whole job is fetching sources; a blocked with arm measures the permission gate, and the harness's environment check does not look for "requires approval" in the answer.

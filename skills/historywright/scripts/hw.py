@@ -248,7 +248,7 @@ def cmd_verify(a):
 
 def cmd_pack(a):
     if a.sub == "init":
-        return out(C.pack_init(a.dir, a.question, a.name, a.period, a.commercial))
+        return out(C.pack_init(a.dir, a.question, a.name, a.period, a.commercial, a.mechanism))
     if a.sub == "add-ref":
         return out(C.pack_add_ref(a.dir, a.image, a.page, a.title, a.licence, a.object_date, a.place, a.accession,
                                   a.institution, a.author))
@@ -591,6 +591,8 @@ def build():
     x.add_argument("--name")
     x.add_argument("--period")
     x.add_argument("--commercial", action="store_true")
+    x.add_argument("--mechanism", action="store_true",
+                   help="init: a machine or a building with machinery; anachronism.md gets the Mechanism section")
     for k in ("image", "page", "title", "licence", "object-date", "place", "accession", "institution", "author"):
         x.add_argument("--" + k)
     x.set_defaults(fn=cmd_pack)

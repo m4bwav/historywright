@@ -8,9 +8,24 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 - 0.1.0 (2026-10-18): first release, C-20261017-1 to C-20261018-4. https://github.com/m4bwav/historywright/releases/tag/v0.1.0
 - 0.2.0 (2026-10-18): C-20261018-5 to C-20261018-10. https://github.com/m4bwav/historywright/releases/tag/v0.2.0
-- unreleased: C-20261021-1.
+- 0.3.0 (version bumped 2026-10-23; tag and release wait for the owner's go-ahead): C-20261021-1 to C-20261023-3.
 
 ## Changes
+
+### C-20261023-3 · 2026-10-23 · Registry: loc-habs searches the HABS/HAER/HALS collection; version 0.3.0
+- because: R-20261023-1 (user request after the sawmill pack)
+- files: skills/historywright-sources/references/registry.json (loc-habs; updated), skills/historywright-sources/references/eras.md (Colonial and modern Americas), skills/historywright-pack/SKILL.md (Step 3), skills/historywright-sources/SKILL.md and README.md and .claude-plugin/plugin.json (96 sources), .claude-plugin/plugin.json and skills/historywright/scripts/hw_net.py (version 0.3.0), tests/test_hw.py (test_loc_habs_source), tests/fixtures/http (loc-habs-sawmill.json, one index row)
+- `hw.py src loc-habs "<subject>"` returns measured-drawing, photograph and data-page records of US buildings and machinery with their HABS call number, contents count and the 1024 px image, instead of digging them out of the general `loc` search.
+
+### C-20261023-2 · 2026-10-23 · validate-pack fails on unedited templates; machine packs get a Mechanism section
+- because: L-009, L-010 (user request after the sawmill pack)
+- files: skills/historywright/scripts/hw_check.py (`validate_pack`, `_items`, `_section`, `MECHANISM_TEMPLATE`, `pack_init`, `check_sources`), skills/historywright/scripts/hw.py (`pack init --mechanism`), skills/historywright-pack/SKILL.md (Steps 1, 2 and 4), skills/historywright-pack/references/contract.md (manifest.json, anachronism.md), skills/historywright-pack/references/mechanism-example.md (new), skills/historywright/references/cli.md (pack init, validate-pack), tests/test_hw.py (test_validate_fails_on_unedited_templates, test_mechanism_section_required_when_flagged)
+- An answer.md that still holds the template's placeholders and an anachronism.md with empty `- ` items now fail; numbered items count. `pack init --mechanism` sets `historywright.mechanism: true` and writes the "Mechanism: what drives what, and where it must sit" section; validate-pack then requires it to have items. Step 2 says to read pages through `hw.py verify quote` from the start, since curl and WebFetch reads are not in the fetch log. validate-pack on a fresh pack no longer crashes on the empty sources.json.
+
+### C-20261023-1 · 2026-10-23 · Licence check anchored; add-ref refuses NC images in commercial packs and never overwrites a ref
+- because: L-007, L-008 (user request after the sawmill pack)
+- files: skills/historywright/scripts/hw_check.py (`NC_LICENCES`, `pack_add_ref`, `ref_slug`), skills/historywright-pack/references/contract.md (refs/index.json), skills/historywright/references/cli.md (pack add-ref), tests/test_hw.py (test_nc_licence_regex_is_anchored, test_add_ref_refuses_nc_image_in_commercial_pack, test_add_ref_keeps_tail_and_never_overwrites), tests/fixtures/http (tiny.png, one index row)
+- "CC BY 4.0 licence" and "...de France" no longer read as non-commercial. add-ref refuses a non-commercial licence in a commercial pack before downloading anything. A long institution-plus-accession name keeps the accession's tail and a six-character hash; a name taken by another image gets `-2`, `-3`, and the same image added again replaces its own entry (`replaced: true`). The manifest's source list is keyed by file, so two images from one record page both stay.
 
 ### C-20261021-1 · 2026-10-21 · Registry: art sources from artwright; AIC needs its header; probe sends search headers
 - because: R-20261021-1, artwright ruling R6

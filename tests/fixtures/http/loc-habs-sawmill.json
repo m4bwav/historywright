@@ -1,0 +1,90 @@
+{
+ "results": [
+  {
+   "title": "Buttery Sawmill, Silvermine, Fairfield County, CT",
+   "url": "https://www.loc.gov/item/ct0117/",
+   "id": "http://www.loc.gov/item/ct0117/",
+   "date": null,
+   "image_url": [
+    "https://tile.loc.gov/storage-services/service/pnp/habshaer/ct/ct0100/ct0117/photos/022529p_150px.jpg#h=107&w=150",
+    "https://tile.loc.gov/storage-services/service/pnp/habshaer/ct/ct0100/ct0117/photos/022529pr.jpg#h=458&w=640",
+    "https://tile.loc.gov/storage-services/service/pnp/habshaer/ct/ct0100/ct0117/photos/022529pv.jpg#h=732&w=1024"
+   ],
+   "location": [
+    "connecticut",
+    "silvermine",
+    "fairfield county"
+   ],
+   "shelf_id": "HABS CONN,1-SILM,1-",
+   "description": [
+    "Photo(s): 4 | Measured Drawing(s): 9 | Data Page(s): 4"
+   ],
+   "subject": [
+    "lumber industry",
+    "sawmills"
+   ],
+   "online_format": [
+    "image",
+    "pdf"
+   ]
+  },
+  {
+   "title": "Sawmill, U.S. Route 11, Sperryville, Rappahannock County, VA",
+   "url": "https://www.loc.gov/item/va0880/",
+   "id": "http://www.loc.gov/item/va0880/",
+   "date": null,
+   "image_url": [
+    "https://tile.loc.gov/storage-services/service/pnp/habshaer/va/va0800/va0880/photos/305482p_150px.jpg#h=150&w=109",
+    "https://tile.loc.gov/storage-services/service/pnp/habshaer/va/va0800/va0880/photos/305482pr.jpg#h=640&w=465",
+    "https://tile.loc.gov/storage-services/service/pnp/habshaer/va/va0800/va0880/photos/305482pv.jpg#h=1024&w=743"
+   ],
+   "location": [
+    "sperryville",
+    "virginia",
+    "rappahannock county"
+   ],
+   "shelf_id": "HABS VA,79-SPER.V,2-",
+   "description": [
+    "Photo(s): 3"
+   ],
+   "subject": [
+    "sawmills"
+   ],
+   "online_format": [
+    "image",
+    "pdf"
+   ]
+  },
+  {
+   "title": "Emerson Sawmill, Scroon River, River Street, Warrensburg, Warren County, NY",
+   "url": "https://www.loc.gov/item/ny1306/",
+   "id": "http://www.loc.gov/item/ny1306/",
+   "date": null,
+   "image_url": [
+    "https://tile.loc.gov/storage-services/service/pnp/habshaer/ny/ny1300/ny1306/photos/124348p_150px.jpg#h=120&w=150",
+    "https://tile.loc.gov/storage-services/service/pnp/habshaer/ny/ny1300/ny1306/photos/124348pr.jpg#h=512&w=640",
+    "https://tile.loc.gov/storage-services/service/pnp/habshaer/ny/ny1300/ny1306/photos/124348pv.jpg#h=820&w=1024"
+   ],
+   "location": [
+    "warrensburg",
+    "new york",
+    "warren county"
+   ],
+   "shelf_id": "HAER NY,57-WARBU,1-",
+   "description": [
+    "Photo(s): 17 | Data Page(s): 4 | Photo Caption Page(s): 1"
+   ],
+   "subject": [
+    "industry",
+    "sawmills"
+   ],
+   "online_format": [
+    "image",
+    "pdf"
+   ]
+  }
+ ],
+ "pagination": {
+  "of": 110
+ }
+}

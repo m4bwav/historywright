@@ -531,6 +531,130 @@ class DoiMatch(unittest.TestCase):
         self.assertTrue(r["all_match"])
         self.assertNotIn("warning", r)
 
+
+class PackChecks(unittest.TestCase):
+    """Fixes found while building a water-powered sawmill pack (L-007 to L-010)."""
+
+    IMG = "https://example.org/images/%s.png"
+
+    def _pack(self, name, commercial=False, mechanism=False):
+        d = Path(TMP_HOME) / name
+        shutil.rmtree(str(d), ignore_errors=True)
+        argv = ["pack", "init", str(d), "--question", "How was a sawmill driven?", "--period", "1790-1840"]
+        argv += ["--commercial"] if commercial else []
+        argv += ["--mechanism"] if mechanism else []
+        code, r = run(*argv)
+        self.assertTrue(r["ok"], r)
+        return d
+
+    def _good_copy(self, name):
+        d = Path(TMP_HOME) / name
+        shutil.rmtree(str(d), ignore_errors=True)
+        shutil.copytree(str(FIX / "pack-good"), str(d))
+        return d
+
+    def test_nc_licence_regex_is_anchored(self):
+        for lic in ("CC BY-NC 4.0", "CC BY-NC-SA 3.0", "cc-by-nc-nd", "NC", "Non-commercial use only",
+                    "noncommercial", "non commercial research"):
+            self.assertTrue(C.NC_LICENCES.search(lic), lic)
+        for lic in ("CC BY 4.0 licence", "Licence Ouverte, Bibliotheque nationale de France", "CC0", "public domain",
+                    "CC BY-SA 4.0", "Science licence"):
+            self.assertFalse(C.NC_LICENCES.search(lic), lic)
+
+    def test_add_ref_refuses_nc_image_in_commercial_pack(self):
+        d = self._pack("pack-commercial", commercial=True)
+        code, r = run("pack", "add-ref", str(d), "--image", self.IMG % "nc", "--page", "https://example.org/obj/nc",
+                      "--title", "NC object", "--licence", "CC BY-NC 4.0", "--object-date", "1800",
+                      "--place", "Here", "--accession", "NC.1", "--institution", "Museum")
+        self.assertFalse(r["ok"])
+        self.assertIn("commercial", r["error"])
+        self.assertEqual(json.loads((d / "refs" / "index.json").read_text(encoding="utf-8"))["refs"], [])
+        self.assertEqual(list((d / "refs").glob("*.png")), [])
+        # an open licence still goes in
+        code, r = run("pack", "add-ref", str(d), "--image", self.IMG % "ok", "--page", "https://example.org/obj/ok",
+                      "--title", "Open object", "--licence", "CC BY 4.0 licence", "--object-date", "1800",
+                      "--place", "Here", "--accession", "OK.1", "--institution", "Museum")
+        self.assertTrue(r["ok"], r)
+        self.assertFalse(r["ref"]["nc"])
+
+    def test_validate_fails_on_unedited_templates(self):
+        d = self._pack("pack-template")
+        code, r = run("validate-pack", str(d))
+        text = "\n".join(r["problems"])
+        self.assertIn("answer.md still holds the template placeholder", text)
+        self.assertIn("anachronism.md has 3 empty items", text)
+        # a filled pack passes both checks
+        code, r = run("validate-pack", str(FIX / "pack-good"))
+        self.assertFalse(any("template" in p or "empty items" in p for p in r["problems"]), r["problems"])
+
+    def test_add_ref_keeps_tail_and_never_overwrites(self):
+        d = self._pack("pack-names")
+        inst = "Library of Congress Prints and Photographs Division Historic American Buildings Survey"
+        files = []
+        for i, acc in enumerate(("HABS NH-45 sheet 5", "HABS NH-45 sheet 14")):
+            code, r = run("pack", "add-ref", str(d), "--image", self.IMG % ("s%d" % i), "--page",
+                          "https://example.org/obj/s%d" % i, "--title", "Sheet", "--licence", "public domain",
+                          "--object-date", "1936", "--place", "NH", "--accession", acc, "--institution", inst)
+            self.assertTrue(r["ok"], r)
+            files.append(r["ref"]["file"])
+        self.assertNotEqual(files[0], files[1])
+        self.assertTrue(files[0].endswith(".png") and "sheet-5" in files[0], files[0])
+        self.assertIn("sheet-14", files[1])
+        self.assertTrue(all(len(Path(f).stem) <= 64 for f in files), files)
+        # same slug, different image: suffixed, never overwritten
+        code, r1 = run("pack", "add-ref", str(d), "--image", self.IMG % "a", "--page", "https://example.org/obj/a",
+                       "--title", "A", "--licence", "CC0", "--object-date", "1800", "--place", "X",
+                       "--accession", "A.1", "--institution", "Museum")
+        code, r2 = run("pack", "add-ref", str(d), "--image", self.IMG % "b", "--page", "https://example.org/obj/b",
+                       "--title", "B", "--licence", "CC0", "--object-date", "1800", "--place", "X",
+                       "--accession", "A 1", "--institution", "Museum")
+        self.assertEqual(r1["ref"]["file"], "refs/museum-a-1.png")
+        self.assertEqual(r2["ref"]["file"], "refs/museum-a-1-2.png")
+        idx = json.loads((d / "refs" / "index.json").read_text(encoding="utf-8"))["refs"]
+        self.assertEqual(len(idx), 4)
+        # re-adding the same image replaces its own entry and says so
+        code, r3 = run("pack", "add-ref", str(d), "--image", self.IMG % "a", "--page", "https://example.org/obj/a",
+                       "--title", "A again", "--licence", "CC0", "--object-date", "1800", "--place", "X",
+                       "--accession", "A.1", "--institution", "Museum")
+        self.assertEqual((r3["ref"]["file"], r3.get("replaced")), ("refs/museum-a-1.png", True))
+        self.assertEqual(len(json.loads((d / "refs" / "index.json").read_text(encoding="utf-8"))["refs"]), 4)
+
+    def test_loc_habs_source(self):
+        code, d = run("src", "loc-habs", "sawmill", "--limit", "2")
+        self.assertTrue(d["ok"], d)
+        self.assertIn("historic-american-buildings-landscapes-and-engineering-records/?q=sawmill&fo=json", d["url"])
+        self.assertEqual(d["count"], 2)
+        first = d["results"][0]
+        self.assertEqual(first["url"], "https://www.loc.gov/item/ct0117/")
+        self.assertEqual(first["call_number"], "HABS CONN,1-SILM,1-")
+        self.assertIn("Measured Drawing(s)", first["contents"])
+        self.assertTrue(first["image"].startswith("https://tile.loc.gov/") and "pv.jpg" in first["image"])
+
+    def test_mechanism_section_required_when_flagged(self):
+        d = self._pack("pack-mech", mechanism=True)
+        man = json.loads((d / "manifest.json").read_text(encoding="utf-8"))
+        self.assertTrue(man["historywright"]["mechanism"])
+        self.assertIn("## Mechanism: what drives what, and where it must sit",
+                      (d / "anachronism.md").read_text(encoding="utf-8"))
+        self.assertNotIn("Mechanism", (self._pack("pack-plain") / "anachronism.md").read_text(encoding="utf-8"))
+        g = self._good_copy("pack-mech-good")
+        mp = g / "manifest.json"
+        m = json.loads(mp.read_text(encoding="utf-8"))
+        m["historywright"]["mechanism"] = True
+        mp.write_text(json.dumps(m), encoding="utf-8")
+        code, r = run("validate-pack", str(g))
+        self.assertTrue(any("Mechanism" in p for p in r["problems"]), r["problems"])
+        a = g / "anachronism.md"
+        a.write_text(a.read_text(encoding="utf-8") + "\n## Mechanism: what drives what, and where it must sit\n\n"
+                     "1. \n2. \n", encoding="utf-8")
+        code, r = run("validate-pack", str(g))
+        self.assertTrue(any("Mechanism" in p for p in r["problems"]), r["problems"])
+        a.write_text(a.read_text(encoding="utf-8").replace("1. \n2. \n", "1. Wheel on the crank shaft [s1]\n"
+                     "2. Pitman up to the saw gate [s1]\n"), encoding="utf-8")
+        code, r = run("validate-pack", str(g))
+        self.assertTrue(r["ok"], r["problems"])
+
+
 if __name__ == "__main__":
     try:
         unittest.main(verbosity=1)

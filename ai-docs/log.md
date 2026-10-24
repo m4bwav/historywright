@@ -86,3 +86,10 @@ Append-only, newest last.
 - Applied artwright's reviewed proposal (its ruling R6: art fact questions route through this registry): ten link-out entries (getty-provenance, museo-egizio, artnet-pdb, artprice, mutualart, invaluable, liveauctioneers, sothebys-results, christies-results, art-sales-index), the registry now holds 95 sources.
 - `artic` was broken: the API answers 403 (Cloudflare) without an `AIC-User-Agent` header. The search block now sends one (access `ua-required`), and `hw.py probe` sends a source's search headers, with an offline test. Live `hw.py src artic helmet` returned 10 results after the fix.
 - Research R-20261021-1, change C-20261021-1 (unreleased). Not in this PR: Interpol, Art Loss Register, Lost Art, Proveana, IFAR and the Art Basel/UBS report (the proposal's "left out" list; each needs one direct request first); the optional `met` note on artistPrefix.
+
+## 2026-10-23 · Pack fixes from the sawmill pack
+
+- A water-powered sash sawmill pack (1790-1840) for 3D work showed seven gaps; built in branch pack-mechanism-fixes: the NC licence regex anchored (L-007), add-ref refuses NC images in commercial packs (L-008), validate-pack fails on unedited templates (L-009) and no longer crashes on a fresh pack, add-ref keeps the accession tail and never overwrites, `src loc-habs` (R-20261023-1, checked live), and the Mechanism section with `pack init --mechanism` (L-010, example in skills/historywright-pack/references/mechanism-example.md). Step 2 of the pack skill now says to read pages through `verify quote` from the start.
+- Version 0.3.0 in plugin.json and hw_net.VERSION (C-20261023-1 to -3); not tagged.
+- Learning ids start at L-007: another session's uncommitted edit on main adds L-006.
+- Gaps left for later are listed in HANDOFF.md, Next 5.

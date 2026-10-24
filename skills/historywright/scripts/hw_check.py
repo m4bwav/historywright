@@ -20,7 +20,12 @@ from hw_net import (write_text, decode_body, VERSION,fetch, fetched_urls, get_js
 PACK_FILES = ["manifest.json", "answer.md", "sources.json", "entities.json", "places.geojson", "timeline.json",
               "refs/index.json", "anachronism.md"]
 OPEN_LICENCES = re.compile(r"(?i)^(cc0|public domain|pd|pdm|cc[- ]by(?![- ]?nc)[- \w.]*|ogl[\w .-]*|no known copyright)")
-NC_LICENCES = re.compile(r"(?i)(nc|non-?commercial)")
+# "nc" only as a word of its own (CC BY-NC, BY-NC-SA, NC): unanchored it matched "licence" and "France" (L-007)
+NC_LICENCES = re.compile(r"(?i)(\bnc\b|\bnon[- ]?commercial)")
+# Text that pack init writes and an agent must replace (L-009)
+TEMPLATE_PLACEHOLDERS = ("<answer with inline citations [s1]>", "<high|medium|low>", "<what is uncertain and why>")
+LIST_ITEM = re.compile(r"(?m)^[ \t]*(?:[-*]|\d+[.)])(?:[ \t]+(.*))?$")
+MECHANISM_HEADING = "## Mechanism: what drives what, and where it must sit"
 KINDS = {"primary", "secondary", "tertiary", "structured"}
 
 
@@ -148,7 +153,7 @@ def check_sources(doc, network=True, require_fetched=True):
     problems, warnings, checked = [], [], []
     srcs = doc.get("sources") if isinstance(doc, dict) else None
     if not isinstance(srcs, list) or not srcs:
-        return {"ok": False, "problems": ["sources.json needs a non-empty 'sources' list"]}
+        return {"ok": False, "problems": ["sources.json needs a non-empty 'sources' list"], "warnings": []}
     ids = set()
     seen = fetched_urls() if require_fetched else set()
     for s in srcs:
@@ -328,6 +333,9 @@ def validate_pack(path, network=False):
             probs.append("answer.md has no 'Sources disagree' / 'Sources agree' note")
         if not re.search(r"(?i)AI[- ]researched", ans):
             probs.append("answer.md does not say it was AI-researched")
+        left = [t for t in TEMPLATE_PLACEHOLDERS if t in ans]
+        if left:
+            probs.append("answer.md still holds the template placeholder %s: write the answer" % ", ".join(left))
     src = jl("sources.json")
     if src is not None:
         res = check_sources(src, network=network, require_fetched=False)
@@ -393,9 +401,36 @@ def validate_pack(path, network=False):
                 probs.append("%s: generated images are not references (label them reconstructions elsewhere)" % w)
     if (root / "anachronism.md").exists():
         a = (root / "anachronism.md").read_text(encoding="utf-8")
-        if len(re.findall(r"(?m)^\s*[-*] ", a)) < 3:
+        filled, empty = _items(a)
+        if empty:
+            probs.append("anachronism.md has %d empty items (the template's '- ' lines): fill them or delete them"
+                         % empty)
+        if filled < 3:
             probs.append("anachronism.md needs a checklist of at least three items")
+        if hw.get("mechanism"):
+            sec = _section(a, "Mechanism")
+            if sec is None:
+                probs.append("manifest says historywright.mechanism: true but anachronism.md has no '%s' section"
+                             % MECHANISM_HEADING)
+            elif _items(sec)[0] == 0:
+                probs.append("anachronism.md: the Mechanism section has no items (the drive chain from the power "
+                             "source to the tool, where each part sits)")
     return {"ok": not probs, "pack": str(root), "problems": probs, "warnings": warns}
+
+
+def _items(text):
+    """(filled, empty) markdown list items, bulleted or numbered."""
+    found = [(m.group(1) or "").strip() for m in LIST_ITEM.finditer(text)]
+    return sum(1 for f in found if f), sum(1 for f in found if not f)
+
+
+def _section(text, title):
+    """The body of the first heading that starts with title, up to the next heading of the same or higher level."""
+    m = re.search(r"(?im)^(#{1,6})[ \t]+%s\b.*$" % re.escape(title), text)
+    if not m:
+        return None
+    end = re.search(r"(?m)^#{1,%d}[ \t]" % len(m.group(1)), text[m.end():])
+    return text[m.end():m.end() + end.start()] if end else text[m.end():]
 
 
 def _sha(p):
@@ -414,9 +449,14 @@ TEMPLATES = {
     "refs/index.json": {"refs": []},
     "anachronism.md": "# Anachronism checklist: {period}\n\nEach item cites its source.\n\n- \n- \n- \n",
 }
+# pack init --mechanism: a machine, or a building with machinery (L-010)
+MECHANISM_TEMPLATE = (
+    "# Anachronism and mechanism checklist: {period}\n\nEach item cites its source.\n\n" + MECHANISM_HEADING +
+    "\n\nThe drive chain from the power source to the tool, one link per item: the part, where it must sit, what it "
+    "drives, each cited.\n\n1. \n2. \n3. \n\n## What a picture or model must never show\n\n- \n- \n- \n")
 
 
-def pack_init(path, question, name=None, period=None, commercial=False):
+def pack_init(path, question, name=None, period=None, commercial=False, mechanism=False):
     root = Path(path)
     (root / "refs").mkdir(parents=True, exist_ok=True)
     made = []
@@ -424,6 +464,8 @@ def pack_init(path, question, name=None, period=None, commercial=False):
         p = root / f
         if p.exists():
             continue
+        if f == "anachronism.md" and mechanism:
+            t = MECHANISM_TEMPLATE
         if isinstance(t, str):
             write_text(p, t.format(question=question, version=VERSION, date=today(), period=period or "?"))
         else:
@@ -435,7 +477,7 @@ def pack_init(path, question, name=None, period=None, commercial=False):
                "targets": [], "units": "m", "sources": [], "tools": [{"name": "historywright", "version": VERSION}],
                "outputs": [], "reviews": [], "status": "references",
                "historywright": {"version": "1", "question": question, "period": period, "commercial": commercial,
-                                 "created": today(), "completeness": []}}
+                                 "mechanism": bool(mechanism), "created": today(), "completeness": []}}
         write_text(mp, json.dumps(man, indent=1, ensure_ascii=False) + "\n")
         made.append("manifest.json")
     return {"ok": True, "pack": str(root), "created": made}
@@ -444,31 +486,62 @@ def pack_init(path, question, name=None, period=None, commercial=False):
 def pack_add_ref(path, image_url, page_url, title, licence, object_date, place, accession, institution,
                  author=None, nc=None):
     root = Path(path)
+    is_nc = bool(NC_LICENCES.search(licence or "")) if nc is None else nc
+    mp = root / "manifest.json"
+    man = load_json(mp) if mp.exists() else None
+    if is_nc and man and (man.get("historywright") or {}).get("commercial"):  # refuse, not just flag (L-008)
+        return {"ok": False, "error": "licence %r is non-commercial and this pack is marked commercial "
+                "(manifest historywright.commercial: true): find an open-licence image, or ask the user whether "
+                "the work is really commercial" % licence}
     r = fetch(image_url, accept="image/*,*/*")
     if not r.ok:
         return {"ok": False, "error": "image fetch failed: %s" % (r.error or r.status)}
     ext = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/tiff": ".tif",
            "image/gif": ".gif"}.get(r.headers.get("content-type", "").split(";")[0], ".jpg")
-    slug = re.sub(r"[^a-z0-9]+", "-", ("%s %s" % (institution, accession)).lower()).strip("-")[:60] or "ref"
-    rel = "refs/%s%s" % (slug, ext)
+    ip = root / "refs" / "index.json"
+    idx = load_json(ip) if ip.exists() else {"refs": []}
+    by_file = {x.get("file"): x for x in idx.get("refs", [])}
+    base = ref_slug(institution, accession)
+    rel, n, replaced = "refs/%s%s" % (base, ext), 1, False
+    while (root / rel).exists() or rel in by_file:
+        if (by_file.get(rel) or {}).get("image_url") == image_url:
+            replaced = True  # the same image added again: update its own entry
+            break
+        n += 1
+        rel = "refs/%s-%d%s" % (base, n, ext)
     (root / rel).write_bytes(r.body)
-    is_nc = bool(NC_LICENCES.search(licence or "")) if nc is None else nc
     entry = {"file": rel, "title": title, "object_date": object_date, "place": place, "accession": accession,
              "institution": institution, "url": page_url, "image_url": image_url, "licence": licence,
              "author": author, "nc": is_nc, "retrieved": today(), "sha256": _sha(root / rel), "bytes": len(r.body)}
-    ip = root / "refs" / "index.json"
-    idx = load_json(ip) if ip.exists() else {"refs": []}
-    idx["refs"] = [x for x in idx["refs"] if x.get("file") != rel] + [entry]
+    idx["refs"] = [x for x in idx.get("refs", []) if x.get("file") != rel] + [entry]
     write_text(ip, json.dumps(idx, indent=1, ensure_ascii=False) + "\n")
     mp = root / "manifest.json"
     if mp.exists():
         man = load_json(mp)
         man.setdefault("sources", [])
-        man["sources"] = [s for s in man["sources"] if s.get("url") != page_url] + [
+        man["sources"] = [s for s in man["sources"] if s.get("file") != rel] + [
             {"what": "reference image: %s (%s, %s)" % (title, institution, accession), "url": page_url,
              "author": author or institution, "licence": licence, "retrieved": today(), "file": rel}]
         write_text(mp, json.dumps(man, indent=1, ensure_ascii=False) + "\n")
-    return {"ok": True, "ref": entry}
+    out = {"ok": True, "ref": entry}
+    if replaced:
+        out["replaced"] = True
+    elif n > 1:
+        out["note"] = "refs/%s%s was taken by another image; saved as %s" % (base, ext, rel)
+    return out
+
+
+def ref_slug(institution, accession, limit=60):
+    """refs/ file stem from institution and accession; a long one keeps the accession's tail and a short hash."""
+    def slug(x):
+        return re.sub(r"[^a-z0-9]+", "-", (x or "").lower()).strip("-")
+    full = slug("%s %s" % (institution, accession)) or "ref"
+    if len(full) <= limit:
+        return full
+    h = hashlib.sha1(full.encode("utf-8")).hexdigest()[:6]
+    tail = slug(accession)[-(limit // 2):].strip("-")
+    head = slug(institution)[:max(limit - len(tail) - len(h) - 2, 8)].strip("-")
+    return "-".join(x for x in (head, tail, h) if x)
 
 
 def pack_csl(path):

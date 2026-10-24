@@ -15,7 +15,8 @@ Script: the hub's `hw.py` (`../historywright/scripts/hw.py`).
 
 Pin down who or what, where, and when as narrowly as the sources allow ("a legionary of Caesar's army in Gaul,
 about 52 BC", not "a Roman soldier"), and whether the work is commercial (it decides which image licences may
-enter). Then `hw.py pack init <dir> --question "<question>" --period "<period>" [--commercial]`.
+enter). Then `hw.py pack init <dir> --question "<question>" --period "<period>" [--commercial] [--mechanism]`;
+`--mechanism` is for a machine or a building with machinery (a mill, a forge, a press, a ship's rig).
 
 ## Step 2: research (the hub's Steps 1 to 6)
 
@@ -23,7 +24,8 @@ Answer the question behind the pack with the hub's method and write it to `answe
 `sources.json` with the exact supporting quote, every person, polity or object in `entities.json` with its QID
 and date object (`hw.py wd claims`, `hw.py cal date` print the fields), places in `places.geojson`
 (`hw.py place search`, coordinates `[lon, lat]`) and dated events in `timeline.json`, each row with the sentence
-it rests on.
+it rests on. Read every page through `hw.py verify quote <url> "<quote>"` from the start: pages read with curl or
+WebFetch are not in the fetch log, so `verify sources` fails on them in Step 5.
 
 ## Step 3: reference images from collection records only
 
@@ -33,13 +35,15 @@ other AI pictures (R-20261017-20). So:
 1. Search open collections first, CC0 before anything else: `hw.py src met "<object>" --detail 5`, then
    `cleveland`, `artic`, `getty`, `smithsonian` (key), `rijksmuseum`; then `commons` and `europeana` with per-file
    licences; non-commercial collections (British Museum, Science Museum Group) only for non-commercial packs.
+   US buildings, mills, bridges and machinery: `hw.py src loc-habs "<subject>"` (HABS/HAER/HALS measured
+   drawings, photographs and data pages, public domain).
 2. Keep an object only if its record gives the object's own date and place and an accession number (or a Commons
    file page with author and licence), and the date fits the period; say so when the nearest evidence is earlier,
    later or from another region.
 3. `hw.py pack add-ref <dir> --image <url> --page <record url> --title "..." --licence CC0 --object-date "..."
    --place "..." --accession "..." --institution "..."`.
 
-Expect gaps: the US CC0 APIs return Greek and Etruscan helmets for "Roman helmet" and little late-Republican kit;
+`add-ref` refuses a non-commercial licence in a commercial pack and never overwrites an existing file. Expect gaps: the US CC0 APIs return Greek and Etruscan helmets for "Roman helmet" and little late-Republican kit;
 that period comes from Commons and Europeana (R-20261017-8). An empty search is a finding: record it in
 `completeness` with the reason.
 
@@ -48,6 +52,12 @@ that period comes from Commons and Europeana (R-20261017-8). An empty search is 
 Write `anachronism.md`: what did not exist yet, what is commonly shown wrong, and what the evidence says about
 colour, material and shape, each item cited to sources.json. Generated pictures made later from the pack are
 labelled reconstructions, never evidence.
+
+For a machine or a building with machinery (`--mechanism`), add the section "Mechanism: what drives what, and
+where it must sit": the drive chain from the power source to the tool, one link per numbered item (what the part
+is, where it must sit, what it drives, with sizes), then what a picture must never show (a blade outside the
+building, a wheel with no shaft into it, free-floating gears). Image models get mechanisms wrong more often than
+dates (L-010). Example: [references/mechanism-example.md](references/mechanism-example.md).
 
 ## Step 5: validate and hand over
 
