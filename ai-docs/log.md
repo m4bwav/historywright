@@ -93,3 +93,8 @@ Append-only, newest last.
 - Version 0.3.0 in plugin.json and hw_net.VERSION (C-20261023-1 to -3); not tagged.
 - Learning ids start at L-007: another session's uncommitted edit on main adds L-006.
 - Gaps left for later are listed in HANDOFF.md, Next 5.
+
+## 2026-10-24 · Water path in the Mechanism template; hw.py fetch
+
+- The sawmill pack was extended for a wide illustration and needed a hand-written water-path section (dam, races, gate, where the water meets an undershot wheel, tail race). Built in branch scene-illustration: `pack init --mechanism` now writes "### Water path (water-powered machines)" with `<fill: ...>` placeholders that validate-pack fails on (L-011, C-20261024-1), and the example file has the pack's filled water path cited to Evans 1795, HABS and Fairbairn 1864.
+- `hw.py fetch <url> [--find]` stores a page for reading (before, `verify quote` with a dummy quote was the only way, since `verify url` stores nothing) and tries long-s spellings for pre-1800 OCR (L-012, C-20261024-2). Both changes go into the untagged 0.3.0.

@@ -108,5 +108,8 @@ answer.md.
 
 When `historywright.mechanism` is true, a section headed `## Mechanism: what drives what, and where it must sit`
 lists the drive chain from the power source to the tool, one link per item: what the part is, where it must sit,
-what it drives, with sizes and citations. It is followed by what a picture or model must never show. Example:
-[mechanism-example.md](mechanism-example.md).
+what it drives, with sizes and citations. It is followed by what a picture or model must never show. Inside it,
+`pack init --mechanism` writes a `### Water path (water-powered machines)` subsection (source, head race or flume,
+gate, where the water meets the wheel, turning direction, tail race, and three prohibitions) whose items hold
+`<fill: ...>` placeholders; any placeholder left in anachronism.md fails validation. A machine not driven by water
+deletes the subsection. Example: [mechanism-example.md](mechanism-example.md).

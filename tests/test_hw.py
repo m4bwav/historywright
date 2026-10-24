@@ -7,6 +7,7 @@ import contextlib
 import io
 import json
 import os
+import re
 import shutil
 import sys
 import tempfile
@@ -653,6 +654,76 @@ class PackChecks(unittest.TestCase):
                      "2. Pitman up to the saw gate [s1]\n"), encoding="utf-8")
         code, r = run("validate-pack", str(g))
         self.assertTrue(r["ok"], r["problems"])
+
+    def test_mechanism_template_has_water_path(self):
+        d = self._pack("pack-water", mechanism=True)
+        a = (d / "anachronism.md").read_text(encoding="utf-8")
+        water = C._section(a, "Water path")
+        self.assertIsNotNone(water, a)
+        self.assertIn("### Water path (water-powered machines)", C._section(a, "Mechanism"))
+        for part in ("**Source.**", "**Head race or flume.**", "**Gate.**", "**Where the water meets the wheel.**",
+                     "**Turning direction.**", "**Tail race.**", "overshot, onto the top", "breastshot, at the side",
+                     "undershot, against the bottom", "No water from the hub, axle or shaft",
+                     "No trough or flume ending above an undershot wheel", "The wheel sits in its race"):
+            self.assertIn(part, water)
+        self.assertNotIn("Water path", (self._pack("pack-water-plain") / "anachronism.md").read_text(encoding="utf-8"))
+
+    def test_water_path_placeholders_fail_until_filled(self):
+        # a filled pack whose anachronism.md is the fresh --mechanism template: placeholders fail
+        g = self._good_copy("pack-water-good")
+        m = json.loads((g / "manifest.json").read_text(encoding="utf-8"))
+        m["historywright"]["mechanism"] = True
+        (g / "manifest.json").write_text(json.dumps(m), encoding="utf-8")
+        fresh = C.MECHANISM_TEMPLATE.format(period="1790-1840")
+        (g / "anachronism.md").write_text(fresh, encoding="utf-8")
+        code, r = run("validate-pack", str(g))
+        self.assertFalse(r["ok"])
+        self.assertTrue(any("template placeholders" in p and "<fill:" in p for p in r["problems"]), r["problems"])
+        # every placeholder and empty item replaced: the pack validates
+        filled = C.FILL_MARK.sub("Evans 1795 [s1]", fresh)
+        filled = re.sub(r"(?m)^(\d+\.|-) $", r"\1 Wheel on the crank shaft [s1]", filled)
+        (g / "anachronism.md").write_text(filled, encoding="utf-8")
+        code, r = run("validate-pack", str(g))
+        self.assertTrue(r["ok"], r["problems"])
+        # a mill that is not water-powered deletes the subsection and still validates
+        (g / "anachronism.md").write_text(re.sub(r"(?s)### Water path.*?(?=\n## )", "", filled), encoding="utf-8")
+        code, r = run("validate-pack", str(g))
+        self.assertTrue(r["ok"], r["problems"])
+        self.assertNotIn("Water path", (g / "anachronism.md").read_text(encoding="utf-8"))
+
+
+class Fetch(unittest.TestCase):
+    URL = "https://example.org/longs-ocr"
+
+    def test_long_s_spellings(self):
+        self.assertEqual(C.long_s_spellings("shot"), ["shot", "fhot", "ſhot"])
+        self.assertEqual(C.long_s_spellings("Floats"), ["floats"])  # a final s stays round
+        self.assertEqual(C.long_s_spellings("sufficient distance")[1], "fufficient diftance")
+
+    def test_fetch_stores_page_and_finds_long_s(self):
+        code, r = run("fetch", self.URL, "--find", "shot", "--find", "sufficient distance", "--find", "floats")
+        self.assertTrue(r["ok"], r)
+        self.assertEqual(code, 0)
+        txt = Path(r["text_file"])
+        self.assertTrue(txt.exists() and "flanted under the wheel" in txt.read_text(encoding="utf-8"))
+        counts = {(f["term"], f["spelling"]): f["count"] for f in r["finds"]}
+        self.assertEqual(counts[("shot", "shot")], 0)
+        self.assertEqual(counts[("shot", "fhot")], 2)
+        self.assertEqual(counts[("sufficient distance", "fufficient diftance")], 1)
+        self.assertEqual(counts[("floats", "floats")], 2)
+        self.assertIn("gate", " ".join(f["snippets"][0] for f in r["finds"] if f["spelling"] == "fhot"))
+        # the page is in the fetch log and the page store, so a later quote check reads it without a dummy quote
+        import hw_net
+        self.assertIn(self.URL, hw_net.fetched_urls())
+        self.assertIsNotNone(hw_net.stored_page(self.URL))
+        code, q = run("verify", "quote", "--url", self.URL, "--quote", "drawn near the floats")
+        self.assertTrue(q["found"], q)
+        self.assertIn("page store", q["source_text"])
+
+    def test_fetch_fails_soft_on_missing_page(self):
+        code, r = run("fetch", "https://example.org/missing")
+        self.assertFalse(r["ok"])
+        self.assertEqual(code, 1)
 
 
 if __name__ == "__main__":
