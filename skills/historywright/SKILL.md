@@ -54,8 +54,9 @@ lower the default confidence. On a contested topic, search in each party's langu
 
 - Wikidata references name the work (`stated_in`); Wikipedia is a finder:
   `hw.py wp refs "<Title>" --near "<phrase from the sentence>"` returns the footnotes cited in that sentence.
-- Open the cited source and read the passage (WebFetch, or `hw.py verify quote --url U --quote "..."`, which
-  stores the page for the pack and reads PDFs; `found: null` means unreadable, not absent). Primary texts: LacusCurtius, Perseus, Fordham, Avalon, archives; scholarship:
+- Open the cited source and read the passage (WebFetch, or `hw.py fetch U [--find "<word>"]` and
+  `hw.py verify quote --url U --quote "..."`, which store the page for the pack and read PDFs; `found: null` means
+  unreadable, not absent; pre-1800 OCR prints the long s as "f", which `--find` also tries). Primary texts: LacusCurtius, Perseus, Fordham, Avalon, archives; scholarship:
   `hw.py oa search "<topic>"`; company history: SEC EDGAR filings, the Wayback Machine.
 - A book or article appears in the answer only after its title, author and year match together in Crossref,
   OpenAlex or a library catalogue (`hw.py doi <DOI> --title --author --year`). A real DOI with the wrong title is

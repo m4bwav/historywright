@@ -48,3 +48,45 @@ The drive chain, from the water to the blade. Every link must be visible or plai
 Why it matters: the prohibitions name the mistakes pictures of machines make (a blade outside the building, a
 wheel with no shaft into it, gears floating in the air). The answer can hold every fact and still not say where
 each part sits; this section is what a generated picture or a model is checked against (LEARNINGS L-010).
+
+## The water path
+
+The same pack was later extended for a wide picture of the mill in its landscape, where the drive chain inside
+the mill says nothing about where the water comes from and goes. Image models' commonest error there was water
+pouring out of the wheel's hub. `pack init --mechanism` now writes a "Water path (water-powered machines)"
+subsection with one placeholder per item; this is the pack's filled version for its large undershot wheel, cut
+down. Source key: [s1] Evans 1795 as above (its articles on undershot mills, canals and dams); [s2] HABS
+PA-116 as above; [s8] HABS CT-63, Buttery Mill, Silvermine, written data; [s14] William Fairbairn, *Treatise on
+Mills and Millwork*, Part I (London, 1864), chapters I (weirs), III (water-wheels) and IV (the undershot wheel).
+
+```markdown
+### Water path (water-powered machines)
+
+1. **Source.** A dam or weir across the river, "a sufficient distance" above the mill, with a tumbling space to
+   pass floods [s1]; a sluice gate in one wing wall of the weir draws off surplus water [s14]. Chester Springs
+   took its water from an adjacent stone dam [s2].
+2. **Head race.** A dug canal from the pond to the mill, which is "set well into the bank"; surplus runs back to
+   the river over a waste left in the canal's bank [s1]. Evans's worked example: about 3 ft deep and nearly
+   10 ft wide for a 15 ft wheel on 5 ft of head [s1].
+3. **Gate.** A sluice (the shuttle) at the end of the forebay, drawn "as near the float-boards as possible" [s1].
+4. **Where the water meets the wheel (undershot).** The forebay slants down under the wheel so the gate opens
+   near the floats [s1]; the water is applied near the bottom of the wheel, rushing out under the shuttle
+   against the floats [s14].
+5. **Turning direction.** The bottom floats move downstream with the water, the top upstream; the tail race lies
+   in the same direction as the wheel's revolution [s14].
+6. **Tail race.** Sunk about 1 ft [s1], or two to two and a half feet [s14], below the bottom of the wheel, and
+   carried back to the river below the mill [s14].
+
+Never show:
+
+- **No water from the hub, axle or shaft.** Water reaches an undershot wheel at the bottom of its rim [s1] [s14].
+- **No trough ending above the wheel**, no flume on trestles: that feeds an overshot wheel, as at Buttery Mill [s8];
+  an undershot wheel takes its water at the bottom, from a race at ground level [s14].
+- **The wheel sits in its race**, lowest floats in the water between the race walls, its shaft running into
+  the mill wall [s1] [s2] [s14].
+```
+
+How it was found: both books are Internet Archive OCR text. Evans's 1795 printing uses the long s, which the OCR
+reads as "f", so "shot" is "fhot" and "sufficient distance" is "fufficient diftance"; `hw.py fetch <url> --find
+shot` tries those spellings itself. Fairbairn (1864) writes 70 years later in England, but his chapter on the
+undershot wheel's "old forms" describes the wooden wheels of the period, and he and Evans agree.

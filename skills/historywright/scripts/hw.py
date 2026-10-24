@@ -13,6 +13,7 @@ Every command prints one JSON object and fails soft ({"ok": false, "error": ...}
   cal date|jdn|span|era|cjk|setup dates in code: JDN, Julian/Gregorian, BCE, AUC, O.S./N.S., Islamic, CJK eras
   cache get|put|list              answers already researched, with sources and retrieval dates
   verify url|quote|doi|qid|sources   URL health, quote spans, DOIs, QIDs, a whole sources.json
+  fetch URL [--find TERM]         read a page into the run's page store, its text to a file; find terms (long-s too)
   pack init|add-ref|csl           research packs (polywright asset folders); validate-pack DIR checks one
   probe [--only ids]              every registry endpoint, to catch moves between refreshes
   keys status|openalex|whg|contact   optional free keys, stored in ~/.historywright/config.json
@@ -244,6 +245,10 @@ def cmd_verify(a):
             return fail("cannot read %s: %s" % (a.values[0], e))
         return out(C.check_sources(doc, network=not a.offline, require_fetched=not a.any_url))
     return fail("unknown verify command")
+
+
+def cmd_fetch(a):
+    return out(C.fetch_page(a.url, a.find or (), a.refetch))
 
 
 def cmd_pack(a):
@@ -583,6 +588,13 @@ def build():
     x.add_argument("--offline", action="store_true", help="sources: structure only, no network")
     x.add_argument("--any-url", action="store_true", help="sources: do not require each URL in the fetch log")
     x.set_defaults(fn=cmd_verify)
+
+    x = sp.add_parser("fetch")
+    x.add_argument("url")
+    x.add_argument("--find", action="append", help="a word or phrase to count and show in context; repeatable; "
+                   "pre-1800 long-s spellings are tried too ('shot' as 'fhot')")
+    x.add_argument("--refetch", action="store_true")
+    x.set_defaults(fn=cmd_fetch)
 
     x = sp.add_parser("pack")
     x.add_argument("sub", choices=["init", "add-ref", "csl"])

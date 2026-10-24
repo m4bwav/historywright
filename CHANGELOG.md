@@ -8,9 +8,19 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 - 0.1.0 (2026-10-18): first release, C-20261017-1 to C-20261018-4. https://github.com/m4bwav/historywright/releases/tag/v0.1.0
 - 0.2.0 (2026-10-18): C-20261018-5 to C-20261018-10. https://github.com/m4bwav/historywright/releases/tag/v0.2.0
-- 0.3.0 (version bumped 2026-10-23; tag and release wait for the owner's go-ahead): C-20261021-1 to C-20261023-3.
+- 0.3.0 (version bumped 2026-10-23; tag and release wait for the owner's go-ahead): C-20261021-1 to C-20261024-2.
 
 ## Changes
+
+### C-20261024-2 · 2026-10-24 · hw.py fetch: read a page into the page store without a dummy quote; long-s spellings
+- because: L-012 (user request after the sawmill pack's scene extension)
+- files: skills/historywright/scripts/hw_check.py (`fetch_page`, `long_s_spellings`), skills/historywright/scripts/hw.py (`fetch`), skills/historywright/references/cli.md (fetch), skills/historywright/SKILL.md (Step 4), skills/historywright-pack/SKILL.md (Step 2), tests/test_hw.py (class Fetch), tests/fixtures/http (longs-ocr.txt, one index row)
+- `hw.py fetch <url>` stores a page in the run's page store and fetch log, as `verify quote` does, and writes its readable text to a `.txt` file to read; `--find` counts a word or phrase with snippets and also tries its long-s spellings ("fhot" for "shot"). Before this, caching a page meant running `verify quote` with a made-up quote, since `verify url` stores nothing. Step 2 of the pack skill also gives `verify quote` its real flags.
+
+### C-20261024-1 · 2026-10-24 · The Mechanism template gets a Water path subsection; validate-pack fails on its placeholders
+- because: L-011 (user request after the sawmill pack's scene extension)
+- files: skills/historywright/scripts/hw_check.py (`WATER_TEMPLATE`, `MECHANISM_TEMPLATE`, `FILL_MARK`, `validate_pack`), skills/historywright-pack/SKILL.md (Step 4), skills/historywright-pack/references/contract.md (anachronism.md), skills/historywright-pack/references/mechanism-example.md (The water path), skills/historywright/references/cli.md (pack init, validate-pack), tests/test_hw.py (test_mechanism_template_has_water_path, test_water_path_placeholders_fail_until_filled)
+- `pack init --mechanism` writes "### Water path (water-powered machines)" inside the Mechanism section: numbered items for the source (dam or weir and its spill), head race or flume, gate, where the water meets the wheel by type, turning direction and tail race, then three prohibitions (no water from the hub; no trough ending above an undershot wheel; the wheel sits in its race), each holding a `<fill: ...>` placeholder. validate-pack fails while any placeholder is left; deleting the subsection for a machine not driven by water still validates. The example adds the sawmill pack's filled water path, cited to Evans 1795, HABS and Fairbairn 1864.
 
 ### C-20261023-3 · 2026-10-23 · Registry: loc-habs searches the HABS/HAER/HALS collection; version 0.3.0
 - because: R-20261023-1 (user request after the sawmill pack)

@@ -6,6 +6,22 @@ Write an entry the moment a real signal happens: a user correction, the same err
 
 ## Active
 
+### L-012 · 2026-10-24 · Caching a page needed a dummy quote, and 1795 OCR spells "shot" as "fhot"
+- Trigger: extending the sawmill pack (sawmill-3d/history) for a wide illustration, 2026-10-24. `hw.py verify url` checks a link without storing the body, so the only way to put Evans 1795 and Fairbairn 1864 into the page store for reading was `hw.py verify quote --url U --quote <any word>`. Then searches of the Evans OCR for "shot", "sufficient" and "distance" found nothing: the 1795 printing uses the long s, which the OCR reads as "f" ("fhot", "fufficient dif-").
+- Hypothesis: a reading step disguised as a check gets skipped or done with curl, which leaves the page out of the fetch log; and a researcher searching pre-1800 OCR with modern spellings concludes that a source is silent when it is not.
+- Rule: read pages with `hw.py fetch <url> [--find "<word>"]` (page store, fetch log, text file); `--find` also tries each term with every non-final s as "f" and as "ſ". Search pre-1800 OCR in long-s spellings before calling a source silent.
+- Evidence: the sawmill pack's sources.json, s1 (Evans 1795 OCR: "fufficient dif-", "underfhot", "tale-race") and s14 (Fairbairn 1864); class Fetch in tests/test_hw.py.
+- Scope: skill
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-24
+
+### L-011 · 2026-10-24 · A water-powered machine's pack must say where the water comes from and goes
+- Trigger: the sawmill pack (sawmill-3d/history) was extended on 2026-10-24 for a wide picture of the mill in its landscape. Its Mechanism section (from `pack init --mechanism`) covered the drive chain inside the mill and said nothing about the dam, races, gate or where the water meets the wheel, and image models' commonest error was water pouring from the wheel's hub. A "Scene: the water path in a wide picture" section had to be researched and written by hand.
+- Hypothesis: the drive chain starts at the wheel, so a template that asks for it stops there; a picture wider than the wheel is checked against nothing, and the model falls back on a fountain-like jet from the axle or a trough over an undershot wheel.
+- Rule: `pack init --mechanism` writes a "Water path (water-powered machines)" subsection: source, head race or flume, gate, where the water meets the wheel for its type, turning direction, tail race, and the prohibitions (no water from the hub or axle; no trough ending above an undershot wheel; the wheel sits in its race), each a `<fill: ...>` placeholder that validate-pack fails on until it is replaced with cited facts or the subsection is deleted.
+- Evidence: the sawmill pack's anachronism.md ("Scene: the water path in a wide picture") and answer.md section 4, from Evans 1795 (forebay slanted under an undershot wheel, gate near the floats, tail-race fall, dam a sufficient distance above the mill, waste in the canal bank) and Fairbairn 1864 (water applied near the bottom, rushing under the shuttle, tail-race in the direction of revolution, weir sluice in a wing wall); test_water_path_placeholders_fail_until_filled.
+- Scope: skill
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-24
+
 ### L-010 · 2026-10-23 · A machine's pack needs a Mechanism section: what drives what, and where each part must sit
 - Trigger: a pack for a water-powered sash sawmill (1790-1840) feeding 3D and image work. The answer held every fact (flutter wheel on the crank shaft, pitman up through the floor, sash between fender posts), but the anachronism template only asked what did not exist yet; the drive chain and a list of placements a picture must never break (blade outside the building, wheel with no shaft into it, floating gears) had to be written by hand.
 - Hypothesis: for a machine the likeliest error in a picture or model is not a date but a part in the wrong place or connected to nothing; a prose answer does not say where each part sits, so nothing downstream can check it.

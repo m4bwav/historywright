@@ -79,5 +79,12 @@
   "file": "tiny.png",
   "status": 200,
   "content_type": "image/png"
+ },
+ {
+  "match": "example\\.org/longs-ocr",
+  "method": "GET",
+  "file": "longs-ocr.txt",
+  "status": 200,
+  "content_type": "text/plain; charset=utf-8"
  }
 ]

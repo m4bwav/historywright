@@ -26,6 +26,9 @@ NC_LICENCES = re.compile(r"(?i)(\bnc\b|\bnon[- ]?commercial)")
 TEMPLATE_PLACEHOLDERS = ("<answer with inline citations [s1]>", "<high|medium|low>", "<what is uncertain and why>")
 LIST_ITEM = re.compile(r"(?m)^[ \t]*(?:[-*]|\d+[.)])(?:[ \t]+(.*))?$")
 MECHANISM_HEADING = "## Mechanism: what drives what, and where it must sit"
+WATER_HEADING = "### Water path (water-powered machines)"
+# Text in the --mechanism template's water path that the researcher replaces with cited facts (L-011)
+FILL_MARK = re.compile(r"<fill:[^>]*>")
 KINDS = {"primary", "secondary", "tertiary", "structured"}
 
 
@@ -72,6 +75,40 @@ def page_text(url, refetch=False):
     if "<" in text[:2000] and re.search(r"(?i)<(html|body|div|p)\b", text[:5000]):
         text = html_to_text(text)
     return text, how
+
+
+def long_s_spellings(term):
+    """The term as pre-1800 OCR may print it: a long s (U+017F) is read as 'f', so 'shot' is 'fhot'; a final s
+    stays round. The term first, then its long-s spellings, no duplicates (L-012)."""
+    t = term.lower()
+    out = [t]
+    for sub in ("f", "ſ"):
+        v = re.sub(r"s(?=[a-z])", sub, t)
+        if v not in out:
+            out.append(v)
+    return out
+
+
+def fetch_page(url, finds=(), refetch=False, context=80, limit=5):
+    """Fetch a page into this run's page store (logged, so verify sources accepts it) and write its readable text
+    to a .txt file beside it; with finds, count each term and its long-s spellings and show where they occur."""
+    text, how = page_text(url, refetch)
+    if text is None:
+        return {"ok": False, "url": url, "error": how}
+    txt = home() / "pages" / (hashlib.sha1(url.encode("utf-8")).hexdigest() + ".txt")
+    write_text(txt, text)
+    res = {"ok": True, "url": url, "source_text": how, "chars": len(text), "text_file": str(txt)}
+    if finds:
+        low = text.lower()
+        rows = []
+        for term in finds:
+            for sp in long_s_spellings(term):
+                hits = [m.start() for m in re.finditer(re.escape(sp), low)]
+                rows.append({"term": term, "spelling": sp, "count": len(hits),
+                             "snippets": [re.sub(r"\s+", " ", text[max(0, i - context): i + len(sp) + context])
+                                          for i in hits[:limit]]})
+        res["finds"] = rows
+    return res
 
 
 def quote_in(quote, text, pdf=False):
@@ -415,6 +452,11 @@ def validate_pack(path, network=False):
             elif _items(sec)[0] == 0:
                 probs.append("anachronism.md: the Mechanism section has no items (the drive chain from the power "
                              "source to the tool, where each part sits)")
+        fills = FILL_MARK.findall(a)
+        if fills:
+            probs.append("anachronism.md still holds %d template placeholders (%s...): replace each with what the "
+                         "sources say, cited, or delete the water path if the machine is not water-powered"
+                         % (len(fills), fills[0][:40]))
     return {"ok": not probs, "pack": str(root), "problems": probs, "warnings": warns}
 
 
@@ -449,11 +491,36 @@ TEMPLATES = {
     "refs/index.json": {"refs": []},
     "anachronism.md": "# Anachronism checklist: {period}\n\nEach item cites its source.\n\n- \n- \n- \n",
 }
-# pack init --mechanism: a machine, or a building with machinery (L-010)
+# pack init --mechanism: a machine, or a building with machinery (L-010), with its water path (L-011)
+WATER_TEMPLATE = (
+    WATER_HEADING + "\n\nWhere the water comes from and where it goes, from the river above the mill to the river "
+    "below it. Delete this subsection if the machine is not driven by water. Replace every <fill: ...> with what the "
+    "sources say, cited to sources.json.\n\n"
+    "1. **Source.** <fill: the dam or weir across the river: what it is built of, how far above the mill, and where "
+    "its surplus spills (over the crest, or by a waste or sluice in a wing wall), cited>\n"
+    "2. **Head race or flume.** <fill: how the water travels from the pond to the mill: a dug race at ground level "
+    "or a trough on trestles; its size, its lining, and any waste in its bank, cited>\n"
+    "3. **Gate.** <fill: the sluice or shuttle that lets the water onto the wheel: where it sits and how it is "
+    "worked from the mill, cited>\n"
+    "4. **Where the water meets the wheel.** <fill: keep the line for this wheel's type and delete the others: "
+    "overshot, onto the top from a trough that ends above it; breastshot, at the side, about axle height, against "
+    "a curved breast; undershot, against the bottom floats, out under a gate close to them; cited>\n"
+    "5. **Turning direction.** <fill: the part of the rim the water acts on moves with the water (an undershot "
+    "wheel's bottom moves downstream, an overshot wheel's top moves away from the trough); say which way the wheel "
+    "turns in this picture or model, cited>\n"
+    "6. **Tail race.** <fill: where the spent water leaves: how far below the wheel the race is sunk, and its "
+    "course back to the river below the mill, cited>\n\n"
+    "Never show:\n\n"
+    "- **No water from the hub, axle or shaft**, for any wheel type: the water reaches the rim. <fill: cite>\n"
+    "- **No trough or flume ending above an undershot wheel**: an undershot wheel takes its water at the bottom, "
+    "from a race at ground level. <fill: cite>\n"
+    "- **The wheel sits in its race**, between the race walls with its lowest floats or buckets at the water, not "
+    "on dry ground or floating over a pond. <fill: cite>\n")
 MECHANISM_TEMPLATE = (
     "# Anachronism and mechanism checklist: {period}\n\nEach item cites its source.\n\n" + MECHANISM_HEADING +
     "\n\nThe drive chain from the power source to the tool, one link per item: the part, where it must sit, what it "
-    "drives, each cited.\n\n1. \n2. \n3. \n\n## What a picture or model must never show\n\n- \n- \n- \n")
+    "drives, each cited.\n\n1. \n2. \n3. \n\n" + WATER_TEMPLATE +
+    "\n## What a picture or model must never show\n\n- \n- \n- \n")
 
 
 def pack_init(path, question, name=None, period=None, commercial=False, mechanism=False):

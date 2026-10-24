@@ -24,8 +24,11 @@ Answer the question behind the pack with the hub's method and write it to `answe
 `sources.json` with the exact supporting quote, every person, polity or object in `entities.json` with its QID
 and date object (`hw.py wd claims`, `hw.py cal date` print the fields), places in `places.geojson`
 (`hw.py place search`, coordinates `[lon, lat]`) and dated events in `timeline.json`, each row with the sentence
-it rests on. Read every page through `hw.py verify quote <url> "<quote>"` from the start: pages read with curl or
-WebFetch are not in the fetch log, so `verify sources` fails on them in Step 5.
+it rests on. Read every page through hw.py from the start: `hw.py fetch <url> [--find "<word>"]` stores the page
+and writes its text to a file to read, `hw.py verify quote --url <url> --quote "<quote>"` checks a quote. Pages read
+with curl or WebFetch are not in the fetch log, so `verify sources` fails on them in Step 5 (`verify url` checks a
+link but stores nothing). Pre-1800 printing uses the long s, which OCR reads as "f": search "fhot" for "shot",
+"fufficient" for "sufficient"; `--find` tries those spellings itself (L-012).
 
 ## Step 3: reference images from collection records only
 
@@ -57,7 +60,12 @@ For a machine or a building with machinery (`--mechanism`), add the section "Mec
 where it must sit": the drive chain from the power source to the tool, one link per numbered item (what the part
 is, where it must sit, what it drives, with sizes), then what a picture must never show (a blade outside the
 building, a wheel with no shaft into it, free-floating gears). Image models get mechanisms wrong more often than
-dates (L-010). Example: [references/mechanism-example.md](references/mechanism-example.md).
+dates (L-010). For a water-powered machine, fill its "Water path" subsection too: the source (dam or weir and
+its spill), head race or flume, gate, where the water meets the wheel for its type (overshot onto the top,
+breastshot at the side, undershot against the bottom), the turning direction, the tail race back to the river,
+and the prohibitions (no water from the hub; no trough ending above an undershot wheel; the wheel sits in its
+race). Replace every `<fill: ...>` with cited facts, or delete the subsection for a wind, horse or steam drive;
+validate-pack fails while any is left (L-011). Example: [references/mechanism-example.md](references/mechanism-example.md).
 
 ## Step 5: validate and hand over
 
