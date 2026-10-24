@@ -33,10 +33,10 @@ command.
 | `verify quote --url U --quote "..." [--refetch]` | is the quote a span of the page (exact or normalised; `...` splits). PDFs: pdftotext when on PATH, else a built-in reader; spacing is ignored as a last step for quotes of 20+ letters; `found: null` = no readable text (a scan) |
 | `verify doi <DOI> --title --author --year`, `verify qid <QID> [--label]` | does the reference exist and match |
 | `verify sources <sources.json> [--offline] [--any-url]` | every source fetched this run, every quote in its page, independence and corroboration |
-| `pack init <dir> --question "..." [--name] [--period] [--commercial]` | scaffold a research pack (historywright-pack) |
-| `pack add-ref <dir> --image --page --title --licence --object-date --place --accession --institution` | download a reference image and record it |
+| `pack init <dir> --question "..." [--name] [--period] [--commercial] [--mechanism]` | scaffold a research pack (historywright-pack); `--mechanism` (a machine or a building with machinery) sets `historywright.mechanism` and adds the Mechanism section to anachronism.md |
+| `pack add-ref <dir> --image --page --title --licence --object-date --place --accession --institution` | download a reference image and record it; refuses a non-commercial licence in a commercial pack; a taken file name gets `-2`, `-3` (the same image again replaces its own entry, `replaced: true`); a long name keeps the accession's tail and a short hash |
 | `pack csl <dir>` | sources.json as CSL-JSON for Zotero |
-| `validate-pack <dir> [--network]` | the pack contract (files, EDTF, QIDs, RFC 7946, licences, completeness) |
+| `validate-pack <dir> [--network]` | the pack contract (files, EDTF, QIDs, RFC 7946, licences, completeness, unedited template text, the Mechanism section when `historywright.mechanism` is true) |
 | `probe [--only id,id]` | call every registry endpoint; ok, moved, gone, blocked, unreachable |
 | `keys status [--offline]`, `keys contact --set ADDR`, `keys openalex --email ADDR [--yes]`, `keys whg [--token T] [--no-browser]` | optional free keys |
 | `lint [--ids]` | registry and era outline checks |

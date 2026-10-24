@@ -31,6 +31,13 @@ Updated 2026-10-18 (end of the Step 6 session).
    theses would not download. Find a readable scholarly source on Satavahana chronology and add it to the registry or eras.md.
 3. Optional: `evergreen.py worth --ab` on the 11 value cases for a fresh baseline after 0.2.0.
 4. Evergreen refresh due 2026-11-16.
+5. Gaps found on the sawmill pack (2026-10-23), not yet built, one line each:
+   - Long-s OCR: 18th-century prints OCR as "faw" for "saw"; `verify quote` should match a modern-spelling quote against long-s text (or fold s/f before matching).
+   - IIIF: LoC, Gallica and many museums serve images through IIIF; `pack add-ref` could take a IIIF manifest or image service and pick a size.
+   - Internet Archive plates: book plates (Evans 1795 Plates XI-XIV) have no per-plate URL; add a route from an IA item and page number to a page image for `add-ref`.
+   - EDTF intervals: period ranges such as 1790/1840 and open ends need checks and examples in entities.json and timeline.json.
+   - Drawing-measured claims: values read off a measured drawing (sheet N, scaled) have no quote to verify; sources.json needs a claim kind for them (locator plus "measured from sheet").
+   - Commons filetype: `src commons` returns PDFs and DjVu files among images; filter by filetype or say so in the results.
 
 ## Read first
 

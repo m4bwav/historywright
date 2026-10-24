@@ -98,7 +98,8 @@ Olmec, Maya (Classic c. 250-900), Teotihuacan, Aztec (Mexica, 1428-1521), Andean
 ## Colonial and modern Americas
 
 `loc` (newspapers through loc.gov, 20 requests a minute), `pares` (Spanish archives, browse), `hemeroteca-
-brasileira` (browse), `federal-register`, `edgar` (company filings), `avalon` (founding documents).
+brasileira` (browse), `federal-register`, `edgar` (company filings), `avalon` (founding documents), `loc-habs`
+(HABS/HAER/HALS measured drawings of US buildings, mills, bridges and machinery).
 
 ## Oceania
 
