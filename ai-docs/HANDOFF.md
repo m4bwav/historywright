@@ -28,13 +28,14 @@ Updated 2026-11-01 (v0.5.1 session).
 ## Waiting for Mark
 
 - Any directory submission (on hold since 2026-10-17).
-- A DPLA key (free, by email) if DPLA should become a search source; not requested.
+- None for DPLA: key saved 2026-11-01 (`keys.dpla`).
 
 ## Next
 
 1. Optional: `evergreen.py worth --ab` on the 11 value cases for a fresh baseline (last after 0.2.0).
 2. Evergreen refresh due 2026-11-16.
-3. Small follow-up: drop the two LacusCurtius skip markers when the site answers (still TLS failure on a second check late on
+3. Wire DPLA in as a search source (key in config; check terms and limits first), one PR with a test.
+4. Small follow-up: drop the two LacusCurtius skip markers when the site answers (still TLS failure on a second check late on
    2026-11-01). Nothing unreleased on main.
 
 ## Read first

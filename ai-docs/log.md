@@ -150,3 +150,4 @@ Append-only, newest last.
 
 - LacusCurtius (penelope.uchicago.edu) still fails the TLS handshake (curl exit 35), so the two wiki skip markers stay.
 - Nothing else to do yet: the A/B is optional and paid, and the evergreen refresh is due 2026-11-16. No code changes.
+- DPLA key requested with the owner's go-ahead (POST api.dp.la/v2/api_key/<email>), saved as `keys.dpla` in the user config; a live `/v2/items` test with the Authorization header returned 200. Not wired into hw.py yet: read DPLA's terms and limits first, then add a search block with a test.

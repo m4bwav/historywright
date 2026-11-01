@@ -11,7 +11,7 @@ historywright clone). If the clone's main is behind or dirty, work in a git work
 
 ## Waiting on Mark
 
-- Directory submissions (on hold). A DPLA key (not requested; ask first).
+- Directory submissions (on hold). DPLA key is in; wiring it in is the next step.
 
 ## Order of work
 
