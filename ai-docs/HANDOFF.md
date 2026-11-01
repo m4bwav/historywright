@@ -16,8 +16,8 @@ Updated 2026-11-01 (v0.5.1 session).
   `place search --source ohm`, Seshat CC BY-SA, doi "only the year differs", South Asia era outline 185 BCE-320 CE.
 - Wiki at 0.5.1 (wiki commit 366ce61; live 12 pages, 0 failures). Procedure and verifier:
   [notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md); the verifier defaults to v0.5.1 (1c55b31). Dated skip markers: two
-  verify-quote outputs (LacusCurtius down, SSL) and one verify-url output (Wayback 429 in the 0.5.1 run); drop each
-  when a run gets the live answer again.
+  verify-quote outputs (LacusCurtius down, SSL); drop them when it answers. The Wayback marker was dropped later on
+  2026-11-01 (wiki f9be70e).
 - Installed: historywright@mark-local (check the version with `claude plugin list`).
 - Cache: four live answers in `~/.historywright/cache` (two India, crusader Jerusalem 2026-10-23, Deir el-Medina 2026-10-25).
   Move them aside before eval runs.
@@ -34,8 +34,8 @@ Updated 2026-11-01 (v0.5.1 session).
 
 1. Optional: `evergreen.py worth --ab` on the 11 value cases for a fresh baseline (last after 0.2.0).
 2. Evergreen refresh due 2026-11-16.
-3. Small follow-ups: drop the wiki skip markers when LacusCurtius answers (it still failed SSL on 2026-11-01) and
-   when Wayback answers `verify-url` without 429. Nothing unreleased on main.
+3. Small follow-up: drop the two LacusCurtius skip markers when the site answers (still TLS failure late on
+   2026-11-01). Nothing unreleased on main.
 
 ## Read first
 

@@ -45,6 +45,11 @@ gets the live label again). LacusCurtius still refused SSL. The stream-URL advic
 0.5.1 reads `download/` itself. `outputs` 61 checked, 0 missing, 9 skipped; `check` 0 errors, 0 warnings; `live` 12 
 pages, 0 failures, anchors 44 links, 0 broken. test_hw.py: 62 tests.
 
+Wiki commit f9be70e (2026-11-01, later): `hw.py verify url` re-run by hand from `git archive 1c55b31` with a fresh
+`HW_HOME` got `likely_hallucinated` (exit 1) again, identical to the page, so the Wayback skip marker is gone and the
+saved outputs' `verify-url` section holds the live answer. LacusCurtius still failed the TLS handshake (curl schannel
+error 35); its marker stays.
+
 ## Updating the wiki later
 
 1. `git -C <wiki dir> pull --ff-only`, then edit the pages.

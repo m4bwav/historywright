@@ -717,7 +717,7 @@ historywright at 1c55b31 from https://codeload.github.com/m4bwav/historywright/z
 
 ## verify-url
 {
- "ok": true,
+ "ok": false,
  "results": [
   {
    "url": "https://en.wikipedia.org/wiki/Julius_Caesar",
@@ -726,13 +726,13 @@ historywright at 1c55b31 from https://codeload.github.com/m4bwav/historywright/z
   },
   {
    "url": "https://en.wikipedia.org/wiki/The_Fourth_Gallic_Diary_of_Caesar",
-   "label": "unknown",
+   "label": "likely_hallucinated",
    "status": 404,
-   "why": "Wayback check failed (HTTP 429)"
+   "why": "no live page and no archived copy"
   }
  ]
 }
-[exit 0]
+[exit 1]
 
 ## src-wayback
 {
