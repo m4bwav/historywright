@@ -588,9 +588,81 @@ def pack_init(path, question, name=None, period=None, commercial=False, mechanis
     return {"ok": True, "pack": str(root), "created": made}
 
 
+IA_MANIFEST = "https://iiif.archive.org/iiif/3/%s/manifest.json"
+
+
+def _first(x):
+    return x[0] if isinstance(x, list) and x else x
+
+
+def _canvas_image(c):
+    """(image service id or None, plain image URL or None) of one Presentation 2 or 3 canvas."""
+    if c.get("items"):  # v3: canvas > AnnotationPage > Annotation > body
+        body = _first(_first(c["items"]).get("items") or []) or {}
+        body = body.get("body") or {}
+    else:  # v2: canvas > images > resource
+        body = (_first(c.get("images") or []) or {}).get("resource") or {}
+    svc = _first(body.get("service")) or {}
+    return (svc.get("id") or svc.get("@id")), (body.get("id") or body.get("@id"))
+
+
+def iiif_image(url=None, ia=None, canvas=None, size=2000):
+    """Resolve a IIIF image service (its base or info.json), a IIIF manifest plus a 1-based canvas number, or an
+    Internet Archive item plus a page (its IIIF manifest), to one image URL at most `size` pixels on the long side,
+    kept within the service's maxWidth, maxHeight and maxArea."""
+    if ia:
+        url = IA_MANIFEST % urllib.parse.quote(ia)
+    if not url:
+        return {"ok": False, "error": "give --image (a IIIF manifest or image service) or --ia ITEM"}
+    info_url = url if url.endswith("info.json") else None
+    info, out = None, {"canvas": canvas}
+    if not info_url:
+        j, r = get_json(url, accept="application/ld+json,application/json")
+        if j is None:
+            return {"ok": False, "error": "IIIF fetch failed: %s" % (r.error or r.status)}
+        if j.get("protocol") == "http://iiif.io/api/image" or "ImageService" in str(j.get("type", "")):
+            info, info_url = j, url
+        else:
+            canvases = j.get("items") or (_first(j.get("sequences") or []) or {}).get("canvases") or []
+            if not canvases:
+                return {"ok": False, "error": "not a IIIF manifest or image service: %s" % url}
+            if not canvas or not 1 <= canvas <= len(canvases):
+                return {"ok": False, "error": "this manifest has %d canvases: give --canvas 1 to %d"
+                        % (len(canvases), len(canvases))}
+            svc, plain = _canvas_image(canvases[canvas - 1])
+            out["manifest"] = url
+            if not svc:
+                return dict(out, ok=True, image_url=plain, service=None, size="as served")
+            info_url = svc.rstrip("/") + "/info.json"
+    if info is None:
+        info, r = get_json(info_url)
+        if info is None:
+            return {"ok": False, "error": "IIIF info.json fetch failed: %s" % (r.error or r.status)}
+    base = (info.get("id") or info.get("@id") or info_url[:-len("/info.json")]).rstrip("/")
+    w, h = info.get("width") or 0, info.get("height") or 0
+    n = min(size, info.get("maxWidth") or size, info.get("maxHeight") or info.get("maxWidth") or size)
+    if info.get("maxArea") and w and h:
+        n = min(n, int((info["maxArea"] * max(w, h) / min(w, h)) ** 0.5))
+    if w and h and max(w, h) <= n:
+        sz = "max" if "/3/" in str(info.get("@context", "")) else "full"
+    else:
+        sz = "!%d,%d" % (n, n)
+    return dict(out, ok=True, image_url="%s/full/%s/0/default.jpg" % (base, sz), service=base, size=sz,
+                pixels=[w, h])
+
+
 def pack_add_ref(path, image_url, page_url, title, licence, object_date, place, accession, institution,
-                 author=None, nc=None):
+                 author=None, nc=None, ia=None, canvas=None, size=2000):
     root = Path(path)
+    iiif = None
+    if ia or (image_url and re.search(r"(?i)iiif|manifest|info\.json$", image_url) and not
+              re.search(r"/full/[^/]+/[^/]+/default\.\w+$", image_url)):
+        iiif = iiif_image(image_url, ia, canvas, size)
+        if not iiif.get("ok"):
+            return iiif
+        image_url = iiif["image_url"]
+        if ia and not page_url and canvas:
+            page_url = "https://archive.org/details/%s/page/n%d" % (ia, canvas - 1)
     is_nc = bool(NC_LICENCES.search(licence or "")) if nc is None else nc
     mp = root / "manifest.json"
     man = load_json(mp) if mp.exists() else None
@@ -618,6 +690,8 @@ def pack_add_ref(path, image_url, page_url, title, licence, object_date, place, 
     entry = {"file": rel, "title": title, "object_date": object_date, "place": place, "accession": accession,
              "institution": institution, "url": page_url, "image_url": image_url, "licence": licence,
              "author": author, "nc": is_nc, "retrieved": today(), "sha256": _sha(root / rel), "bytes": len(r.body)}
+    if iiif:
+        entry["iiif"] = {k: iiif.get(k) for k in ("manifest", "canvas", "service", "size") if iiif.get(k)}
     idx["refs"] = [x for x in idx.get("refs", []) if x.get("file") != rel] + [entry]
     write_text(ip, json.dumps(idx, indent=1, ensure_ascii=False) + "\n")
     mp = root / "manifest.json"

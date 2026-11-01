@@ -44,7 +44,8 @@ other AI pictures (R-20261017-20). So:
    file page with author and licence), and the date fits the period; say so when the nearest evidence is earlier,
    later or from another region.
 3. `hw.py pack add-ref <dir> --image <url> --page <record url> --title "..." --licence CC0 --object-date "..."
-   --place "..." --accession "..." --institution "..."`.
+   --place "..." --accession "..." --institution "..."`. `--image` may be a IIIF manifest (with `--canvas N`) or
+   image service (LoC, Gallica, many museums); a book plate on the Internet Archive is `--ia <item> --canvas <page>`.
 
 `add-ref` refuses a non-commercial licence in a commercial pack and never overwrites an existing file. Expect gaps: the US CC0 APIs return Greek and Etruscan helmets for "Roman helmet" and little late-Republican kit;
 that period comes from Commons and Europeana (R-20261017-8). An empty search is a finding: record it in

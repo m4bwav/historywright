@@ -256,7 +256,7 @@ def cmd_pack(a):
         return out(C.pack_init(a.dir, a.question, a.name, a.period, a.commercial, a.mechanism))
     if a.sub == "add-ref":
         return out(C.pack_add_ref(a.dir, a.image, a.page, a.title, a.licence, a.object_date, a.place, a.accession,
-                                  a.institution, a.author))
+                                  a.institution, a.author, ia=a.ia, canvas=a.canvas, size=a.size))
     if a.sub == "csl":
         return out(C.pack_csl(a.dir))
     return fail("unknown pack command")
@@ -607,6 +607,9 @@ def build():
                    help="init: a machine or a building with machinery; anachronism.md gets the Mechanism section")
     for k in ("image", "page", "title", "licence", "object-date", "place", "accession", "institution", "author"):
         x.add_argument("--" + k)
+    x.add_argument("--ia", help="add-ref: an Internet Archive item id; --canvas picks the page (its IIIF manifest)")
+    x.add_argument("--canvas", type=int, help="add-ref: 1-based canvas (page) in a IIIF manifest or --ia item")
+    x.add_argument("--size", type=int, default=2000, help="add-ref: IIIF images, long side in pixels (default 2000)")
     x.set_defaults(fn=cmd_pack)
 
     x = sp.add_parser("validate-pack")

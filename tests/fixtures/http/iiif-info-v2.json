@@ -1,0 +1,7 @@
+{
+ "@context": "http://iiif.io/api/image/2/context.json",
+ "@id": "https://example.org/iiif/v2/plate",
+ "protocol": "http://iiif.io/api/image",
+ "width": 800,
+ "height": 600
+}

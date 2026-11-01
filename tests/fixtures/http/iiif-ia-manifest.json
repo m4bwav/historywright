@@ -1,0 +1,63 @@
+{
+ "@context": "http://iiif.io/api/presentation/3/context.json",
+ "id": "https://iiif.archive.org/iiif/3/testbook/manifest.json",
+ "type": "Manifest",
+ "items": [
+  {
+   "id": "https://iiif.archive.org/iiif/testbook$0/canvas",
+   "type": "Canvas",
+   "width": 1777,
+   "height": 3096,
+   "items": [
+    {
+     "type": "AnnotationPage",
+     "items": [
+      {
+       "type": "Annotation",
+       "body": {
+        "id": "https://iiif.archive.org/image/iiif/3/testbook%2Fpage_0001.jp2/full/max/0/default.jpg",
+        "type": "Image",
+        "format": "image/jpeg",
+        "service": [
+         {
+          "id": "https://iiif.archive.org/image/iiif/3/testbook%2Fpage_0001.jp2",
+          "type": "ImageService3",
+          "profile": "level2"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "https://iiif.archive.org/iiif/testbook$1/canvas",
+   "type": "Canvas",
+   "width": 1777,
+   "height": 3096,
+   "items": [
+    {
+     "type": "AnnotationPage",
+     "items": [
+      {
+       "type": "Annotation",
+       "body": {
+        "id": "https://iiif.archive.org/image/iiif/3/testbook%2Fpage_0002.jp2/full/max/0/default.jpg",
+        "type": "Image",
+        "format": "image/jpeg",
+        "service": [
+         {
+          "id": "https://iiif.archive.org/image/iiif/3/testbook%2Fpage_0002.jp2",
+          "type": "ImageService3",
+          "profile": "level2"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
