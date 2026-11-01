@@ -13,6 +13,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261101-3 · 2026-11-01 · eras.md South Asia names a readable source on Satavahana chronology
+- because: L-005, HANDOFF Next 1 (the SOAS and UW theses would not download)
+- files: skills/historywright-sources/references/eras.md (South Asia)
+- Shimada 2013 (Brill, open access on OAPEN) sets out the long and short Satavahana chronologies and the Sasan restrike that dates Nahapana and Gotamiputa; its OAPEN PDF fetched whole and two quotes checked exact with `verify quote`.
+
 ### C-20261101-2 · 2026-11-01 · Version 0.4.0: ships hw.py fetch, the Water path and the Commons filter
 - because: the wiki run against v0.3.0 found `hw.py fetch` missing (the v0.3.0 tag sits on 5c39462, before PR #21)
 - files: .claude-plugin/plugin.json and skills/historywright/scripts/hw_net.py (version 0.4.0), CHANGELOG.md (Releases), ai-docs/notes/2026-10-18-wiki-verify.py (default commit, three sections for 0.4.0)
