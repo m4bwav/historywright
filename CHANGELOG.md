@@ -13,6 +13,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261101-6 · 2026-11-01 · sources.json takes measured claims
+- because: HANDOFF Next 4 (sawmill-pack gap: drawing-measured claims)
+- files: skills/historywright/scripts/hw_check.py (check_sources), skills/historywright-pack/references/contract.md (sources.json), tests/test_hw.py (Sources), ai-docs/decisions/2026-11-01-measured-claims.md
+- A claim may carry `measured` (`scale`, `how`) and a sheet `locator` in place of a quote; `verify sources` checks those fields, skips the quote check and reports the claim as `measured`.
+
 ### C-20261101-5 · 2026-11-01 · validate-pack checks EDTF intervals
 - because: HANDOFF Next 4 (sawmill-pack gap: EDTF intervals)
 - files: skills/historywright/scripts/hw_dates.py (edtf_bounds), skills/historywright/scripts/hw_check.py (_interval_problems, date objects, timeline rows), skills/historywright-pack/references/contract.md (entities.json), tests/test_hw.py (Dates)

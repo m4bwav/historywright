@@ -51,6 +51,10 @@ machinery; anachronism.md must then have a Mechanism section with items (see ana
 - `kind`: primary, secondary, tertiary (Wikipedia and mirrors must be tertiary), structured (Wikidata, gazetteers).
 - `tier`: 1, 2 or 3 as in the registry.
 - Every claim has a `quote` that is a span of the fetched page; `hw.py verify sources` re-reads it.
+- A value read off a measured drawing has no words to quote. Give it `measured` instead:
+  `{"claim": "the wheel was 14 ft across", "locator": "Sheet 3 of 7", "measured": {"scale": "1:24 (scale bar)",
+  "how": "ruler on the scan, rim to rim"}}`. The locator names the sheet; `verify sources` lists the claim as
+  `measured` and checks no quote, so the answer says the value was measured from the sheet, not stated.
 - `derived_from` names the source ids or URLs it copies; independence is counted from it.
 
 ## entities.json
