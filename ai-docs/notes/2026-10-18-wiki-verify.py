@@ -3,7 +3,7 @@
     python ai-docs/notes/2026-10-18-wiki-verify.py [COMMIT] > ai-docs/notes/2026-10-18-wiki-verify.out.txt
 
 The release zip holds only skills/ and three files, and the pages also use tests/fixtures, so this downloads the
-repository zip at COMMIT (default: the v0.4.0 tag's commit) from GitHub into a scratch folder (never the working tree) and runs each page's commands as the page
+repository zip at COMMIT (default: the v0.5.0 tag's commit) from GitHub into a scratch folder (never the working tree) and runs each page's commands as the page
 shows them, from a scratch run folder, with HW_HOME pointing at a fresh scratch home: no keys, no contact, no cache.
 
 Network: the commands that read sources call the live public APIs that need no key (Wikidata, Wikipedia,
@@ -29,7 +29,7 @@ import urllib.request
 import zipfile
 
 sys.stdout.reconfigure(encoding="utf-8", newline="\n")  # the saved output stays LF on Windows too
-COMMIT = sys.argv[1] if len(sys.argv) > 1 else "d0ba8f6762c09440f6f4b27c432394fb1a21be18"  # v0.4.0
+COMMIT = sys.argv[1] if len(sys.argv) > 1 else "3239fbfd99f794078dd17b679ce020994d1b5c25"  # v0.5.0
 WORK = tempfile.mkdtemp(prefix="hwwiki_")
 url = "https://codeload.github.com/m4bwav/historywright/zip/" + COMMIT
 zipfile.ZipFile(io.BytesIO(urllib.request.urlopen(url, timeout=120).read())).extractall(WORK)
@@ -284,6 +284,35 @@ python hw.py fetch https://en.wikipedia.org/wiki/Ides_of_March --find "Kalends"
 
 snippet("src-loc-habs", """
 python hw.py src loc-habs "sawmill" --limit 2
+""")
+
+# since 0.5.0: EDTF interval checks, measured claims, long-s OCR quotes, IIIF and Internet Archive refs
+shutil.copytree(os.path.join(REPO, "tests", "fixtures", "pack-good"), os.path.join(RUN, "pack-interval"))
+_tl = json.load(open(os.path.join(RUN, "pack-interval", "timeline.json"), encoding="utf-8"))
+_tl["rows"][0]["when"] = "1840/1790"
+write("pack-interval/timeline.json", json.dumps(_tl, indent=1, ensure_ascii=False))
+_en = json.load(open(os.path.join(RUN, "pack-interval", "entities.json"), encoding="utf-8"))
+_en["entities"][0]["dates"]["birth"]["edtf"] = "1790/1840"
+write("pack-interval/entities.json", json.dumps(_en, indent=1, ensure_ascii=False))
+snippet("validate-interval", """
+python hw.py validate-pack pack-interval
+""")
+
+shutil.copytree(os.path.join(REPO, "tests", "fixtures", "pack-good"), os.path.join(RUN, "pack-measured"))
+_so = json.load(open(os.path.join(RUN, "pack-measured", "sources.json"), encoding="utf-8"))
+_so["sources"][0]["claims"].append({"claim": "the wheel was 14 ft across", "locator": "Sheet 3 of 7",
+                                    "measured": {"scale": "1:24 (scale bar)", "how": "ruler on the scan, rim to rim"}})
+write("pack-measured/sources.json", json.dumps(_so, indent=1, ensure_ascii=False))
+snippet("sources-measured", """
+python hw.py verify sources pack-measured/sources.json --offline --any-url
+""")
+
+snippet("verify-quote-long-s", """
+python hw.py verify quote --url "https://archive.org/download/youngmillwrightm00evan/youngmillwrightm00evan_djvu.txt" --quote "a sufficient guide to save thousands"
+""")
+
+snippet("add-ref-ia", """
+python hw.py pack add-ref sawmill --ia youngmillwrightm00evan --canvas 301 --title "Evans 1795, a plate" --licence "public domain" --object-date 1795 --place Philadelphia --accession youngmillwrightm00evan --institution "Internet Archive"
 """)
 
 # ---------------------------------------------------------------- historywright-sources
