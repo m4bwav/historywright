@@ -57,7 +57,20 @@ def url_health(url):
 
 # ---------------------------------------------------------------- quotes
 
+IA_STREAM_TXT = re.compile(r"(?i)^(https?://(?:www\.)?archive\.org)/stream/([^/?#]+/[^?#]+\.txt)$")
+
+
+def ia_text_url(url):
+    """archive.org/stream/ITEM/FILE.txt serves a viewer page; download/ serves the text itself."""
+    m = IA_STREAM_TXT.match(url)
+    return "%s/download/%s" % m.groups() if m else url
+
+
 def page_text(url, refetch=False):
+    real = ia_text_url(url)
+    if real != url:
+        text, how = page_text(real, refetch)
+        return text, "%s (read from %s)" % (how, real)
     body = None if refetch else stored_page(url)
     fetched, ctype = False, ""
     if body is None:
@@ -219,7 +232,7 @@ def check_sources(doc, network=True, require_fetched=True):
         s_mirror = is_mirror(url)
         if s_mirror and s.get("kind") != "tertiary":
             problems.append("%s: %s is Wikipedia or a mirror; mark it tertiary and cite the source beneath it" % (sid, url))
-        if require_fetched and url and url not in seen and not s.get("offline"):
+        if require_fetched and url and url not in seen and ia_text_url(url) not in seen and not s.get("offline"):
             problems.append("%s: %s was not fetched in this run (fetch-log); cite only what was read" % (sid, url))
         for c in s.get("claims", []):
             if not c.get("claim"):

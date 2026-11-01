@@ -14,6 +14,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261101-9 · 2026-11-01 · Internet Archive stream text URLs read from download
+- because: HANDOFF Next 3 (verify quote on `stream/ITEM/ITEM_djvu.txt` gave found:false where `download/` matched)
+- files: skills/historywright/scripts/hw_check.py (ia_text_url, page_text, check_sources), skills/historywright/references/cli.md (verify quote), tests/test_hw.py (Pdf)
+- `stream/ITEM/FILE.txt` serves a viewer page; `verify quote` and `fetch` now read `download/ITEM/FILE.txt` and say so in `source_text`, and `verify sources` accepts either URL in the fetch log. Checked live on Evans 1795.
+
 ### C-20261101-8 · 2026-11-01 · Version 0.5.0: long-s quotes, EDTF interval checks, measured claims, IIIF refs
 - because: user request (release once the sawmill gaps were built)
 - files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)
