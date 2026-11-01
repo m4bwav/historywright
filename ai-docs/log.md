@@ -128,3 +128,8 @@ Append-only, newest last.
 - PR #27 `verify quote` folds medial s to f on both sides after the normalised pass (C-4); #28 EDTF interval checks in validate-pack, either calendar accepted for jdn bounds (C-5); #29 `measured` claims (C-6, decision 2026-11-01-measured-claims.md); #30 `pack add-ref` IIIF manifests/services and `--ia ITEM --canvas N` via iiif.archive.org v3 manifests, checked live on Evans 1795 canvas 301 (C-7); #31 version 0.5.0 (C-8). Tagged v0.5.0 at 3239fbf, release zip 119,161 bytes.
 - Wiki to 0.5.0 by a background agent: wiki commit 466ee14, live 12/0, repo PR #32 (verifier sections for the four features).
 - Snags: parallel PRs that each add a CHANGELOG top entry conflict; rebase and put the newer entry first. Working on several branches in one clone, stash before switching. `wsl --cd` from Git Bash needs MSYS_NO_PATHCONV=1.
+
+## 2026-11-01 · IA stream text URLs
+
+- PR #34 (C-20261101-9): `page_text` rewrites `archive.org/stream/ITEM/FILE.txt` to `download/` (stream serves a "Full text of" viewer page), so `verify quote` and `fetch` read the text; `verify sources` accepts either URL in the fetch log. Live check on Evans 1795 read the djvu text. Merged after six green jobs; not released.
+- Skipped the optional worth A/B (cost, no change to the skills since 0.5.0 that it would measure). LacusCurtius still refuses the TLS handshake.

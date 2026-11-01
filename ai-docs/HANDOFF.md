@@ -31,9 +31,9 @@ Updated 2026-11-01 (sawmill gaps + v0.5.0 session).
 
 1. Optional: `evergreen.py worth --ab` on the 11 value cases for a fresh baseline (last after 0.2.0).
 2. Evergreen refresh due 2026-11-16.
-3. Sawmill-pack gaps all built 2026-11-01 (PRs #27-#30). Possible follow-ups, none urgent: `verify quote` on an IA
-   `stream/ITEM/ITEM_djvu.txt` URL gives found:false where `download/...` matches (stream serves a viewer page; maybe
-   rewrite stream to download); LacusCurtius still down (SSL EOF), drop the wiki skip markers when it answers.
+3. Unreleased on main: C-20261101-9 (PR #34, IA `stream/.../*.txt` read from `download/`). Release it with the next
+   change, or alone if nothing else comes. LacusCurtius still down on 2026-11-01 (SSL handshake fails); drop the
+   wiki skip markers when it answers.
 
 ## Read first
 
