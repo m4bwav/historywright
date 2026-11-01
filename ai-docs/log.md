@@ -122,3 +122,9 @@ Append-only, newest last.
 ## 2026-11-01 · Wiki to 0.5.0
 
 - Wiki commit 466ee14: pages re-run against v0.5.0 (3239fbf) on Windows and WSL; new sections for EDTF interval refusals, measured claims, long-s quotes and `pack add-ref --ia`; Versions-and-Upgrading has a 0.5.0 row, section and a "From 0.4.0 to 0.5.0" table. `live` 12 pages, 0 failures. Details: notes/2026-10-18-github-wiki.md.
+
+## 2026-11-01 · Sawmill gaps built, v0.5.0 released
+
+- PR #27 `verify quote` folds medial s to f on both sides after the normalised pass (C-4); #28 EDTF interval checks in validate-pack, either calendar accepted for jdn bounds (C-5); #29 `measured` claims (C-6, decision 2026-11-01-measured-claims.md); #30 `pack add-ref` IIIF manifests/services and `--ia ITEM --canvas N` via iiif.archive.org v3 manifests, checked live on Evans 1795 canvas 301 (C-7); #31 version 0.5.0 (C-8). Tagged v0.5.0 at 3239fbf, release zip 119,161 bytes.
+- Wiki to 0.5.0 by a background agent: wiki commit 466ee14, live 12/0, repo PR #32 (verifier sections for the four features).
+- Snags: parallel PRs that each add a CHANGELOG top entry conflict; rebase and put the newer entry first. Working on several branches in one clone, stash before switching. `wsl --cd` from Git Bash needs MSYS_NO_PATHCONV=1.

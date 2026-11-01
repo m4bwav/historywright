@@ -1,21 +1,22 @@
 # historywright handoff
 
-Updated 2026-11-01 (Satavahana source session).
+Updated 2026-11-01 (sawmill gaps + v0.5.0 session).
 
 ## State
 
 - Public: https://github.com/m4bwav/historywright (main). Three skills, hw.py (six stdlib modules), 85-source
-  registry (96 sources), 58 offline tests, CI green on three systems with Python 3.9 and 3.14.
+  registry (96 sources), 61 offline tests, CI green on three systems with Python 3.9 and 3.14.
 - Released: v0.1.0, v0.2.0, v0.3.0 (2026-10-24: pack fixes, loc-habs) and **v0.4.0 on 2026-11-01** (`hw.py fetch`,
   Water path, Commons filter; the v0.3.0 tag had missed PR #21, L-013): https://github.com/m4bwav/historywright/releases/tag/v0.4.0.
-  Unreleased: C-20261101-3.
+  **v0.5.0 on 2026-11-01** (long-s quotes, EDTF interval checks, measured claims, IIIF/IA add-ref; C-20261101-3 to -8):
+  https://github.com/m4bwav/historywright/releases/tag/v0.5.0. Installed copy updated to 0.5.0.
 - 0.2.0 = CHANGELOG C-20261018-5 to -10: project home, Roman and Hijri dates, Wayback collapse, PDF quotes,
   `place search --source ohm`, Seshat CC BY-SA, doi "only the year differs", South Asia era outline 185 BCE-320 CE.
-- Wiki at 0.4.0 (wiki commit 8f1cfd9; live 12 pages, 0 failures). Procedure and verifier:
-  [notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md); the verifier defaults to v0.4.0. LacusCurtius was down on
+- Wiki at 0.5.0 (wiki commit 466ee14; live 12 pages, 0 failures; repo PR #32). Procedure and verifier:
+  [notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md); the verifier defaults to v0.5.0 (3239fbf). LacusCurtius was down on
   2026-11-01: two verify-quote outputs carry a dated skip marker; drop it when the site answers.
 - Installed: historywright@mark-local (check the version with `claude plugin list`).
-- Cache: two live answers in `~/.historywright/cache` (who ruled India in AD 26; what happened to India's records).
+- Cache: four live answers in `~/.historywright/cache` (two India, crusader Jerusalem 2026-10-23, Deir el-Medina 2026-10-25).
   Move them aside before eval runs.
 - Keys stay in `~/.historywright/config.json` (OpenAlex, WHG). Never in the repository.
 - Owner rulings: [decisions/2026-10-18-owner-rulings-live-calls-and-tag.md](decisions/2026-10-18-owner-rulings-live-calls-and-tag.md),
@@ -28,15 +29,11 @@ Updated 2026-11-01 (Satavahana source session).
 
 ## Next
 
-1. (Done 2026-11-01) South Asia depth: Shimada 2013 named in eras.md (C-20261101-3, unreleased).
-2. Optional: `evergreen.py worth --ab` on the 11 value cases for a fresh baseline after 0.2.0.
-3. Evergreen refresh due 2026-11-16.
-4. Gaps found on the sawmill pack (2026-10-23), not yet built, one line each:
-   - Long-s OCR: `hw.py fetch --find` tries long-s spellings (0.4.0); `verify quote` itself still does not fold s/f.
-   - IIIF: LoC, Gallica and many museums serve images through IIIF; `pack add-ref` could take a IIIF manifest or image service and pick a size.
-   - Internet Archive plates: book plates (Evans 1795 Plates XI-XIV) have no per-plate URL; add a route from an IA item and page number to a page image for `add-ref`.
-   - EDTF intervals: period ranges such as 1790/1840 and open ends need checks and examples in entities.json and timeline.json.
-   - Drawing-measured claims: values read off a measured drawing (sheet N, scaled) have no quote to verify; sources.json needs a claim kind for them (locator plus "measured from sheet").
+1. Optional: `evergreen.py worth --ab` on the 11 value cases for a fresh baseline (last after 0.2.0).
+2. Evergreen refresh due 2026-11-16.
+3. Sawmill-pack gaps all built 2026-11-01 (PRs #27-#30). Possible follow-ups, none urgent: `verify quote` on an IA
+   `stream/ITEM/ITEM_djvu.txt` URL gives found:false where `download/...` matches (stream serves a viewer page; maybe
+   rewrite stream to download); LacusCurtius still down (SSL EOF), drop the wiki skip markers when it answers.
 
 ## Read first
 
