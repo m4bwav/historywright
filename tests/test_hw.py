@@ -521,6 +521,20 @@ class Pdf(unittest.TestCase):
         self.assertFalse(miss["found"])
         self.assertIn("pdftotext", miss["note"])
 
+    def test_ia_stream_text_reads_download(self):
+        import hashlib
+        import hw_net
+        stream = "https://archive.org/stream/millwright00evan/millwright00evan_djvu.txt"
+        url = "https://archive.org/download/millwright00evan/millwright00evan_djvu.txt"
+        self.assertEqual(C.ia_text_url(stream), url)
+        self.assertEqual(C.ia_text_url("https://archive.org/stream/millwright00evan"), "https://archive.org/stream/millwright00evan")
+        pages = hw_net.home() / "pages"
+        pages.mkdir(parents=True, exist_ok=True)
+        (pages / (hashlib.sha1(url.encode("utf-8")).hexdigest() + ".body")).write_bytes(b"the water-wheel turns the saw")
+        r = C.verify_quote(stream, "the water-wheel turns the saw")
+        self.assertTrue(r["found"])
+        self.assertIn(url, r["source_text"])
+
     def test_spacing_ignored_only_for_pdf(self):
         text = "Constitution of the United States W E THE P EOPLE of the United States, in Order to form"
         q = "We the People of the United States, in Order"
