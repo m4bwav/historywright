@@ -1,4 +1,4 @@
-# Kickoff: historywright open items (after 0.4.0)
+# Kickoff: historywright open items (after 0.4.0 and the Satavahana source)
 
 Rewritten 2026-11-01. Paste this into a fresh session started in the folder that holds this repository (the
 historywright clone). If the clone's main is behind or dirty, work in a git worktree from `origin/main`.
@@ -15,8 +15,7 @@ historywright clone). If the clone's main is behind or dirty, work in a git work
 
 ## Order of work
 
-Take HANDOFF's Next list top to bottom: South Asia depth (a readable scholarly source on Satavahana chronology),
-then the sawmill-pack gaps (one PR per gap, each with a test), the optional A/B, and the evergreen refresh when due
+Take HANDOFF's Next list top to bottom (South Asia depth is done): the sawmill-pack gaps (one PR per gap, each with a test), the optional A/B, and the evergreen refresh when due
 (2026-11-16). Tag and release yourself once the version is bumped in a PR and CI passes; before tagging, check every
 CHANGELOG entry in the range is in the tag commit (L-013). After a release, bring the wiki to it
 (notes/2026-10-18-github-wiki.md).
