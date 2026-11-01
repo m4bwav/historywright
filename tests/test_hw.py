@@ -131,6 +131,22 @@ class Dates(unittest.TestCase):
         for bad in ("July 100 BC", "2026-13", "100 BC", "", "/", "[]", "1975-4-4"):
             self.assertFalse(D.edtf_valid(bad), bad)
 
+    def test_edtf_intervals(self):
+        y1790, y1840 = D.span_range(1790, None, None, "gregorian")[0], D.span_range(1840, None, None, "gregorian")[1]
+        self.assertEqual(D.edtf_bounds("1790/1840")[2], False)
+        self.assertTrue(D.edtf_bounds("1840/1790")[2])
+        self.assertEqual(D.edtf_bounds("1790/..")[1], None)
+        self.assertEqual(D.edtf_bounds("../1840")[0], None)
+        self.assertIsNone(D.edtf_bounds("1790"))
+        ok = [y1790, y1840]
+        self.assertEqual(C._interval_problems("1790~/1840", ok, "x"), [])
+        self.assertEqual(C._interval_problems("1790/..", [y1790, y1840 + 9000], "x"), [])
+        self.assertIn("ends before", C._interval_problems("1840/1790", None, "x")[0])
+        self.assertIn("outside", C._interval_problems("1790/1840", [y1790, y1840 + 30], "x")[0])
+        self.assertIn("outside", C._interval_problems("{1667,1668}", [D.gregorian_to_jdn(1669, 3, 1)] * 2, "x")[0])
+        # Caesar's contract example (Julian days) still passes
+        self.assertEqual(C._interval_problems("[-0099-07-12,-0099-07-13]", [1685091, 1685092], "x"), [])
+
     def test_wikidata_time(self):
         t = D.wikidata_time({"time": "-0100-07-12T00:00:00Z", "precision": 11,
                              "calendarmodel": "http://www.wikidata.org/entity/Q1985786"})

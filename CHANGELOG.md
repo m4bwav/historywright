@@ -13,6 +13,10 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261101-5 · 2026-11-01 · validate-pack checks EDTF intervals
+- because: HANDOFF Next 4 (sawmill-pack gap: EDTF intervals)
+- files: skills/historywright/scripts/hw_dates.py (edtf_bounds), skills/historywright/scripts/hw_check.py (_interval_problems, date objects, timeline rows), skills/historywright-pack/references/contract.md (entities.json), tests/test_hw.py (Dates)
+- Dates and timeline rows now fail on a backwards interval and on a `jdn` range outside the EDTF's days (Julian or Gregorian); the contract shows `1790/1840`, `1790~/1840`, `1790/..` and `../1840`.
 ### C-20261101-4 · 2026-11-01 · verify quote matches long-s OCR
 - because: L-012, HANDOFF Next 4 (sawmill-pack gap: long-s OCR)
 - files: skills/historywright/scripts/hw_check.py (quote_in), skills/historywright/SKILL.md (open the cited source), skills/historywright/references/cli.md (verify quote), tests/test_hw.py (Fetch)
