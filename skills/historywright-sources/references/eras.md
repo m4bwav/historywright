@@ -58,7 +58,10 @@ Indus Valley (c. 3300-1300 BCE), Maurya (c. 322-185 BCE), then no single power u
 in the Ganges basin; Indo-Greek, Indo-Scythian (Azes), Indo-Parthian (Gondophares) and Kushan kings in the north-west;
 the Northern Satraps at Mathura and the Western Satraps; the Satavahanas in the Deccan; Chera, Chola and Pandya in
 the south. Inscriptions there are dated in eras whose start years scholars dispute (the Azes era: 58/57 or 47/46 BCE),
-so compute each reading separately. Gupta (c. 320-550 CE), Delhi Sultanate (1206-1526),
+so compute each reading separately. Satavahana dates follow a long chronology (founded c. 300-200 BCE) or a
+short one (mid-1st century BCE), and Nahapana's coins restruck by the Indo-Parthian Sasan put Nahapana and his
+rival Gotamiputa Satakani in the mid-1st century CE: Shimada, *Early Buddhist Architecture in Context* (Brill 2013,
+doi:10.1163/9789004233263, open access on OAPEN, CC BY-NC-ND) lays out both and reads cleanly with `verify quote`. Gupta (c. 320-550 CE), Delhi Sultanate (1206-1526),
 Mughal (1526-1857), British rule (to 1947). National archives (`abhilekh-patal`) are browse-only: rely on
 `openalex`, `wikidata` references, `internet-archive` scans, and name regional scholarship. Lower the default
 confidence; dates for early dynasties carry wide ranges.

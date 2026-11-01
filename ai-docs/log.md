@@ -112,3 +112,9 @@ Append-only, newest last.
 - The wiki run against v0.3.0 showed `hw.py fetch` missing: the v0.3.0 tag (5c39462) predates PR #21, so C-20261024-1 and -2 never shipped although CHANGELOG said so (L-013). PR #23 bumped to 0.4.0, corrected the Releases list (C-20261101-2) and added three verifier sections; merged after six green jobs, tag v0.4.0 at d0ba8f6, release workflow green, `historywright-0.4.0.zip`: https://github.com/m4bwav/historywright/releases/tag/v0.4.0. historywright@mark-local reinstalled (0.4.0). Ruling: decisions/2026-11-01-release-0.4.0.md.
 - Wiki commit 8f1cfd9 against v0.4.0 on Windows and WSL: fetch and loc-habs on Commands, `--mechanism` on The-Research-Pack, 0.3.0 and 0.4.0 notes. `live` 12 pages, 0 failures. Details in notes/2026-10-18-github-wiki.md.
 - LacusCurtius (penelope.uchicago.edu) refused all connections over HTTP and HTTPS on 2026-11-01; the verify-quote outputs on two pages stay from 0.2.0 under a dated skip marker.
+
+## 2026-11-01 · South Asia depth: Satavahana chronology source
+
+- `hw.py oa search "Satavahana chronology" --filter is_oa:true` found Shimada, *Early Buddhist Architecture in Context* (Brill 2013, doi:10.1163/9789004233263, CC BY-NC-ND on OAPEN). The OAPEN bitstream PDF fetched whole (1.35 M chars); two quotes exact with `verify quote` (long vs short chronology; the Sasan restrike dating Nahapana and Gotamiputa to the mid-1st century CE).
+- Dead ends: Ollett's *Language of the Snakes* appendix ("Time Line of the Satavahanas") fetched 0 chars from De Gruyter; luminosoa.org and OAPEN's discover page answer 403.
+- eras.md South Asia now names Shimada and the two chronologies (C-20261101-3). Next 1 closed. For AD 26, Shimada's short chronology puts the early kings c. 100-20 BCE and Gotamiputa in the mid-1st century CE, so the Deccan ruler in AD 26 stays uncertain; say so.
