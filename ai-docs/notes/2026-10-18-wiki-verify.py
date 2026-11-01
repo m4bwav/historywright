@@ -3,7 +3,7 @@
     python ai-docs/notes/2026-10-18-wiki-verify.py [COMMIT] > ai-docs/notes/2026-10-18-wiki-verify.out.txt
 
 The release zip holds only skills/ and three files, and the pages also use tests/fixtures, so this downloads the
-repository zip at COMMIT (default: the v0.3.0 tag's commit) from GitHub into a scratch folder (never the working tree) and runs each page's commands as the page
+repository zip at COMMIT (default: the v0.4.0 tag's commit) from GitHub into a scratch folder (never the working tree) and runs each page's commands as the page
 shows them, from a scratch run folder, with HW_HOME pointing at a fresh scratch home: no keys, no contact, no cache.
 
 Network: the commands that read sources call the live public APIs that need no key (Wikidata, Wikipedia,
@@ -29,7 +29,7 @@ import urllib.request
 import zipfile
 
 sys.stdout.reconfigure(encoding="utf-8", newline="\n")  # the saved output stays LF on Windows too
-COMMIT = sys.argv[1] if len(sys.argv) > 1 else "5c394628e950cdf41a8ef2f44acd91f54ca90fba"  # v0.3.0
+COMMIT = sys.argv[1] if len(sys.argv) > 1 else "d0ba8f6762c09440f6f4b27c432394fb1a21be18"  # v0.4.0
 WORK = tempfile.mkdtemp(prefix="hwwiki_")
 url = "https://codeload.github.com/m4bwav/historywright/zip/" + COMMIT
 zipfile.ZipFile(io.BytesIO(urllib.request.urlopen(url, timeout=120).read())).extractall(WORK)

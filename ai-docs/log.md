@@ -106,3 +106,9 @@ Append-only, newest last.
 - L-006 (abridged sourcebook translations, from the 2026-10-23 Jerusalem brief) sat uncommitted in the main clone; committed here. The main clone's working copy still holds it until that clone is pulled.
 - next-session-prompt.md rewritten: the old one still described Step 7 after 0.2.0.
 - CI: ubuntu-latest moved to 26.04, which has no setup-python 3.9 build; the Ubuntu jobs now run on ubuntu-24.04 (tests.yml). Revisit when 3.9 is dropped.
+
+## 2026-11-01 · Wiki to 0.4.0; 0.4.0 released
+
+- The wiki run against v0.3.0 showed `hw.py fetch` missing: the v0.3.0 tag (5c39462) predates PR #21, so C-20261024-1 and -2 never shipped although CHANGELOG said so (L-013). PR #23 bumped to 0.4.0, corrected the Releases list (C-20261101-2) and added three verifier sections; merged after six green jobs, tag v0.4.0 at d0ba8f6, release workflow green, `historywright-0.4.0.zip`: https://github.com/m4bwav/historywright/releases/tag/v0.4.0. historywright@mark-local reinstalled (0.4.0). Ruling: decisions/2026-11-01-release-0.4.0.md.
+- Wiki commit 8f1cfd9 against v0.4.0 on Windows and WSL: fetch and loc-habs on Commands, `--mechanism` on The-Research-Pack, 0.3.0 and 0.4.0 notes. `live` 12 pages, 0 failures. Details in notes/2026-10-18-github-wiki.md.
+- LacusCurtius (penelope.uchicago.edu) refused all connections over HTTP and HTTPS on 2026-11-01; the verify-quote outputs on two pages stay from 0.2.0 under a dated skip marker.

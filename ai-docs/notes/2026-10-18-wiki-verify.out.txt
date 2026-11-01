@@ -1,14 +1,14 @@
 ## installed
-historywright at f890f1c from https://codeload.github.com/m4bwav/historywright/zip/f890f1c7172a91e5e5454f45f035affd3936df4f
+historywright at d0ba8f6 from https://codeload.github.com/m4bwav/historywright/zip/d0ba8f6762c09440f6f4b27c432394fb1a21be18
 
 ## version
-0.2.0
+0.4.0
 [exit 0]
 
 ## doctor
 {
  "ok": true,
- "version": "0.2.0",
+ "version": "0.4.0",
  "checks": {
   "python": "<python>",
   "python_ok": true,
@@ -24,12 +24,12 @@ historywright at f890f1c from https://codeload.github.com/m4bwav/historywright/z
   },
   "registry": {
    "path": "<repo>\\skills\\historywright-sources\\references\\registry.json",
-   "sources": 85
+   "sources": 96
   },
   "era_outline": true,
   "dila_table": false,
   "cache_entries": 0,
-  "user_agent": "historywright/0.2.0 (https://github.com/m4bwav/historywright)",
+  "user_agent": "historywright/0.4.0 (https://github.com/m4bwav/historywright)",
   "pdftotext": true,
   "cwd_in_skill_folder": false
  },
@@ -428,7 +428,7 @@ historywright at f890f1c from https://codeload.github.com/m4bwav/historywright/z
   "P1326": "latest date",
   "P1480": "sourcing circumstances",
   "P1810": "subject named as",
-  "P1932": "object named as",
+  "P1932": "object of statement named as",
   "P268": "Bibliothèque nationale de France ID",
   "P4342": "Great Norwegian Encyclopedia ID",
   "P5019": "Brockhaus Enzyklopädie online ID",
@@ -472,7 +472,7 @@ historywright at f890f1c from https://codeload.github.com/m4bwav/historywright/z
 {
  "ok": true,
  "title": "Microsoft",
- "references_total": 345,
+ "references_total": 350,
  "url": "https://en.wikipedia.org/wiki/Microsoft",
  "role": "finder: read each reference and cite it, not the article",
  "sentence": "Gates and Allen established Microsoft on April 4, 1975, with Gates as CEO, and Allen suggested the name \"Micro-Soft\", short for micro-computer software.",
@@ -622,7 +622,7 @@ historywright at f890f1c from https://codeload.github.com/m4bwav/historywright/z
  "ok": true,
  "api": "openalex",
  "keyed": false,
- "count": 6125,
+ "count": 6569,
  "page": 1,
  "works": [
   {
@@ -648,7 +648,7 @@ historywright at f890f1c from https://codeload.github.com/m4bwav/historywright/z
    "authors": [
     "Remington Edward. Rose"
    ],
-   "venue": "Medical Entomology and Zoology",
+   "venue": "University Microfilms International eBooks",
    "oa_url": null
   }
  ]
@@ -708,13 +708,12 @@ historywright at f890f1c from https://codeload.github.com/m4bwav/historywright/z
 
 ## verify-quote
 {
- "found": true,
- "match": "exact",
- "ok": true,
+ "ok": false,
  "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Julius*.html",
- "source_text": "fetched now"
+ "found": null,
+ "error": "fetch failed: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)"
 }
-[exit 0]
+[exit 1]
 
 ## verify-url
 {
@@ -1456,26 +1455,117 @@ legionary/timeline.json
 }
 [exit 0]
 
+## pack-init-mechanism
+{
+ "ok": true,
+ "pack": "sawmill",
+ "created": [
+  "answer.md",
+  "sources.json",
+  "entities.json",
+  "places.geojson",
+  "timeline.json",
+  "refs/index.json",
+  "anachronism.md",
+  "manifest.json"
+ ]
+}
+[exit 0]
+{
+ "ok": false,
+ "pack": "sawmill",
+ "problems": [
+  "manifest.json historywright.completeness missing: list each part present or empty with a reason",
+  "answer.md still holds the template placeholder <answer with inline citations [s1]>, <high|medium|low>, <what is uncertain and why>: write the answer",
+  "sources.json needs a non-empty 'sources' list",
+  "anachronism.md has 6 empty items (the template's '- ' lines): fill them or delete them",
+  "anachronism.md still holds 10 template placeholders (<fill: ...>...): replace each with what the sources say, cited, or delete the water path if the machine is not water-powered"
+ ],
+ "warnings": []
+}
+[exit 1]
+
+## fetch-find
+{
+ "ok": true,
+ "url": "https://en.wikipedia.org/wiki/Ides_of_March",
+ "source_text": "fetched now",
+ "chars": 15199,
+ "text_file": "<home>\\pages\\c6c2680d89960149e41dbb938936af69d830d277.txt",
+ "finds": [
+  {
+   "term": "Kalends",
+   "spelling": "kalends",
+   "count": 1,
+   "snippets": [
+    "e 13th for most months, but the 15th in March, May, July, and October), and the Kalends (1st of the following month). Originally the Ides were supposed to be determine"
+   ]
+  }
+ ]
+}
+[exit 0]
+
+## src-loc-habs
+{
+ "ok": true,
+ "source": "loc-habs",
+ "name": "HABS/HAER/HALS (Library of Congress)",
+ "tier": 1,
+ "licence": "public domain (US government documentation; LoC: no known restrictions)",
+ "url": "https://www.loc.gov/collections/historic-american-buildings-landscapes-and-engineering-records/?q=sawmill&fo=json&c=10",
+ "count": 2,
+ "results": [
+  {
+   "title": "Buttery Sawmill, Silvermine, Fairfield County, CT",
+   "url": "https://www.loc.gov/item/ct0117/",
+   "id": "http://www.loc.gov/item/ct0117/",
+   "call_number": "HABS CONN,1-SILM,1-",
+   "contents": "Photo(s): 4 | Measured Drawing(s): 9 | Data Page(s): 4",
+   "location": [
+    "fairfield county",
+    "connecticut",
+    "silvermine"
+   ],
+   "image": "https://tile.loc.gov/storage-services/service/pnp/habshaer/ct/ct0100/ct0117/photos/022529pv.jpg#h=732&w=1024"
+  },
+  {
+   "title": "Sawmill, U.S. Route 11, Sperryville, Rappahannock County, VA",
+   "url": "https://www.loc.gov/item/va0880/",
+   "id": "http://www.loc.gov/item/va0880/",
+   "call_number": "HABS VA,79-SPER.V,2-",
+   "contents": "Photo(s): 3",
+   "location": [
+    "sperryville",
+    "virginia",
+    "rappahannock county"
+   ],
+   "image": "https://tile.loc.gov/storage-services/service/pnp/habshaer/va/va0800/va0880/photos/305482pv.jpg#h=1024&w=743"
+  }
+ ],
+ "mirror_warning": null
+}
+[exit 0]
+
 ## lint
 {
  "ok": true,
- "sources": 85,
+ "sources": 96,
  "by_tier": {
   "3": 5,
-  "1": 53,
-  "2": 27
+  "1": 56,
+  "2": 35
  },
  "by_route": {
   "wd": 2,
   "wp": 1,
   "place": 4,
-  "link-out": 53,
-  "src": 22,
+  "link-out": 63,
+  "src": 23,
   "cal": 1,
   "oa": 1,
   "doi": 1
  },
- "era_outline_bytes": 6747,
+ "era_outline_bytes": 6840,
  "era_outline_band": "green",
  "problems": [],
  "warnings": [],
@@ -1504,7 +1594,7 @@ era name 康熙: 60 years, 10 months, 2 days (22219 days)
 {
  "ok": true,
  "contact": "you@example.com",
- "user_agent": "historywright/0.2.0 (https://github.com/m4bwav/historywright; you@example.com)"
+ "user_agent": "historywright/0.4.0 (https://github.com/m4bwav/historywright; you@example.com)"
 }
 [exit 0]
 

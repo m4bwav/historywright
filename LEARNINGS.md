@@ -6,6 +6,14 @@ Write an entry the moment a real signal happens: a user correction, the same err
 
 ## Active
 
+### L-013 · 2026-11-01 · A tag cut before the last PR merged silently left that PR out of the release
+- Trigger: the wiki run against v0.3.0 on 2026-11-01 answered `invalid choice: 'fetch'`. v0.3.0 sat on 5c39462 (PR #20); PR #21 (`hw.py fetch`, the Water path) merged afterwards, yet CHANGELOG's Releases line covered it.
+- Hypothesis: the release range is written from the CHANGELOG, while the tag goes on whatever main is at that moment; with two PRs in flight the two disagree and nothing checks it.
+- Rule: before `git tag`, confirm every CHANGELOG entry in the release range is in the tag commit (`git log <commit>..origin/main` empty, or each entry's files present at the commit), and run the wiki verifier at the tag before writing release notes.
+- Evidence: decisions/2026-11-01-release-0.4.0.md; PR #23 and v0.4.0 shipped the two entries.
+- Scope: repo
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-11-01
+
 ### L-012 · 2026-10-24 · Caching a page needed a dummy quote, and 1795 OCR spells "shot" as "fhot"
 - Trigger: extending the sawmill pack (sawmill-3d/history) for a wide illustration, 2026-10-24. `hw.py verify url` checks a link without storing the body, so the only way to put Evans 1795 and Fairbairn 1864 into the page store for reading was `hw.py verify quote --url U --quote <any word>`. Then searches of the Evans OCR for "shot", "sufficient" and "distance" found nothing: the 1795 printing uses the long s, which the OCR reads as "f" ("fhot", "fufficient dif-").
 - Hypothesis: a reading step disguised as a check gets skipped or done with curl, which leaves the page out of the fetch log; and a researcher searching pre-1800 OCR with modern spellings concludes that a source is silent when it is not.
