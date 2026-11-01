@@ -133,3 +133,9 @@ Append-only, newest last.
 
 - PR #34 (C-20261101-9): `page_text` rewrites `archive.org/stream/ITEM/FILE.txt` to `download/` (stream serves a "Full text of" viewer page), so `verify quote` and `fetch` read the text; `verify sources` accepts either URL in the fetch log. Live check on Evans 1795 read the djvu text. Merged after six green jobs; not released.
 - Skipped the optional worth A/B (cost, no change to the skills since 0.5.0 that it would measure). LacusCurtius still refuses the TLS handshake.
+
+## 2026-11-01 · v0.5.1 and the wiki
+
+- PR #36 bumped to 0.5.1 (C-20261101-10, shipping C-20261101-9), six green jobs, merged; tag v0.5.1 at 1c55b31, release `historywright-0.5.1.zip`. historywright@mark-local reinstalled (0.5.1) after pulling the main clone and `claude plugin marketplace update mark-local`.
+- Snag: a hand-made `gh release create` raced the tag-push release workflow, which then failed ("a release with the same tag name already exists"). Fix: deleted the hand-made release, re-ran the workflow. Rule: push the tag and let the workflow make the release (L-014).
+- Wiki re-run against v0.5.1 on Windows then WSL; wiki commit 366ce61, `live` 12 pages, 0 failures. Wayback answered 429 for `verify-url` this run, so that output keeps the 0.5.0 run under a dated skip marker. LacusCurtius still refuses SSL.

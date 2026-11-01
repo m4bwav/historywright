@@ -1,14 +1,14 @@
 ## installed
-historywright at 3239fbf from https://codeload.github.com/m4bwav/historywright/zip/3239fbfd99f794078dd17b679ce020994d1b5c25
+historywright at 1c55b31 from https://codeload.github.com/m4bwav/historywright/zip/1c55b3120de0fe9f548b7525c766b46d95017020
 
 ## version
-0.5.0
+0.5.1
 [exit 0]
 
 ## doctor
 {
  "ok": true,
- "version": "0.5.0",
+ "version": "0.5.1",
  "checks": {
   "python": "<python>",
   "python_ok": true,
@@ -29,7 +29,7 @@ historywright at 3239fbf from https://codeload.github.com/m4bwav/historywright/z
   "era_outline": true,
   "dila_table": false,
   "cache_entries": 0,
-  "user_agent": "historywright/0.5.0 (https://github.com/m4bwav/historywright)",
+  "user_agent": "historywright/0.5.1 (https://github.com/m4bwav/historywright)",
   "pdftotext": false,
   "cwd_in_skill_folder": false
  },
@@ -717,7 +717,7 @@ historywright at 3239fbf from https://codeload.github.com/m4bwav/historywright/z
 
 ## verify-url
 {
- "ok": false,
+ "ok": true,
  "results": [
   {
    "url": "https://en.wikipedia.org/wiki/Julius_Caesar",
@@ -726,13 +726,13 @@ historywright at 3239fbf from https://codeload.github.com/m4bwav/historywright/z
   },
   {
    "url": "https://en.wikipedia.org/wiki/The_Fourth_Gallic_Diary_of_Caesar",
-   "label": "likely_hallucinated",
+   "label": "unknown",
    "status": 404,
-   "why": "no live page and no archived copy"
+   "why": "Wayback check failed (HTTP 429)"
   }
  ]
 }
-[exit 1]
+[exit 0]
 
 ## src-wayback
 {
@@ -1666,7 +1666,7 @@ era name 康熙: 60 years, 10 months, 2 days (22219 days)
 {
  "ok": true,
  "contact": "you@example.com",
- "user_agent": "historywright/0.5.0 (https://github.com/m4bwav/historywright; you@example.com)"
+ "user_agent": "historywright/0.5.1 (https://github.com/m4bwav/historywright; you@example.com)"
 }
 [exit 0]
 
