@@ -1,5 +1,33 @@
 [
  {
+  "match": "iiif\\.archive\\.org/iiif/3/testbook/manifest\\.json",
+  "method": "GET",
+  "file": "iiif-ia-manifest.json",
+  "status": 200,
+  "content_type": "application/ld+json"
+ },
+ {
+  "match": "iiif\\.archive\\.org/image/iiif/3/testbook%2Fpage_0002\\.jp2/info\\.json",
+  "method": "GET",
+  "file": "iiif-info-v3.json",
+  "status": 200,
+  "content_type": "application/ld+json"
+ },
+ {
+  "match": "example\\.org/iiif/v2/plate/info\\.json",
+  "method": "GET",
+  "file": "iiif-info-v2.json",
+  "status": 200,
+  "content_type": "application/json"
+ },
+ {
+  "match": "/full/[^/]+/0/default\\.jpg",
+  "method": "GET",
+  "file": "tiny.png",
+  "status": 200,
+  "content_type": "image/png"
+ },
+ {
   "match": "wikidata\\.org/w/api\\.php\\?action=wbgetclaims&entity=Q1048&",
   "method": "GET",
   "file": "q1048-p569-claims.json",

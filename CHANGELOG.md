@@ -13,6 +13,10 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261101-7 · 2026-11-01 · pack add-ref reads IIIF and Internet Archive pages
+- because: HANDOFF Next 4 (sawmill-pack gaps: IIIF; Internet Archive plates)
+- files: skills/historywright/scripts/hw_check.py (iiif_image, pack_add_ref), skills/historywright/scripts/hw.py (pack options), skills/historywright-pack/SKILL.md (step 3), skills/historywright/references/cli.md (pack add-ref), tests (PackChecks, IIIF fixtures)
+- `--image` takes a IIIF Presentation 2/3 manifest with `--canvas`, or an Image API 2/3 service; `--ia ITEM --canvas N` resolves an Internet Archive page through iiif.archive.org (checked live on Evans 1795, canvas 301: a 2000 x 1148 JPEG). The size respects maxWidth, maxHeight and maxArea.
 ### C-20261101-6 · 2026-11-01 · sources.json takes measured claims
 - because: HANDOFF Next 4 (sawmill-pack gap: drawing-measured claims)
 - files: skills/historywright/scripts/hw_check.py (check_sources), skills/historywright-pack/references/contract.md (sources.json), tests/test_hw.py (Sources), ai-docs/decisions/2026-11-01-measured-claims.md

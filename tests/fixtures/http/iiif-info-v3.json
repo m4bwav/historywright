@@ -1,0 +1,10 @@
+{
+ "@context": "http://iiif.io/api/image/3/context.json",
+ "id": "https://iiif.archive.org/image/iiif/3/testbook%2Fpage_0002.jp2",
+ "type": "ImageService3",
+ "protocol": "http://iiif.io/api/image",
+ "profile": "level2",
+ "width": 1777,
+ "height": 3096,
+ "maxWidth": 1200
+}

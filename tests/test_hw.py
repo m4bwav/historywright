@@ -590,6 +590,23 @@ class PackChecks(unittest.TestCase):
                     "CC BY-SA 4.0", "Science licence"):
             self.assertFalse(C.NC_LICENCES.search(lic), lic)
 
+    def test_iiif_routes(self):
+        # an Internet Archive page: item + canvas -> manifest -> image service, capped by its maxWidth
+        r = C.iiif_image(ia="testbook", canvas=2, size=2000)
+        self.assertTrue(r["ok"], r)
+        self.assertTrue(r["image_url"].endswith("page_0002.jp2/full/!1200,1200/0/default.jpg"), r)
+        self.assertIn("canvases", C.iiif_image(ia="testbook", canvas=9)["error"])
+        # a v2 image service smaller than the asked size: the whole image
+        r = C.iiif_image("https://example.org/iiif/v2/plate/info.json", size=2000)
+        self.assertEqual(r["image_url"], "https://example.org/iiif/v2/plate/full/full/0/default.jpg")
+        d = self._pack("pack-iiif")
+        code, r = run("pack", "add-ref", str(d), "--ia", "testbook", "--canvas", "2", "--title", "Plate XI",
+                      "--licence", "public domain", "--object-date", "1795", "--place", "Philadelphia",
+                      "--accession", "testbook n1", "--institution", "Internet Archive")
+        self.assertTrue(r["ok"], r)
+        self.assertEqual(r["ref"]["url"], "https://archive.org/details/testbook/page/n1")
+        self.assertEqual(r["ref"]["iiif"]["canvas"], 2)
+
     def test_add_ref_refuses_nc_image_in_commercial_pack(self):
         d = self._pack("pack-commercial", commercial=True)
         code, r = run("pack", "add-ref", str(d), "--image", self.IMG % "nc", "--page", "https://example.org/obj/nc",
