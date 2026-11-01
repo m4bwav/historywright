@@ -8,9 +8,15 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 - 0.1.0 (2026-10-18): first release, C-20261017-1 to C-20261018-4. https://github.com/m4bwav/historywright/releases/tag/v0.1.0
 - 0.2.0 (2026-10-18): C-20261018-5 to C-20261018-10. https://github.com/m4bwav/historywright/releases/tag/v0.2.0
-- 0.3.0 (2026-10-24): C-20261021-1 to C-20261024-2. https://github.com/m4bwav/historywright/releases/tag/v0.3.0
+- 0.3.0 (2026-10-24): C-20261021-1 to C-20261023-3 (the tag was cut before PR #21 merged, so C-20261024-1 and -2 were not in it). https://github.com/m4bwav/historywright/releases/tag/v0.3.0
+- 0.4.0 (2026-11-01): C-20261024-1 to C-20261101-2. https://github.com/m4bwav/historywright/releases/tag/v0.4.0
 
 ## Changes
+
+### C-20261101-2 · 2026-11-01 · Version 0.4.0: ships hw.py fetch, the Water path and the Commons filter
+- because: the wiki run against v0.3.0 found `hw.py fetch` missing (the v0.3.0 tag sits on 5c39462, before PR #21)
+- files: .claude-plugin/plugin.json and skills/historywright/scripts/hw_net.py (version 0.4.0), CHANGELOG.md (Releases), ai-docs/notes/2026-10-18-wiki-verify.py (default commit, three sections for 0.4.0)
+- The Releases list now says what 0.3.0 really holds; 0.4.0 carries C-20261024-1, C-20261024-2 and C-20261101-1.
 
 ### C-20261101-1 · 2026-11-01 · Commons search returns images only; registry notes for the 403 hosts; cli.md on two-column PDFs
 - because: R-20261101-1, HANDOFF Next 1 and 5 (open items)
