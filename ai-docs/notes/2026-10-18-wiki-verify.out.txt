@@ -1,14 +1,14 @@
 ## installed
-historywright at d0ba8f6 from https://codeload.github.com/m4bwav/historywright/zip/d0ba8f6762c09440f6f4b27c432394fb1a21be18
+historywright at 3239fbf from https://codeload.github.com/m4bwav/historywright/zip/3239fbfd99f794078dd17b679ce020994d1b5c25
 
 ## version
-0.4.0
+0.5.0
 [exit 0]
 
 ## doctor
 {
  "ok": true,
- "version": "0.4.0",
+ "version": "0.5.0",
  "checks": {
   "python": "<python>",
   "python_ok": true,
@@ -29,7 +29,7 @@ historywright at d0ba8f6 from https://codeload.github.com/m4bwav/historywright/z
   "era_outline": true,
   "dila_table": false,
   "cache_entries": 0,
-  "user_agent": "historywright/0.4.0 (https://github.com/m4bwav/historywright)",
+  "user_agent": "historywright/0.5.0 (https://github.com/m4bwav/historywright)",
   "pdftotext": true,
   "cwd_in_skill_folder": false
  },
@@ -1546,6 +1546,78 @@ legionary/timeline.json
 }
 [exit 0]
 
+## validate-interval
+{
+ "ok": false,
+ "pack": "pack-interval",
+ "problems": [
+  "entity Julius Caesar birth: jdn [1685091, 1685092] falls outside the days '1790/1840' covers [2374845, 2393483]",
+  "timeline row 0: interval '1840/1790' ends before it starts"
+ ],
+ "warnings": []
+}
+[exit 1]
+
+## sources-measured
+{
+ "ok": true,
+ "problems": [],
+ "warnings": [],
+ "quote_checks": [
+  {
+   "source": "s1",
+   "claim": "the wheel was 14 ft across",
+   "found": null,
+   "match": "measured",
+   "locator": "Sheet 3 of 7"
+  }
+ ],
+ "independent_sources": [
+  "s1",
+  "s2"
+ ],
+ "corroborated": true
+}
+[exit 0]
+
+## verify-quote-long-s
+{
+ "found": true,
+ "match": "normalised, long s read as f (pre-1800 print)",
+ "ok": true,
+ "url": "https://archive.org/download/youngmillwrightm00evan/youngmillwrightm00evan_djvu.txt",
+ "source_text": "fetched now"
+}
+[exit 0]
+
+## add-ref-ia
+{
+ "ok": true,
+ "ref": {
+  "file": "refs/internet-archive-youngmillwrightm00evan.jpg",
+  "title": "Evans 1795, a plate",
+  "object_date": "1795",
+  "place": "Philadelphia",
+  "accession": "youngmillwrightm00evan",
+  "institution": "Internet Archive",
+  "url": "https://archive.org/details/youngmillwrightm00evan/page/n300",
+  "image_url": "https://iiif.archive.org/image/iiif/3/youngmillwrightm00evan%2Fyoungmillwrightm00evan_jp2.zip%2Fyoungmillwrightm00evan_jp2%2Fyoungmillwrightm00evan_0301.jp2/full/!2000,2000/0/default.jpg",
+  "licence": "public domain",
+  "author": null,
+  "nc": false,
+  "retrieved": "<today>",
+  "sha256": "e1362f728392361e242afb0a584573e4e309cfa00581cf88e11cd1d444da0101",
+  "bytes": 550396,
+  "iiif": {
+   "manifest": "https://iiif.archive.org/iiif/3/youngmillwrightm00evan/manifest.json",
+   "canvas": 301,
+   "service": "https://iiif.archive.org/image/iiif/3/youngmillwrightm00evan%2Fyoungmillwrightm00evan_jp2.zip%2Fyoungmillwrightm00evan_jp2%2Fyoungmillwrightm00evan_0301.jp2",
+   "size": "!2000,2000"
+  }
+ }
+}
+[exit 0]
+
 ## lint
 {
  "ok": true,
@@ -1565,7 +1637,7 @@ legionary/timeline.json
   "oa": 1,
   "doi": 1
  },
- "era_outline_bytes": 6840,
+ "era_outline_bytes": 7254,
  "era_outline_band": "green",
  "problems": [],
  "warnings": [],
@@ -1594,7 +1666,7 @@ era name 康熙: 60 years, 10 months, 2 days (22219 days)
 {
  "ok": true,
  "contact": "you@example.com",
- "user_agent": "historywright/0.4.0 (https://github.com/m4bwav/historywright; you@example.com)"
+ "user_agent": "historywright/0.5.0 (https://github.com/m4bwav/historywright; you@example.com)"
 }
 [exit 0]
 
