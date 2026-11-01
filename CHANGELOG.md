@@ -13,6 +13,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261101-4 · 2026-11-01 · verify quote matches long-s OCR
+- because: L-012, HANDOFF Next 4 (sawmill-pack gap: long-s OCR)
+- files: skills/historywright/scripts/hw_check.py (quote_in), skills/historywright/SKILL.md (open the cited source), skills/historywright/references/cli.md (verify quote), tests/test_hw.py (Fetch)
+- When the normalised match fails, `verify quote` folds every medial s to f in quote and page and tries again, so "slanted under the wheel" matches OCR's "flanted under the wheel"; the result says `long s read as f`.
+
 ### C-20261101-3 · 2026-11-01 · eras.md South Asia names a readable source on Satavahana chronology
 - because: L-005, HANDOFF Next 1 (the SOAS and UW theses would not download)
 - files: skills/historywright-sources/references/eras.md (South Asia)

@@ -126,10 +126,19 @@ def quote_in(quote, text, pdf=False):
             squeezed = [re.sub(r"\s", "", q) for q in parts]
             if pdf and sum(map(len, squeezed)) >= 20 and _in_order(squeezed, re.sub(r"\s", "", nt)):
                 return {"found": True, "match": "normalised, spacing ignored (PDF)"}
+            folded = [_fold_long_s(q) for q in parts]
+            if folded != parts and _in_order(folded, _fold_long_s(nt)):
+                return {"found": True, "match": "normalised, long s read as f (pre-1800 print)"}
             near = _closest(p, nt)
             return {"found": False, "missing_part": p[:120], "closest": near}
         pos = i + len(p)
     return {"found": True, "match": "normalised" if len(parts) == 1 else "normalised, in parts"}
+
+
+def _fold_long_s(s):
+    """OCR of pre-1800 print reads a long s as 'f' ('fhot' for 'shot'); NFKC has already made U+017F an 's'.
+    Every s before a letter becomes f on both sides, so either spelling matches (L-012)."""
+    return re.sub(r"s(?=[a-z])", "f", s)
 
 
 def _in_order(parts, text):
