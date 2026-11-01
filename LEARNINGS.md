@@ -54,6 +54,14 @@ Write an entry the moment a real signal happens: a user correction, the same err
 - Scope: skill
 - Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-23
 
+### L-006 · 2026-10-23 · Abridged sourcebook translations drop details; read the original-language text when a detail matters, and expect several hosts to block scripts
+- Trigger: the Jerusalem 1099 film brief (siege_news). Krey's Gesta translation on Fordham says only that the people on the al-Aqsa roof "were taken under the protection of Tancred and Gaston"; the Latin (thelatinlibrary) says Tancred and Gaston "dederunt sua uexilla" (gave them their banners), which was the detail asked for. The same Latin gave the first-assault weekday and the "lesser wall" (forewall) that Krey's excerpt cut. Separately: metmuseum.org pages 429, publications.iaa.org.il and tandfonline 403 (also to WebFetch), journals.openedition.org serves an Anubis JS challenge, eprints.soas.ac.uk did not resolve, and Wayback `id_` copies of Met essays came back gzip-encoded.
+- Hypothesis: sourcebook excerpts are abridged ("....") and translated loosely; for a period-detail question the original text is often online and short enough to search. Bot walls are per host and stable over a session.
+- Rule: when a translation's wording carries the claim (banners, weekdays, numbers), search the original-language text too and quote both. For the blocked hosts, go to the Met collection API (v1.1 search, v1 objects), a Wayback copy (gunzip it), or another repository; name the blocked work under "where to look next" rather than citing it. Pages fetched with curl are not in the fetch log, so run `verify sources --any-url` or fetch through `hw.py verify quote`.
+- Evidence: D:\ComfyUI\output\video\siege_news\source\facts.md and sources.json (31 quotes verified, 2026-10-23).
+- Scope: skill (method; historywright-sources host notes)
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-23
+
 ### L-005 · 2026-10-17 · A research skill's A/B must grant the research tools to both arms
 - Trigger: the first `evergreen.py worth --ab` run scored 48% with the skill against 33% without (verdict CUT). Most with-arm failures ended "requires approval": the runner's default outcome tools are Skill, Read, Glob, Grep and Write, so hw.py, WebFetch and WebSearch were blocked; the skill then refused to answer from memory, as its rules say, while the without arm answered from memory in 3 to 5 seconds.
 - Hypothesis: the default tool grant fits skills that edit files, not skills whose whole job is fetching sources; a blocked with arm measures the permission gate, and the harness's environment check does not look for "requires approval" in the answer.

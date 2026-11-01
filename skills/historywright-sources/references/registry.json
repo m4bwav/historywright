@@ -1745,7 +1745,7 @@
         "url": "https://catalog.hathitrust.org/api/volumes/brief/oclc/424023.json",
         "expect": 200
       },
-      "notes": "The Bibliographic API takes identifiers (oclc, isbn, lccn, htid), not free text, so no generic search; its records object is keyed by record id. The Data API retired 2024-07-17. Full text: public-domain volumes in the babel viewer, Research Datasets or HTRC.",
+      "notes": "The Bibliographic API takes identifiers (oclc, isbn, lccn, htid), not free text, so no generic search; its records object is keyed by record id. The Data API retired 2024-07-17. Full text: public-domain volumes in the babel viewer, Research Datasets or HTRC. The Bibliographic API probe answered ok on 2026-11-01 with hw.py's User-Agent (R-20261101-1).",
       "checked": "2026-10-17",
       "research": "R-20261017-6"
     },
@@ -1945,7 +1945,7 @@
       "search": null,
       "detail": null,
       "probe": null,
-      "notes": "Free key by email (POST api.dp.la/v2/api_key/{email}), passed as api_key. A keyless /v2/items call returned 403 JSON on 2026-10-17, and dp.la itself returned 403 to curl. Fields not verified, so no search block yet.",
+      "notes": "Free key by email (POST api.dp.la/v2/api_key/{email}), passed as api_key. A keyless /v2/items call returned 403 JSON on 2026-10-17, and dp.la itself returned 403 to curl. Fields not verified, so no search block yet. Re-checked 2026-11-01: the keyless 403 body is `invalid_api_key`, not a bot wall; a key would clear it (R-20261101-1).",
       "checked": "2026-10-17",
       "research": "R-20261017-6"
     },
@@ -1972,7 +1972,7 @@
       "search": null,
       "detail": null,
       "probe": null,
-      "notes": "Keyless SRU (Dublin Core XML, 50 records a page), but it served a Cloudflare challenge (403) to curl with hw.py's User-Agent on 2026-10-17, as pages did to the research fetcher. XML anyway. Re-check at each refresh; a community MCP server (sweet-bnf) exists.",
+      "notes": "Keyless SRU (Dublin Core XML, 50 records a page), but it served a Cloudflare challenge (403) to curl with hw.py's User-Agent on 2026-10-17, as pages did to the research fetcher. XML anyway. Re-check at each refresh; a community MCP server (sweet-bnf) exists. Re-checked 2026-11-01 with hw.py's own User-Agent (one SRU request): still 403 behind Cloudflare, so an honest agent does not clear it (R-20261101-1).",
       "checked": "2026-10-17",
       "research": "R-20261017-6"
     },
@@ -2373,7 +2373,7 @@
       "route": "src",
       "url": "https://commons.wikimedia.org/",
       "search": {
-        "url": "https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch={q}&gsrnamespace=6&gsrlimit=10&prop=imageinfo&iiprop=url%7Cextmetadata&iiextmetadatafilter=LicenseShortName%7CArtist%7CDateTimeOriginal&format=json",
+        "url": "https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch={q}%20filetype%3Abitmap%7Cdrawing&gsrnamespace=6&gsrlimit=10&prop=imageinfo&iiprop=url%7Cextmetadata&iiextmetadatafilter=LicenseShortName%7CArtist%7CDateTimeOriginal&format=json",
         "items": "query.pages",
         "fields": {
           "title": "title",
@@ -2390,7 +2390,7 @@
         "url": "https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=roman%20helmet&gsrnamespace=6&gsrlimit=1&prop=imageinfo&iiprop=url%7Cextmetadata&iiextmetadatafilter=LicenseShortName&format=json",
         "expect": 200
       },
-      "notes": "Keyless; Wikimedia limits (200/min with a contact User-Agent); Commons has throttled unidentified server clients since late 2025. query.pages is an object keyed by page id. Artist (HTML) and DateTimeOriginal are absent on some files (4 of 10 in the test), so treat them as optional. LicenseShortName confirmed live on 2026-10-17. Check the licence per file before a pack ships it.",
+      "notes": "Keyless; Wikimedia limits (200/min with a contact User-Agent); Commons has throttled unidentified server clients since late 2025. query.pages is an object keyed by page id. Artist (HTML) and DateTimeOriginal are absent on some files (4 of 10 in the test), so treat them as optional. LicenseShortName confirmed live on 2026-10-17. Check the licence per file before a pack ships it. The search adds `filetype:bitmap|drawing`: without it a search returns PDFs and DjVu scans among images (\"sash sawmill\" gave PDFs, 2026-11-01, R-20261101-1).",
       "checked": "2026-10-17",
       "research": "R-20261017-8"
     },
