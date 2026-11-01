@@ -6,6 +6,14 @@ Write an entry the moment a real signal happens: a user correction, the same err
 
 ## Active
 
+### L-014 · 2026-11-01 · A hand-made GitHub release broke the tag-push release workflow
+- Trigger: after pushing v0.5.1 the session ran `gh release create` itself; the release workflow, started by the same tag push, then failed with "a release with the same tag name already exists" and attached no zip.
+- Hypothesis: `.github/workflows/release.yml` builds the zip and creates the release on every `v*` tag push, so any release made by hand races it.
+- Rule: push the annotated tag and let the workflow make the release; edit its notes afterwards if needed. If a hand-made one already exists, `gh release delete TAG -y` (the tag stays) and re-run the workflow.
+- Evidence: release run 41338576253 failed, then passed on re-run with `historywright-0.5.1.zip`.
+- Scope: repo
+- Status: active · helpful 0 · harmful 0 · last_confirmed 2026-11-01
+
 ### L-013 · 2026-11-01 · A tag cut before the last PR merged silently left that PR out of the release
 - Trigger: the wiki run against v0.3.0 on 2026-11-01 answered `invalid choice: 'fetch'`. v0.3.0 sat on 5c39462 (PR #20); PR #21 (`hw.py fetch`, the Water path) merged afterwards, yet CHANGELOG's Releases line covered it.
 - Hypothesis: the release range is written from the CHANGELOG, while the tag goes on whatever main is at that moment; with two PRs in flight the two disagree and nothing checks it.
