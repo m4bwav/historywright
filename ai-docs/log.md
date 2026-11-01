@@ -139,3 +139,9 @@ Append-only, newest last.
 - PR #36 bumped to 0.5.1 (C-20261101-10, shipping C-20261101-9), six green jobs, merged; tag v0.5.1 at 1c55b31, release `historywright-0.5.1.zip`. historywright@mark-local reinstalled (0.5.1) after pulling the main clone and `claude plugin marketplace update mark-local`.
 - Snag: a hand-made `gh release create` raced the tag-push release workflow, which then failed ("a release with the same tag name already exists"). Fix: deleted the hand-made release, re-ran the workflow. Rule: push the tag and let the workflow make the release (L-014).
 - Wiki re-run against v0.5.1 on Windows then WSL; wiki commit 366ce61, `live` 12 pages, 0 failures. Wayback answered 429 for `verify-url` this run, so that output keeps the 0.5.0 run under a dated skip marker. LacusCurtius still refuses SSL.
+
+## 2026-11-01 · Follow-up: Wayback skip marker dropped
+
+- Wayback availability API answered again: `verify url` at v0.5.1 (fresh `HW_HOME`) gave `likely_hallucinated`, exit 1, as on the page. Removed the dated skip marker on How-Claims-Are-Checked (wiki f9be70e) and put the live answer into the saved verifier outputs.
+- LacusCurtius still fails the TLS handshake (curl error 35); its two markers stay.
+- A/B left optional and not run (cost); refresh due 2026-11-16.
