@@ -10,8 +10,14 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 - 0.2.0 (2026-10-18): C-20261018-5 to C-20261018-10. https://github.com/m4bwav/historywright/releases/tag/v0.2.0
 - 0.3.0 (2026-10-24): C-20261021-1 to C-20261023-3 (the tag was cut before PR #21 merged, so C-20261024-1 and -2 were not in it). https://github.com/m4bwav/historywright/releases/tag/v0.3.0
 - 0.4.0 (2026-11-01): C-20261024-1 to C-20261101-2. https://github.com/m4bwav/historywright/releases/tag/v0.4.0
+- 0.5.0 (2026-11-01): C-20261101-3 to C-20261101-8. https://github.com/m4bwav/historywright/releases/tag/v0.5.0
 
 ## Changes
+
+### C-20261101-8 · 2026-11-01 · Version 0.5.0: long-s quotes, EDTF interval checks, measured claims, IIIF refs
+- because: user request (release once the sawmill gaps were built)
+- files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)
+- 0.5.0 ships C-20261101-3 to -7.
 
 ### C-20261101-7 · 2026-11-01 · pack add-ref reads IIIF and Internet Archive pages
 - because: HANDOFF Next 4 (sawmill-pack gaps: IIIF; Internet Archive plates)
