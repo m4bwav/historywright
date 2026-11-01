@@ -145,3 +145,8 @@ Append-only, newest last.
 - Wayback availability API answered again: `verify url` at v0.5.1 (fresh `HW_HOME`) gave `likely_hallucinated`, exit 1, as on the page. Removed the dated skip marker on How-Claims-Are-Checked (wiki f9be70e) and put the live answer into the saved verifier outputs.
 - LacusCurtius still fails the TLS handshake (curl error 35); its two markers stay.
 - A/B left optional and not run (cost); refresh due 2026-11-16.
+
+## 2026-11-01 · Open-items check
+
+- LacusCurtius (penelope.uchicago.edu) still fails the TLS handshake (curl exit 35), so the two wiki skip markers stay.
+- Nothing else to do yet: the A/B is optional and paid, and the evergreen refresh is due 2026-11-16. No code changes.

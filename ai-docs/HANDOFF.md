@@ -34,7 +34,7 @@ Updated 2026-11-01 (v0.5.1 session).
 
 1. Optional: `evergreen.py worth --ab` on the 11 value cases for a fresh baseline (last after 0.2.0).
 2. Evergreen refresh due 2026-11-16.
-3. Small follow-up: drop the two LacusCurtius skip markers when the site answers (still TLS failure late on
+3. Small follow-up: drop the two LacusCurtius skip markers when the site answers (still TLS failure on a second check late on
    2026-11-01). Nothing unreleased on main.
 
 ## Read first
