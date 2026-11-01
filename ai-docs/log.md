@@ -105,3 +105,4 @@ Append-only, newest last.
 - `src commons` adds `filetype:bitmap|drawing` (PDFs had come back among images; live check all JPEG). cli.md notes two-column PDFs read in stream order. C-20261101-1, unreleased.
 - L-006 (abridged sourcebook translations, from the 2026-10-23 Jerusalem brief) sat uncommitted in the main clone; committed here. The main clone's working copy still holds it until that clone is pulled.
 - next-session-prompt.md rewritten: the old one still described Step 7 after 0.2.0.
+- CI: ubuntu-latest moved to 26.04, which has no setup-python 3.9 build; the Ubuntu jobs now run on ubuntu-24.04 (tests.yml). Revisit when 3.9 is dropped.
