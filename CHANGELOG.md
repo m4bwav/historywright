@@ -8,9 +8,14 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 - 0.1.0 (2026-10-18): first release, C-20261017-1 to C-20261018-4. https://github.com/m4bwav/historywright/releases/tag/v0.1.0
 - 0.2.0 (2026-10-18): C-20261018-5 to C-20261018-10. https://github.com/m4bwav/historywright/releases/tag/v0.2.0
-- 0.3.0 (version bumped 2026-10-23; tag and release wait for the owner's go-ahead): C-20261021-1 to C-20261024-2.
+- 0.3.0 (2026-10-24): C-20261021-1 to C-20261024-2. https://github.com/m4bwav/historywright/releases/tag/v0.3.0
 
 ## Changes
+
+### C-20261101-1 · 2026-11-01 · Commons search returns images only; registry notes for the 403 hosts; cli.md on two-column PDFs
+- because: R-20261101-1, HANDOFF Next 1 and 5 (open items)
+- files: skills/historywright-sources/references/registry.json (commons search, gallica, dpla, hathitrust notes), skills/historywright/references/cli.md (verify quote), LEARNINGS.md (L-006)
+- `src commons` adds `filetype:bitmap|drawing` to the search so PDFs and DjVu scans no longer come back among images. The notes record that hw.py's own User-Agent does not clear Gallica or QDL, that DPLA only needs a key, and that HathiTrust answers. cli.md says two-column PDFs read in stream order. L-006 (abridged sourcebook translations; read the original text) is committed from an earlier session's working copy.
 
 ### C-20261024-2 · 2026-10-24 · hw.py fetch: read a page into the page store without a dummy quote; long-s spellings
 - because: L-012 (user request after the sawmill pack's scene extension)

@@ -98,3 +98,10 @@ Append-only, newest last.
 
 - The sawmill pack was extended for a wide illustration and needed a hand-written water-path section (dam, races, gate, where the water meets an undershot wheel, tail race). Built in branch scene-illustration: `pack init --mechanism` now writes "### Water path (water-powered machines)" with `<fill: ...>` placeholders that validate-pack fails on (L-011, C-20261024-1), and the example file has the pack's filled water path cited to Evans 1795, HABS and Fairbairn 1864.
 - `hw.py fetch <url> [--find]` stores a page for reading (before, `verify quote` with a dummy quote was the only way, since `verify url` stores nothing) and tries long-s spellings for pre-1800 OCR (L-012, C-20261024-2). Both changes go into the untagged 0.3.0.
+
+## 2026-11-01 · Leftovers: the 403 hosts, Commons images only, L-006
+
+- One request each with hw.py's User-Agent: Gallica SRU and QDL 403 (Cloudflare), DPLA 403 `invalid_api_key`, HathiTrust ok (R-20261101-1). The open question is closed; no key requested.
+- `src commons` adds `filetype:bitmap|drawing` (PDFs had come back among images; live check all JPEG). cli.md notes two-column PDFs read in stream order. C-20261101-1, unreleased.
+- L-006 (abridged sourcebook translations, from the 2026-10-23 Jerusalem brief) sat uncommitted in the main clone; committed here. The main clone's working copy still holds it until that clone is pulled.
+- next-session-prompt.md rewritten: the old one still described Step 7 after 0.2.0.

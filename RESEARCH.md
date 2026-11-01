@@ -41,7 +41,7 @@ Topic: answering history questions from sources, not model memory; a source regi
 - Resolved 2026-10-17: the DILA Time Authority data is CC BY-SA 3.0 Unported (COPYING.rst in github.com/DILA-edu/Authority-Databases; the site footer says CC BY-SA 2.5 Taiwan). hw.py may download it on demand and build the table locally, with attribution. kltng/calendar_converter's repository has no licence, so do not fetch its prebuilt db.
 - Resolved 2026-10-17 (R-20261017-25): `action=parse` HTML gives every footnote as `<li id="cite&#95;note-...">` with a `reference-text` span; `hw.py wp refs --near` maps a sentence to its footnotes. Parsoid untested.
 - Resolved 2026-10-18 (R-20261018-4): Seshat Public Data is CC BY-SA 4.0, commercial use allowed. WHG's current docs were re-read: limits unchanged.
-- Do Gallica, DPLA, QDL and HathiTrust 403s clear with an honest User-Agent? Test with hw.py's own agent.
+- Resolved 2026-11-01 (R-20261101-1): an honest User-Agent clears neither Gallica nor QDL (Cloudflare); DPLA's 403 is a missing key; HathiTrust answers.
 - Islamic AH conversion beyond tabular, Japanese nengō before 1873, the Wanli reign figure, current CMOS edition, Smithsonian Human Origins terms, Paris Musées and National Palace Museum image terms: unsearched (budget ran out).
 - Is the IntCal20 successor out (hoped 2026–2027)?
 - The exact r/AskHistorians AI rule text (reddit is blocked to the fetcher; use RSS).
@@ -91,6 +91,13 @@ Best sources (primary first): the Wikimedia API changelog and rate-limit pages, 
 ## Findings log
 
 Newest first within the day. Track is subject, tooling, practice, or testing. Creation-pass magnitudes are `n/a (initial)`. Their `Applied:` lines name where the Step 2 build (2026-10-17) used them: SKILL.md guards cite the `R-` id in place.
+
+### R-20261101-1 · 2026-11-01 · Build: the 403 hosts with hw.py's own User-Agent; Commons filetype filter
+- Summary: One request each with hw.py's fetcher (its identifying User-Agent) on 2026-11-01. Gallica SRU (`searchRetrieve`, one record): 403, an HTML page, as on 2026-10-17. QDL search: 403 with a Cloudflare "Just a moment..." challenge. DPLA `/v2/items` without a key: 403 with JSON `{"error":"invalid_api_key"}`, so its 403 is a missing key, not a bot wall. HathiTrust Bibliographic API (`hw.py probe --only hathitrust`): ok. An honest User-Agent clears none of the walled hosts; Gallica and QDL stay link-out. Commons: `gsrsearch=sash sawmill` returned image/jpeg and application/pdf among 20 results; adding the CirrusSearch keyword `filetype:bitmap|drawing` returned only image/jpeg.
+- Track: subject
+- Sources: https://gallica.bnf.fr/SRU, https://www.qdl.qa/en/search/site/map, https://api.dp.la/v2/items?q=sawmill, https://catalog.hathitrust.org/api/volumes/brief/oclc/424023.json, https://commons.wikimedia.org/w/api.php
+- Magnitude: 0.1 (registry notes; one search URL narrowed)
+- Applied: skills/historywright-sources/references/registry.json (commons search url and notes; gallica, dpla, hathitrust notes)
 
 ### R-20261023-1 · 2026-10-23 · Build: the HABS/HAER/HALS collection has its own loc.gov JSON route
 - Summary: Researching a water-powered sawmill of 1790-1840, the general `loc` search buried the Historic American Buildings Survey and Engineering Record among books and newspapers, while the collection-scoped URL `https://www.loc.gov/collections/historic-american-buildings-landscapes-and-engineering-records/?q={q}&fo=json` returned only survey records. Checked live on 2026-10-23: `q=sawmill` gave 200 with 110 results; each result has `title`, `url` (the item page), `id`, `shelf_id` (the HABS call number, e.g. "HABS CONN,1-SILM,1-"), `description` (counts of photos, measured drawings and data pages), `location`, `subject` and three `image_url` sizes (150 px, 640 px, 1024 px); `date` is null on the records seen. The same host and limits as `loc` (20 requests a minute, one-hour block, R-20261017-6). Item pages list sheets as `/resource/<id>.sheet/?sp=N`; data pages are PDFs on tile.loc.gov. `hw.py probe --only loc-habs` answered ok and `hw.py src loc-habs "up-and-down sawmill"` returned the Chester Springs mill (HABS PA-116) first.
