@@ -325,6 +325,22 @@ def _geo_problems(gj):
     return probs, warns
 
 
+def _interval_problems(edtf, jdn, where):
+    """An EDTF interval runs forwards, and a jdn range stays inside the days the interval or set covers."""
+    if not edtf or not D.edtf_valid(edtf):
+        return []
+    b = D.edtf_bounds(edtf)
+    if not b:
+        return []
+    first, last, backwards = b
+    if backwards:
+        return ["%s: interval %r ends before it starts" % (where, edtf)]
+    if isinstance(jdn, list) and len(jdn) == 2 and all(isinstance(x, int) for x in jdn):
+        if (first is not None and jdn[0] < first) or (last is not None and jdn[1] > last):
+            return ["%s: jdn %s falls outside the days %r covers [%s, %s]" % (where, jdn, edtf, first, last)]
+    return []
+
+
 def _date_obj_problems(d, where):
     p = []
     if not isinstance(d, dict):
@@ -337,6 +353,7 @@ def _date_obj_problems(d, where):
     j = d.get("jdn")
     if j is not None and not (isinstance(j, list) and len(j) == 2 and all(isinstance(x, int) for x in j) and j[0] <= j[1]):
         p.append("%s: jdn must be [first, last] integers" % where)
+    p += _interval_problems(d.get("edtf"), j, where)
     if d.get("qualifier") == "disputed" and d.get("edtf") and not re.search(r"[\[\]{}/]", d["edtf"]):
         p.append("%s: a disputed date is a set or a range, never a point" % where)
     return p
@@ -418,6 +435,7 @@ def validate_pack(path, network=False):
                     probs.append("%s: missing %s" % (w, k))
             if row.get("when") and not D.edtf_valid(row["when"]):
                 probs.append("%s: %r is not EDTF" % (w, row["when"]))
+            probs += _interval_problems(row.get("when"), row.get("jdn"), w)
             if row.get("source") and row["source"] not in src_ids:
                 probs.append("%s: source %s not in sources.json" % (w, row["source"]))
             j = row.get("jdn")

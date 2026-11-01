@@ -464,6 +464,33 @@ def edtf_valid(s):
     return bool(_EDTF_DATE.match(s))
 
 
+def _edtf_end(x):
+    """(first, last) JDN of one EDTF date under the Julian and the Gregorian reading together, or None when the
+    end is open, unknown, unspecified (X) or a Y-year."""
+    x = x.rstrip("?~%")
+    m = re.fullmatch(r"(-?\d{4})(?:-(\d{2})(?:-(\d{2}))?)?", x)
+    if not m or (m.group(2) and int(m.group(2)) > 12):
+        return None
+    y, mo, d = int(m.group(1)), int(m.group(2) or 0) or None, int(m.group(3) or 0) or None
+    spans = [span_range(y, mo, d, cal) for cal in ("julian", "gregorian")]
+    return min(s[0] for s in spans), max(s[1] for s in spans)
+
+
+def edtf_bounds(s):
+    """For a valid EDTF interval or set: (first, last, reversed). first or last is None at an open or unknown end;
+    reversed is True when the start is later than the end ('1840/1790'). None for a plain date or a timestamp."""
+    if s[:1] in "[{":
+        ends = [_edtf_end(p) for it in s[1:-1].split(",") for p in it.strip().split("..") if p]
+        known = [e for e in ends if e]
+        if not known:
+            return None
+        return min(e[0] for e in known), max(e[1] for e in known), False
+    if "/" not in s or "T" in s:
+        return None
+    a, b = (_edtf_end(p) for p in s.split("/", 1))
+    return (a[0] if a else None), (b[1] if b else None), bool(a and b and a[0] > b[1])
+
+
 def edtf_for(y, m=None, d=None, qualifier=None):
     s = iso_astro(y, m, d)
     if qualifier in ("circa", "approximate"):

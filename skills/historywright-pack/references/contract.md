@@ -65,6 +65,10 @@ machinery; anachronism.md must then have a Mechanism section with items (see ana
 The date object: `as_written` (as the sources write it), `calendar`, `edtf` (level 0 or 1, or a level 2 set),
 `jdn` [first, last], `precision`, `qualifier` (disputed, circa, floruit, tpq, taq, or null), `era_name`
 (for East Asian dates) and `sources` (ids in sources.json). A disputed date is a set or a range, never a point.
+Periods are EDTF intervals: `1790/1840` (a sawmill's working years), `1790~/1840` (began about 1790),
+`1790/..` (open end: still running), `../1840` (start unknown). `validate-pack` refuses an interval that ends
+before it starts (`1840/1790`) and a `jdn` outside the days the interval or set covers; either calendar's
+reading of the bounds is accepted, so a Julian `jdn` passes against an EDTF year.
 `hw.py wd claims` and `hw.py cal date` print every field.
 
 ## places.geojson
