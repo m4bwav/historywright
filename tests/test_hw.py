@@ -257,6 +257,18 @@ class Verify(unittest.TestCase):
         res = C.check_sources(doc, network=False, require_fetched=True)
         self.assertTrue(any("not fetched in this run" in p for p in res["problems"]))
 
+    def test_measured_claims(self):
+        good = {"claim": "the wheel was 14 ft across", "locator": "Sheet 3 of 7",
+                "measured": {"scale": "1:24 (scale bar on the sheet)", "how": "ruler on the scan, rim to rim"}}
+        base = {"id": "s1", "title": "HAER drawings", "url": "https://example.org/haer", "kind": "primary",
+                "tier": 1, "retrieved": "2026-10-23"}
+        res = C.check_sources({"sources": [dict(base, claims=[good])]}, network=True, require_fetched=False)
+        self.assertEqual(res["problems"], [], res)  # no quote fetched for a measured claim
+        self.assertEqual(res["quote_checks"][0]["match"], "measured")
+        bad = {"claim": "the wheel was 14 ft across", "measured": {"scale": "1:24"}}
+        res = C.check_sources({"sources": [dict(base, claims=[bad])]}, network=False, require_fetched=False)
+        self.assertEqual(len(res["problems"]), 2, res)
+
 
 class Pack(unittest.TestCase):
     def test_good_pack_passes(self):

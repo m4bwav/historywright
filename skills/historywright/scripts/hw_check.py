@@ -225,6 +225,17 @@ def check_sources(doc, network=True, require_fetched=True):
             if not c.get("claim"):
                 problems.append("%s: a claim without text" % sid)
             q = c.get("quote")
+            m = c.get("measured")
+            if m is not None and not q:
+                # a value read off a measured drawing: no words to check, so the sheet, scale and method must be named
+                cl = (c.get("claim") or "")[:60]
+                if not c.get("locator"):
+                    problems.append("%s: measured claim %r needs a locator (the sheet)" % (sid, cl))
+                if not (isinstance(m, dict) and m.get("scale") and m.get("how")):
+                    problems.append("%s: measured claim %r needs measured.scale and measured.how" % (sid, cl))
+                checked.append({"source": sid, "claim": c.get("claim", "")[:80], "found": None, "match": "measured",
+                                "locator": c.get("locator")})
+                continue
             if not q:
                 problems.append("%s: claim %r has no supporting quote" % (sid, (c.get("claim") or "")[:60]))
                 continue
