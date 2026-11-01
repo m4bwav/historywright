@@ -11,8 +11,14 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 - 0.3.0 (2026-10-24): C-20261021-1 to C-20261023-3 (the tag was cut before PR #21 merged, so C-20261024-1 and -2 were not in it). https://github.com/m4bwav/historywright/releases/tag/v0.3.0
 - 0.4.0 (2026-11-01): C-20261024-1 to C-20261101-2. https://github.com/m4bwav/historywright/releases/tag/v0.4.0
 - 0.5.0 (2026-11-01): C-20261101-3 to C-20261101-8. https://github.com/m4bwav/historywright/releases/tag/v0.5.0
+- 0.5.1 (2026-11-01): C-20261101-9 and -10. https://github.com/m4bwav/historywright/releases/tag/v0.5.1
 
 ## Changes
+
+### C-20261101-10 · 2026-11-01 · Version 0.5.1: Internet Archive stream text URLs
+- because: HANDOFF Next 3 (release C-20261101-9 alone)
+- files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)
+- 0.5.1 ships C-20261101-9.
 
 ### C-20261101-9 · 2026-11-01 · Internet Archive stream text URLs read from download
 - because: HANDOFF Next 3 (verify quote on `stream/ITEM/ITEM_djvu.txt` gave found:false where `download/` matched)
