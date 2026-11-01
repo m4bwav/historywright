@@ -719,6 +719,12 @@ class Fetch(unittest.TestCase):
         code, q = run("verify", "quote", "--url", self.URL, "--quote", "drawn near the floats")
         self.assertTrue(q["found"], q)
         self.assertIn("page store", q["source_text"])
+        # the modern spelling of a long-s line is found, and labelled so
+        code, q = run("verify", "quote", "--url", self.URL, "--quote", "slanted under the wheel")
+        self.assertTrue(q["found"], q)
+        self.assertIn("long s", q["match"])
+        code, q = run("verify", "quote", "--url", self.URL, "--quote", "slanted under the axle")
+        self.assertFalse(q["found"], q)
 
     def test_fetch_fails_soft_on_missing_page(self):
         code, r = run("fetch", "https://example.org/missing")
