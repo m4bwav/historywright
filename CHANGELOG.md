@@ -12,8 +12,14 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 - 0.4.0 (2026-11-01): C-20261024-1 to C-20261101-2. https://github.com/m4bwav/historywright/releases/tag/v0.4.0
 - 0.5.0 (2026-11-01): C-20261101-3 to C-20261101-8. https://github.com/m4bwav/historywright/releases/tag/v0.5.0
 - 0.5.1 (2026-11-01): C-20261101-9 and -10. https://github.com/m4bwav/historywright/releases/tag/v0.5.1
+- 0.6.0 (2026-11-02): C-20261102-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.6.0
 
 ## Changes
+
+### C-20261102-2 · 2026-11-02 · Version 0.6.0: DPLA search
+- because: release C-20261102-1
+- files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)
+- Version 0.6.0 ships `hw.py src dpla` (a new keyed source, so a minor bump).
 
 ### C-20261102-1 · 2026-11-02 · DPLA becomes a keyed search source
 - because: R-20261102-1; HANDOFF Next 3
