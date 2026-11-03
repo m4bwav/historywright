@@ -13,8 +13,19 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 - 0.5.0 (2026-11-01): C-20261101-3 to C-20261101-8. https://github.com/m4bwav/historywright/releases/tag/v0.5.0
 - 0.5.1 (2026-11-01): C-20261101-9 and -10. https://github.com/m4bwav/historywright/releases/tag/v0.5.1
 - 0.6.0 (2026-11-02): C-20261102-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.6.0
+- 0.6.1 (2026-11-02): C-20261102-3 and -4. https://github.com/m4bwav/historywright/releases/tag/v0.6.1
 
 ## Changes
+
+### C-20261102-4 · 2026-11-02 · Version 0.6.1: DPLA probe
+- because: release C-20261102-3
+- files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)
+- Version 0.6.1 ships the DPLA probe (no change to commands or output, so a patch).
+
+### C-20261102-3 · 2026-11-02 · DPLA gets a keyed probe
+- because: HANDOFF Next 3 (`hw.py lint` warned "dpla: no probe"); R-20261102-1
+- files: skills/historywright-sources/references/registry.json (dpla probe), tests/test_hw.py (`test_probe_keyed_source`)
+- `hw.py probe` now checks DPLA's items endpoint with one result and expects a `docs` list; without a key the row is `skipped`, as for other keyed sources. Live run 2026-11-02: ok. Lint no longer warns.
 
 ### C-20261102-2 · 2026-11-02 · Version 0.6.0: DPLA search
 - because: release C-20261102-1
