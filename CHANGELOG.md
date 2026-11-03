@@ -15,6 +15,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261102-1 · 2026-11-02 · DPLA becomes a keyed search source
+- because: R-20261102-1; HANDOFF Next 3
+- files: skills/historywright-sources/references/registry.json (dpla), skills/historywright/scripts/hw_net.py (`get_key`, `ENV_KEYS`), skills/historywright/scripts/hw.py (`keys status`), README.md (keys), ai-docs/notes/api-keys-setup.md (optional extras), tests/test_hw.py and tests/fixtures/http (dpla)
+- `hw.py src dpla QUERY` searches the Digital Public Library of America with a free key (`DPLA_API_KEY` or `keys.dpla` in the config) and returns title, date, creator, type, holder, rights category, the holder's page and the DPLA record link. `keys status` checks the key live. `get_key` also reads a key saved as a bare string, which a hand-edited config had and which crashed it.
+
 ### C-20261101-10 · 2026-11-01 · Version 0.5.1: Internet Archive stream text URLs
 - because: HANDOFF Next 3 (release C-20261101-9 alone)
 - files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)

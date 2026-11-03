@@ -92,6 +92,13 @@ Best sources (primary first): the Wikimedia API changelog and rate-limit pages, 
 
 Newest first within the day. Track is subject, tooling, practice, or testing. Creation-pass magnitudes are `n/a (initial)`. Their `Applied:` lines name where the Step 2 build (2026-10-17) used them: SKILL.md guards cite the `R-` id in place.
 
+### R-20261102-1 · 2026-11-02 · Build: DPLA terms, limits and item fields
+- Summary: DPLA's API policies page (pro.dp.la answers 403 to scripts and to the fetch tool; read through the Wayback copy of 2025-03-19, the newest 200 capture) says the key goes in `?api_key=`, use is "not ordinarily rate-limited or revoked", and access may be limited only for abuse that degrades service to others; uptime is best effort. Live `/v2/items?q=Gettysburg%20Address` with the key: 200, 731 hits. Fields: `docs[].id`, `isShownAt` (the holder's page), `object` (thumbnail), `dataProvider.name`, `rightsCategory` (first hit "Unspecified Rights Status"), `sourceResource.title[]`, `.date[].displayDate`, `.creator[]`, `.type[]`. The DPLA record page is `dp.la/item/{id}`.
+- Track: subject
+- Sources: https://web.archive.org/web/20250319000043/https://pro.dp.la/developers/policies, https://api.dp.la/v2/items
+- Magnitude: 0.2 (a link-out source becomes searchable)
+- Applied: skills/historywright-sources/references/registry.json (dpla search block, route, notes), skills/historywright/scripts/hw_net.py and hw.py (key lookup, keys status)
+
 ### R-20261101-1 · 2026-11-01 · Build: the 403 hosts with hw.py's own User-Agent; Commons filetype filter
 - Summary: One request each with hw.py's fetcher (its identifying User-Agent) on 2026-11-01. Gallica SRU (`searchRetrieve`, one record): 403, an HTML page, as on 2026-10-17. QDL search: 403 with a Cloudflare "Just a moment..." challenge. DPLA `/v2/items` without a key: 403 with JSON `{"error":"invalid_api_key"}`, so its 403 is a missing key, not a bot wall. HathiTrust Bibliographic API (`hw.py probe --only hathitrust`): ok. An honest User-Agent clears none of the walled hosts; Gallica and QDL stay link-out. Commons: `gsrsearch=sash sawmill` returned image/jpeg and application/pdf among 20 results; adding the CirrusSearch keyword `filetype:bitmap|drawing` returned only image/jpeg.
 - Track: subject

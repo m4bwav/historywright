@@ -62,6 +62,7 @@ Without a token, historywright uses Pleiades (ancient world), CHGIS (China), Wik
 |---|---|---|
 | Smithsonian Open Access | CC0 museum objects and images | free key at https://api.data.gov/signup/ (instant, by email); 1,000 requests an hour |
 | Europeana | European heritage records and images | free account, then https://www.europeana.eu/account/api-keys; `api2demo` works for tests |
+| Digital Public Library of America (DPLA) | US library, archive and museum records (`hw.py src dpla`) | `curl -X POST https://api.dp.la/v2/api_key/YOUR_EMAIL` emails a key; save it as `keys.dpla` (`{"api_key": "..."}`) or set `DPLA_API_KEY`; no ordinary rate limit |
 | US National Archives (NARA) catalog | federal records | email the NARA catalog API team (address on archives.gov/research/catalog/help/api); 10,000 queries a month; terms forbid caching content |
 | Semantic Scholar | abstracts, citations | request form at https://www.semanticscholar.org/product/api; keyed use 1 request a second |
 | Trove (Australia) | Australian newspapers | key plus approval levels; commercial and AI uses need permission; terms have changed without notice |

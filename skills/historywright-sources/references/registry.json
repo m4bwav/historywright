@@ -1935,19 +1935,34 @@
         "all"
       ],
       "tier": 2,
-      "licence": "metadata believed CC0; objects per item",
+      "licence": "metadata CC0; objects per item (rightsCategory, rights)",
       "access": "key-required",
       "key": "dpla",
       "host": "api.dp.la",
       "pace_s": 0.5,
-      "route": "link-out",
+      "route": "src",
       "url": "https://dp.la/",
-      "search": null,
+      "search": {
+        "url": "https://api.dp.la/v2/items?q={q}&page_size=10&api_key={key}",
+        "items": "docs",
+        "fields": {
+          "title": "sourceResource.title.0",
+          "date": "sourceResource.date.0.displayDate",
+          "id": "id",
+          "url": "isShownAt",
+          "creator": "sourceResource.creator.0",
+          "type": "sourceResource.type.0",
+          "holder": "dataProvider.name",
+          "rights": "rightsCategory",
+          "image": "object"
+        },
+        "link": "https://dp.la/item/{id}"
+      },
       "detail": null,
       "probe": null,
-      "notes": "Free key by email (POST api.dp.la/v2/api_key/{email}), passed as api_key. A keyless /v2/items call returned 403 JSON on 2026-10-17, and dp.la itself returned 403 to curl. Fields not verified, so no search block yet. Re-checked 2026-11-01: the keyless 403 body is `invalid_api_key`, not a bot wall; a key would clear it (R-20261101-1).",
-      "checked": "2026-10-17",
-      "research": "R-20261017-6"
+      "notes": "Free key by email (POST api.dp.la/v2/api_key/{email}), passed as ?api_key= (a keyless call answers 403 `invalid_api_key`). Policies (pro.dp.la/developers/policies, read 2026-11-02 through the 2025-03-19 Wayback copy because pro.dp.la answers 403 to scripts): no ordinary rate limit; access is limited or revoked only for abuse that degrades service for others; best-effort uptime. `url` is the holder's page (isShownAt), `link` the DPLA record. rightsCategory is often 'Unspecified Rights Status': check the holder's page before reuse. dp.la itself returns 403 to scripts; the API answers (R-20261102-1).",
+      "checked": "2026-11-02",
+      "research": "R-20261102-1"
     },
     {
       "id": "gallica",
