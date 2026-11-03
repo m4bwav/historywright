@@ -119,7 +119,8 @@ def save_config(cfg):
 
 
 ENV_KEYS = {"openalex": ("OPENALEX_API_KEY", "api_key"), "whg": ("WHG_TOKEN", "token"),
-            "smithsonian": ("SMITHSONIAN_API_KEY", "api_key"), "europeana": ("EUROPEANA_API_KEY", "api_key")}
+            "smithsonian": ("SMITHSONIAN_API_KEY", "api_key"), "europeana": ("EUROPEANA_API_KEY", "api_key"),
+            "dpla": ("DPLA_API_KEY", "api_key")}
 
 
 def get_key(name):
@@ -127,6 +128,8 @@ def get_key(name):
     if os.environ.get(env):
         return os.environ[env]
     k = load_config().get("keys", {}).get(name, {})
+    if isinstance(k, str):  # a hand-edited config may hold the bare key
+        return k
     return k.get(field) or k.get("token") or k.get("api_key")
 
 

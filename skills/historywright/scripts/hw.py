@@ -412,6 +412,12 @@ def cmd_keys(a):
             d, r = get_json("https://whgazetteer.org/suggest/entity?prefix=Roma", headers={"Authorization": "Bearer " + t})
             row["check"] = "ok" if d is not None else "failed (%s)" % (r.status or r.error)
         rows["whg"] = row
+        k = get_key("dpla")
+        row = {"set": bool(k), "key": mask(k)}
+        if k and not a.offline:
+            d, r = get_json("https://api.dp.la/v2/items?q=test&page_size=1&api_key=" + k)
+            row["check"] = "ok" if d is not None else "failed (%s)" % (r.status or r.error)
+        rows["dpla"] = row
         for name in ("smithsonian", "europeana"):
             rows[name] = {"set": bool(get_key(name))}
         return out({"ok": True, "config": str(config_path()), "keys": rows,

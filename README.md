@@ -112,7 +112,7 @@ Everything works without keys. Two free ones raise limits, and both are in your 
 - **World Historical Gazetteer** (places worldwide): `hw.py keys whg` opens the sign-in page. WHG signs in only
   through ORCID, which is free and open to anyone. On your WHG profile page, generate a token, then
   `hw.py keys whg --token TOKEN`.
-- `hw.py keys status` checks each one. Smithsonian (api.data.gov) and Europeana keys are optional extras.
+- `hw.py keys status` checks each one. Smithsonian (api.data.gov), Europeana and DPLA keys are optional extras.
 
 Paid and gated sources (the ctext.org API, JSTOR, the Oxford Classical Dictionary and the like) are never queried:
 the registry names them as places to look.

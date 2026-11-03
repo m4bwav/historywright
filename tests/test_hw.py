@@ -690,6 +690,26 @@ class PackChecks(unittest.TestCase):
         self.assertIn("Measured Drawing(s)", first["contents"])
         self.assertTrue(first["image"].startswith("https://tile.loc.gov/") and "pv.jpg" in first["image"])
 
+    def test_dpla_source(self):
+        code, d = run("src", "dpla", "Gettysburg Address")
+        self.assertFalse(d["ok"])
+        self.assertIn("needs a free key", d["error"])
+        cfg = Path(TMP_HOME) / "config.json"
+        cfg.write_text(json.dumps({"keys": {"dpla": "abc123"}}), encoding="utf-8")  # bare string, as hand-edited
+        try:
+            code, d = run("src", "dpla", "Gettysburg Address", "--limit", "2")
+        finally:
+            cfg.unlink()
+        self.assertTrue(d["ok"], d)
+        self.assertNotIn("abc123", d["url"])
+        self.assertEqual(d["count"], 2)
+        first = d["results"][0]
+        self.assertEqual(first["title"], "Lincoln's Gettysburg address")
+        self.assertEqual(first["date"], "[1950?]")
+        self.assertEqual(first["holder"], "University of San Francisco")
+        self.assertTrue(first["url"].startswith("http://digitalcollections.usfca.edu/"))
+        self.assertEqual(first["link"], "https://dp.la/item/" + first["id"])
+
     def test_mechanism_section_required_when_flagged(self):
         d = self._pack("pack-mech", mechanism=True)
         man = json.loads((d / "manifest.json").read_text(encoding="utf-8"))

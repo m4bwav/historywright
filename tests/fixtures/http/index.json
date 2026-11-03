@@ -114,5 +114,12 @@
   "file": "longs-ocr.txt",
   "status": 200,
   "content_type": "text/plain; charset=utf-8"
+ },
+ {
+  "match": "api\\.dp\\.la/v2/items\\?q=Gettysburg%20Address&page_size=10&api_key=",
+  "method": "GET",
+  "file": "dpla-gettysburg.json",
+  "status": 200,
+  "content_type": "application/json"
  }
 ]

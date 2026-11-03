@@ -1,0 +1,66 @@
+{
+ "count": 731,
+ "start": 0,
+ "limit": 2,
+ "docs": [
+  {
+   "id": "7aaa7718396bac3658a99918a25ea76e",
+   "isShownAt": "http://digitalcollections.usfca.edu/cdm/ref/collection/p264101coll7/id/890",
+   "object": "https://thumbnails.calisphere.org/clip/150x150/a8ff19aa1c4459169730f210a5bb8d66",
+   "dataProvider": {
+    "@id": "http://dp.la/api/contributor/university-of-san-francisco",
+    "exactMatch": [
+     "http://www.wikidata.org/entity/Q1887879"
+    ],
+    "name": "University of San Francisco"
+   },
+   "rightsCategory": "Unspecified Rights Status",
+   "sourceResource": {
+    "title": [
+     "Lincoln's Gettysburg address",
+     "Gettysburg address"
+    ],
+    "date": [
+     {
+      "displayDate": "[1950?]"
+     }
+    ],
+    "creator": [
+     "Lincoln, Abraham, 1809-1865"
+    ],
+    "type": [
+     "text"
+    ]
+   }
+  },
+  {
+   "id": "bef0b34e9a20c4c8df95a5a616e61ef3",
+   "isShownAt": "http://catalog.hathitrust.org/Record/102320438",
+   "object": null,
+   "dataProvider": {
+    "@id": "http://dp.la/api/contributor/university-of-california",
+    "exactMatch": [
+     "http://www.wikidata.org/entity/Q184478"
+    ],
+    "name": "University of California"
+   },
+   "rightsCategory": "Unlimited Re-Use",
+   "sourceResource": {
+    "title": [
+     "Gettysburg address"
+    ],
+    "date": [
+     {
+      "displayDate": "[1950]"
+     }
+    ],
+    "creator": [
+     "Lincoln, Abraham, 1809-1865"
+    ],
+    "type": [
+     "text"
+    ]
+   }
+  }
+ ]
+}
