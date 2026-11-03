@@ -362,6 +362,30 @@ class Registry(unittest.TestCase):
         self.assertTrue(r["ok"], r)
         self.assertEqual(seen, [{"X-Gate": "historywright"}])
 
+    def test_probe_keyed_source(self):
+        import hw_net
+        seen = []
+
+        def fake_fetch(url, **kw):
+            seen.append(url)
+            return hw_net.Response(200, {"content-type": "application/json"}, b'{"count": 1, "docs": []}', url)
+
+        dpla = [s for s in hw.registry()["sources"] if s["id"] == "dpla"][0]
+        self.assertIn("{key}", dpla["probe"]["url"])
+        saved = hw.fetch, hw.get_key
+        hw.fetch = fake_fetch
+        try:
+            hw.get_key = lambda name: ""
+            code, r = run("probe", "--only", "dpla")
+            self.assertTrue(r["ok"], r)
+            self.assertEqual(seen, [])
+            hw.get_key = lambda name: "TESTKEY" if name == "dpla" else ""
+            code, r = run("probe", "--only", "dpla")
+        finally:
+            hw.fetch, hw.get_key = saved
+        self.assertEqual(r["summary"], {"ok": 1}, r)
+        self.assertIn("api_key=TESTKEY", seen[0])
+
     def test_mirror_detection(self):
         import hw_net
         self.assertTrue(hw_net.is_mirror("https://en.m.wikipedia.org/wiki/X"))
