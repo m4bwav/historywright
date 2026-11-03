@@ -159,3 +159,9 @@ Append-only, newest last.
 - PR #41 (C-20261102-1): registry search block (title, date, creator, type, holder, rights category, holder's page, `dp.la/item/{id}` link), `DPLA_API_KEY`, one offline test on a trimmed live fixture (63 tests). Six green jobs, merged.
 - PR #42 (C-20261102-2) bumped to 0.6.0; tag v0.6.0 at 1288691, the tag-push workflow made the release with historywright-0.6.0.zip. historywright@mark-local updated to 0.6.0.
 - Not done: wiki to 0.6.0 (Next 1). A/B still optional and not run.
+
+## 2026-11-02 · Wiki to 0.6.0
+
+- Verifier re-run against v0.6.0 (1288691) on Windows then WSL; its default COMMIT is now 1288691. diffout against the 0.5.1 run: version and user agent, the DPLA row in `keys status`, `lint` (24 src sources, new warning "dpla: no probe"), a reordered loc-habs location list, and `verify-quote`: LacusCurtius answered again, so both dated skip markers are gone.
+- Wiki commit c274c2c: `src dpla` on Commands (run by hand with the key, which the output masks; skip marker, since the verifier runs keyless), the DPLA key on Getting-Started, a 0.6.0 row and section on Versions-and-Upgrading. outputs 64 checked, 0 missing, 7 skipped; check 0 errors; live 12 pages, 0 failures, anchors 45 links, 0 broken.
+- Snag: a blanket replacement of the old version string also hit history lines (release table, "since 0.5.1"); fixed by hand. Replace version strings only in the lines the note's update list names.

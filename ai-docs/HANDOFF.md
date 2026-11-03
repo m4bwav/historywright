@@ -1,6 +1,6 @@
 # historywright handoff
 
-Updated 2026-11-02 (v0.6.0 session).
+Updated 2026-11-02 (wiki 0.6.0 session).
 
 ## State
 
@@ -16,10 +16,9 @@ Updated 2026-11-02 (v0.6.0 session).
   https://github.com/m4bwav/historywright/releases/tag/v0.6.0. Installed copy updated to 0.6.0.
 - 0.2.0 = CHANGELOG C-20261018-5 to -10: project home, Roman and Hijri dates, Wayback collapse, PDF quotes,
   `place search --source ohm`, Seshat CC BY-SA, doi "only the year differs", South Asia era outline 185 BCE-320 CE.
-- Wiki at 0.5.1 (behind the 0.6.0 release) (wiki commit 366ce61; live 12 pages, 0 failures). Procedure and verifier:
-  [notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md); the verifier defaults to v0.5.1 (1c55b31). Dated skip markers: two
-  verify-quote outputs (LacusCurtius down, SSL); drop them when it answers. The Wayback marker was dropped later on
-  2026-11-01 (wiki f9be70e).
+- Wiki at 0.6.0 (wiki commit c274c2c; live 12 pages, 0 failures). Procedure and verifier:
+  [notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md); the verifier defaults to v0.6.0 (1288691). No dated
+  skip markers left: LacusCurtius answered again on 2026-11-02. `src dpla` on Commands is a keyed hand run (skip marker).
 - Installed: historywright@mark-local (check the version with `claude plugin list`).
 - Cache: four live answers in `~/.historywright/cache` (two India, crusader Jerusalem 2026-10-23, Deir el-Medina 2026-10-25).
   Move them aside before eval runs.
@@ -34,11 +33,9 @@ Updated 2026-11-02 (v0.6.0 session).
 
 ## Next
 
-1. Wiki to 0.6.0: add `src dpla` and the DPLA key row, re-run the verifier on Windows and WSL
-   ([notes/2026-10-18-github-wiki.md](notes/2026-10-18-github-wiki.md)), point its default at v0.6.0 (1288691).
-2. Optional: `evergreen.py worth --ab` on the 11 value cases (last after 0.2.0; paid).
-3. Evergreen refresh due 2026-11-16.
-4. Small follow-up: drop the two LacusCurtius skip markers when the site answers (TLS failure as of 2026-11-01).
+1. Optional: `evergreen.py worth --ab` on the 11 value cases (last after 0.2.0; paid).
+2. Evergreen refresh due 2026-11-16.
+3. Small follow-up: `hw.py lint` warns "dpla: no probe"; add a probe for DPLA (keyed: skip without a key) with a test.
    Nothing unreleased on main.
 
 ## Read first

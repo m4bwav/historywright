@@ -1,4 +1,4 @@
-# Kickoff: historywright open items (after 0.6.0)
+# Kickoff: historywright open items (after 0.6.0 and its wiki)
 
 Rewritten 2026-11-02. Paste this into a fresh session started in the folder that holds this repository (the
 historywright clone). If the clone's main is behind or dirty, work in a git worktree from `origin/main`.
@@ -15,8 +15,8 @@ historywright clone). If the clone's main is behind or dirty, work in a git work
 
 ## Order of work
 
-Take HANDOFF's Next list top to bottom (0.6.0 is out; nothing is unreleased): the wiki to 0.6.0 first, then the
-optional A/B, the evergreen refresh when due (2026-11-16), then the small follow-ups. One PR per change, each with a test; parallel PRs that add
+Take HANDOFF's Next list top to bottom (0.6.0 and its wiki are out; nothing is unreleased): the optional A/B, the
+evergreen refresh when due (2026-11-16), then the small follow-ups (a DPLA probe). One PR per change, each with a test; parallel PRs that add
 CHANGELOG entries conflict, so merge one before branching the next. Tag yourself once the version is bumped in a PR and CI passes, and let the tag-push workflow make the release (never `gh release create` by hand, L-014); before tagging, check every
 CHANGELOG entry in the range is in the tag commit (L-013). After a release, bring the wiki to it
 (notes/2026-10-18-github-wiki.md).

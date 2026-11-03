@@ -1,14 +1,14 @@
 ## installed
-historywright at 1c55b31 from https://codeload.github.com/m4bwav/historywright/zip/1c55b3120de0fe9f548b7525c766b46d95017020
+historywright at 1288691 from https://codeload.github.com/m4bwav/historywright/zip/128869195a91b59c37b82049fb99945318b404f9
 
 ## version
-0.5.1
+0.6.0
 [exit 0]
 
 ## doctor
 {
  "ok": true,
- "version": "0.5.1",
+ "version": "0.6.0",
  "checks": {
   "python": "<python>",
   "python_ok": true,
@@ -29,7 +29,7 @@ historywright at 1c55b31 from https://codeload.github.com/m4bwav/historywright/z
   "era_outline": true,
   "dila_table": false,
   "cache_entries": 0,
-  "user_agent": "historywright/0.5.1 (https://github.com/m4bwav/historywright)",
+  "user_agent": "historywright/0.6.0 (https://github.com/m4bwav/historywright)",
   "pdftotext": true,
   "cwd_in_skill_folder": false
  },
@@ -57,6 +57,10 @@ historywright at 1c55b31 from https://codeload.github.com/m4bwav/historywright/z
   "whg": {
    "set": false,
    "token": null
+  },
+  "dpla": {
+   "set": false,
+   "key": null
   },
   "smithsonian": {
    "set": false
@@ -708,12 +712,13 @@ historywright at 1c55b31 from https://codeload.github.com/m4bwav/historywright/z
 
 ## verify-quote
 {
- "ok": false,
+ "found": true,
+ "match": "exact",
+ "ok": true,
  "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Julius*.html",
- "found": null,
- "error": "fetch failed: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)"
+ "source_text": "fetched now"
 }
-[exit 1]
+[exit 0]
 
 ## verify-url
 {
@@ -1535,9 +1540,9 @@ legionary/timeline.json
    "call_number": "HABS VA,79-SPER.V,2-",
    "contents": "Photo(s): 3",
    "location": [
+    "rappahannock county",
     "sperryville",
-    "virginia",
-    "rappahannock county"
+    "virginia"
    ],
    "image": "https://tile.loc.gov/storage-services/service/pnp/habshaer/va/va0800/va0880/photos/305482pv.jpg#h=1024&w=743"
   }
@@ -1631,8 +1636,8 @@ legionary/timeline.json
   "wd": 2,
   "wp": 1,
   "place": 4,
-  "link-out": 63,
-  "src": 23,
+  "link-out": 62,
+  "src": 24,
   "cal": 1,
   "oa": 1,
   "doi": 1
@@ -1640,7 +1645,9 @@ legionary/timeline.json
  "era_outline_bytes": 7254,
  "era_outline_band": "green",
  "problems": [],
- "warnings": [],
+ "warnings": [
+  "dpla: no probe, so endpoint moves go unnoticed"
+ ],
  "ids": null
 }
 [exit 0]
@@ -1666,7 +1673,7 @@ era name 康熙: 60 years, 10 months, 2 days (22219 days)
 {
  "ok": true,
  "contact": "you@example.com",
- "user_agent": "historywright/0.5.1 (https://github.com/m4bwav/historywright; you@example.com)"
+ "user_agent": "historywright/0.6.0 (https://github.com/m4bwav/historywright; you@example.com)"
 }
 [exit 0]
 
