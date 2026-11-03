@@ -165,3 +165,13 @@ Append-only, newest last.
 - Verifier re-run against v0.6.0 (1288691) on Windows then WSL; its default COMMIT is now 1288691. diffout against the 0.5.1 run: version and user agent, the DPLA row in `keys status`, `lint` (24 src sources, new warning "dpla: no probe"), a reordered loc-habs location list, and `verify-quote`: LacusCurtius answered again, so both dated skip markers are gone.
 - Wiki commit c274c2c: `src dpla` on Commands (run by hand with the key, which the output masks; skip marker, since the verifier runs keyless), the DPLA key on Getting-Started, a 0.6.0 row and section on Versions-and-Upgrading. outputs 64 checked, 0 missing, 7 skipped; check 0 errors; live 12 pages, 0 failures, anchors 45 links, 0 broken.
 - Snag: a blanket replacement of the old version string also hit history lines (release table, "since 0.5.1"); fixed by hand. Replace version strings only in the lines the note's update list names.
+
+## 2026-11-02 · DPLA probe, v0.6.1, wiki to 0.6.1
+
+- PR #45 (C-20261102-3 and -4): keyed probe for DPLA (`/v2/items?q=helmet&page_size=1`, expects `"docs"`), skipped
+  without a key; `test_probe_keyed_source` (64 tests). Live probe ok; `hw.py lint` now has no warnings. Merged after CI.
+- Tagged v0.6.1 on 078613e (CHANGELOG entries checked in the tag commit, L-013); the release workflow made
+  historywright-0.6.1.zip (119,843 bytes). Reinstalled historywright@mark-local at 0.6.1.
+- Wiki commit 3e900dc: verifier re-run on Windows and WSL against 078613e, only expected drift; `live` 12 pages, 0 failures.
+- Snag: the Bash hook refused a heredoc holding an escaped quote in a JSON string; the Edit tool did it.
+- Skipped: the optional paid A/B (no reason to spend on it without a skill change); the refresh is due 2026-11-16.

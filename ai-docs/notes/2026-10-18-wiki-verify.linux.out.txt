@@ -1,14 +1,14 @@
 ## installed
-historywright at 1288691 from https://codeload.github.com/m4bwav/historywright/zip/128869195a91b59c37b82049fb99945318b404f9
+historywright at 078613e from https://codeload.github.com/m4bwav/historywright/zip/078613e2d42251e16b4a570990189a556eef82a4
 
 ## version
-0.6.0
+0.6.1
 [exit 0]
 
 ## doctor
 {
  "ok": true,
- "version": "0.6.0",
+ "version": "0.6.1",
  "checks": {
   "python": "<python>",
   "python_ok": true,
@@ -29,7 +29,7 @@ historywright at 1288691 from https://codeload.github.com/m4bwav/historywright/z
   "era_outline": true,
   "dila_table": false,
   "cache_entries": 0,
-  "user_agent": "historywright/0.6.0 (https://github.com/m4bwav/historywright)",
+  "user_agent": "historywright/0.6.1 (https://github.com/m4bwav/historywright)",
   "pdftotext": false,
   "cwd_in_skill_folder": false
  },
@@ -1645,9 +1645,7 @@ legionary/timeline.json
  "era_outline_bytes": 7254,
  "era_outline_band": "green",
  "problems": [],
- "warnings": [
-  "dpla: no probe, so endpoint moves go unnoticed"
- ],
+ "warnings": [],
  "ids": null
 }
 [exit 0]
@@ -1673,7 +1671,7 @@ era name 康熙: 60 years, 10 months, 2 days (22219 days)
 {
  "ok": true,
  "contact": "you@example.com",
- "user_agent": "historywright/0.6.0 (https://github.com/m4bwav/historywright; you@example.com)"
+ "user_agent": "historywright/0.6.1 (https://github.com/m4bwav/historywright; you@example.com)"
 }
 [exit 0]
 

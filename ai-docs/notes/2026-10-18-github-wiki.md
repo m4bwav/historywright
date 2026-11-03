@@ -56,6 +56,11 @@ Windows then WSL; the verifier's default COMMIT is 1288691. LacusCurtius answere
 (masked as `api_key=***`) and carries a skip marker. `outputs` 64 checked, 0 missing, 7 skipped; `check` 0 errors;
 `live` 12 pages, 0 failures, anchors 45 links, 0 broken.
 
+Tenth wiki commit, 3e900dc (2026-11-02, after the v0.6.1 release): every page re-run against v0.6.1 (078613e) on
+Windows then WSL; the verifier's default COMMIT is 078613e. diffout: only the version, the user agent and the `lint`
+warnings (empty now that DPLA has a probe) changed. `outputs` 64 checked, 0 missing, 7 skipped; `check` 0 errors;
+`live` 12 pages, 0 failures, anchors 45 links, 0 broken.
+
 ## Updating the wiki later
 
 1. `git -C <wiki dir> pull --ff-only`, then edit the pages.
