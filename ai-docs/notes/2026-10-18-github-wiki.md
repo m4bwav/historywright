@@ -50,6 +50,12 @@ Wiki commit f9be70e (2026-11-01, later): `hw.py verify url` re-run by hand from 
 saved outputs' `verify-url` section holds the live answer. LacusCurtius still failed the TLS handshake (curl schannel
 error 35); its marker stays.
 
+Ninth wiki commit, c274c2c (2026-11-02, after the v0.6.0 release): every page re-run against v0.6.0 (1288691) on
+Windows then WSL; the verifier's default COMMIT is 1288691. LacusCurtius answered again, so the two dated
+`verify-quote` skip markers are gone. `src dpla` is keyed, so its Commands output was run by hand with the key
+(masked as `api_key=***`) and carries a skip marker. `outputs` 64 checked, 0 missing, 7 skipped; `check` 0 errors;
+`live` 12 pages, 0 failures, anchors 45 links, 0 broken.
+
 ## Updating the wiki later
 
 1. `git -C <wiki dir> pull --ff-only`, then edit the pages.
