@@ -151,3 +151,11 @@ Append-only, newest last.
 - LacusCurtius (penelope.uchicago.edu) still fails the TLS handshake (curl exit 35), so the two wiki skip markers stay.
 - Nothing else to do yet: the A/B is optional and paid, and the evergreen refresh is due 2026-11-16. No code changes.
 - DPLA key requested with the owner's go-ahead (POST api.dp.la/v2/api_key/<email>), saved as `keys.dpla` in the user config; a live `/v2/items` test with the Authorization header returned 200. Not wired into hw.py yet: read DPLA's terms and limits first, then add a search block with a test.
+
+## 2026-11-02 · DPLA search, v0.6.0
+
+- Read DPLA's API policies (pro.dp.la answers 403 to scripts, so through the 2025-03-19 Wayback copy): key in `?api_key=`, no ordinary rate limit, access limited only for abuse. Owner's live-call condition met; R-20261102-1.
+- `get_key` crashed on `keys.dpla`, which the previous session had saved as a bare string; it now reads either form. `keys status` checks the DPLA key live (ok).
+- PR #41 (C-20261102-1): registry search block (title, date, creator, type, holder, rights category, holder's page, `dp.la/item/{id}` link), `DPLA_API_KEY`, one offline test on a trimmed live fixture (63 tests). Six green jobs, merged.
+- PR #42 (C-20261102-2) bumped to 0.6.0; tag v0.6.0 at 1288691, the tag-push workflow made the release with historywright-0.6.0.zip. historywright@mark-local updated to 0.6.0.
+- Not done: wiki to 0.6.0 (Next 1). A/B still optional and not run.
