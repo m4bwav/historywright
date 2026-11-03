@@ -29,7 +29,7 @@ import urllib.request
 import zipfile
 
 sys.stdout.reconfigure(encoding="utf-8", newline="\n")  # the saved output stays LF on Windows too
-COMMIT = sys.argv[1] if len(sys.argv) > 1 else "128869195a91b59c37b82049fb99945318b404f9"  # v0.6.0
+COMMIT = sys.argv[1] if len(sys.argv) > 1 else "078613e2d42251e16b4a570990189a556eef82a4"  # v0.6.1
 WORK = tempfile.mkdtemp(prefix="hwwiki_")
 url = "https://codeload.github.com/m4bwav/historywright/zip/" + COMMIT
 zipfile.ZipFile(io.BytesIO(urllib.request.urlopen(url, timeout=120).read())).extractall(WORK)
