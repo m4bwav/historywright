@@ -130,6 +130,14 @@ the registry names them as places to look.
 
 Agent evals and their results are in [TESTS.md](TESTS.md).
 
+## Works with
+
+- **[polywright](https://github.com/m4bwav/polywright)**: research packs are polywright asset folders, so a model built from a historywright pack starts with cited references.
+- **[cinewright](https://github.com/m4bwav/cinewright)**: cinewright reads the same pack for period sets, costumes and props.
+- **[artwright](https://github.com/m4bwav/artwright)**: when an artwork's facts matter (date, dynasty, attribution), artwright asks historywright a pinned question and wraps the cited answer.
+
+The wiki's [Works with](https://github.com/m4bwav/historywright/wiki/Works-with) page describes each pairing in more detail.
+
 ## Testing
 
 CI (`.github/workflows/tests.yml`) runs on Linux, macOS and Windows with Python 3.9 and 3.14:

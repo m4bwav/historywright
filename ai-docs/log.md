@@ -175,3 +175,6 @@ Append-only, newest last.
 - Wiki commit 3e900dc: verifier re-run on Windows and WSL against 078613e, only expected drift; `live` 12 pages, 0 failures.
 - Snag: the Bash hook refused a heredoc holding an escaped quote in a JSON string; the Edit tool did it.
 - Skipped: the optional paid A/B (no reason to spend on it without a skill change); the refresh is due 2026-11-16.
+
+## [2026-11-11] docs | Works with section
+README gained a Works with section (polywright, cinewright, artwright); the wiki gained a Works-with page linked from the sidebar and Home. Each entry describes a handoff found in the skill files on one side or the other.
