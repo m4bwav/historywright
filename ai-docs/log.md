@@ -178,3 +178,9 @@ Append-only, newest last.
 
 ## [2026-11-11] docs | Works with section
 README gained a Works with section (polywright, cinewright, artwright); the wiki gained a Works-with page linked from the sidebar and Home. Each entry describes a handoff found in the skill files on one side or the other.
+
+## 2026-11-13 · Book track: The Craft of Research, v0.7.0
+
+- Built five method items and the role warning from Booth, Colomb and Williams (C-20261113-1, R-20261113-1); version 0.7.0 (C-20261113-2). 65 tests.
+- Measured the role warning on 18 sources files on this machine (71 sources): every one lacks `role`, so it is one summary line per file.
+- Causal-questions note deferred (RESEARCH.md Open questions).
