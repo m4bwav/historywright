@@ -93,6 +93,8 @@ AI-researched with historywright; sources fetched and read on <date>.
   view is the consensus. A settled finding is stated as fact; no false balance (R-20261017-11).
 - Classify every disagreement before writing the note: an outdated source, a different frame (formal reign
   against actual power), or a genuine scholarly dispute (R-20261017-24).
+- The confidence reason is a limiting condition where one exists; precision never exceeds the source's; "many
+  historians" becomes names or a count ([references/answer-format.md](references/answer-format.md); R-20261113-1).
 - A direct quote of a person appears only if its exact words were found in a fetched text naming the speaker.
 - Unverified: when the sources cannot be reached, or the only support is Wikipedia and its mirrors, say
   "Unverified:" first, give what you found and what would settle it. Never fill the gap from memory.
@@ -101,7 +103,8 @@ AI-researched with historywright; sources fetched and read on <date>.
 ## Step 8: keep it
 
 Write the entry and save it: `hw.py cache put entry.json`, with `question`, `reading`, `answer`, `confidence`,
-and `sources` (each with `url`, `title`, `retrieved` and the supporting `quote`). When the user wants the research
+and `sources` (each with `url`, `title`, `retrieved` and the supporting `quote`; optionally `role` and `removes`,
+see [references/method.md](references/method.md)). When the user wants the research
 for a 3D model, a film or images, hand over to historywright-pack.
 
 ## Rules

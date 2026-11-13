@@ -21,6 +21,11 @@ AI-researched with historywright; sources fetched and read on YYYY-MM-DD.
 - Inline citations sit next to the claim they support, not at the end of the paragraph.
 - The confidence line names the uncertainty: a disputed reading, one source only, a proleptic date, a region with
   thin coverage. "High" needs two independent sources that agree, one of them primary or scholarly.
+- Where one exists, the reason is a limiting condition ("high, unless the Dio reading is right"; "assuming the
+  regnal list counts regencies"), not a mood word. Name the remove when the nearest source read is two or more
+  hands from the event.
+- Precision never exceeds the source's: a year-precision source gives a year, not a day. "Many historians" or
+  "most scholars" becomes names or a count.
 - "Sources agree." is a valid note. Leave neither out.
 - Dates: give the calendar when it matters ("25 October 1917 (Old Style; 7 November New Style)"), and say
   "republican calendar" for Roman dates before 45 BC.

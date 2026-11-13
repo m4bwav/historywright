@@ -25,6 +25,10 @@ further only when a follow-up would change the answer.
   biography, a press release, a filing under penalty of law).
 - **Corroboration**: does an independent source agree, and does it derive from the first?
 - **Close reading**: what the passage actually says; an inference ("he was 56 when he died") is not a date.
+- **Role of the passage**: does the author assert it, concede it, or report it in order to reject it?
+  `verify quote` proves the words are on the page, not that the author holds them. Record `role` (`asserted`,
+  `conceded`, `rejected`) on each source; `verify sources` warns when it is missing. A concession, or a view
+  summed up to be refuted, is never cited as the author's position.
 
 Primary or secondary depends on the question: a 2025 anniversary post is primary for what Microsoft says about
 itself and secondary for 1975.
@@ -42,6 +46,9 @@ Two sources agree independently only when neither copies the other and neither c
 documented: a false Wikipedia claim reached newspapers and books, which Wikipedia then cited back (the toaster
 "inventor" Alan MacMasters, 2012-2022). Prefer a source that predates the claim's first appearance on Wikipedia.
 Record `derived_from` when one source cites another; `hw.py verify sources` counts only independent ones.
+Count the removes from the event: a document or eyewitness is 0, a historian citing it 1, a reference work citing
+the historian 2. Record `removes` on the source, cite the lowest remove you actually read, and name it in the
+confidence line when it is above one.
 
 ## Disagreement (R-20261017-24)
 
@@ -53,7 +60,17 @@ Classify before writing the "Sources disagree" note:
   incorporation; Julian against Gregorian). Give both with their frames.
 - **Genuine scholarly dispute**: name each position's holders and evidence, and say which is the consensus
   (due weight, no false balance). Caesar's birth year: Mommsen argued 102 BC from the minimum ages for offices;
-  Badian (1959) and most since hold 100 BC, which every ancient source implies.
+  Badian (1959) and most since hold 100 BC, which every ancient source implies. Say why the sides differ (the
+  same evidence read differently, different evidence, a different definition, or a different principle) and
+  what would settle it.
+
+## Arguments that rest on a principle
+
+When an answer infers from silence ("no source mentions it, so it did not exist"), from analogy, or from a rule
+such as the minimum ages for Roman offices, write the principle out and test it: is it true; is it limited as it
+should be; does a stronger principle outrank it; do historians of the period accept that kind of inference; is
+this case a fair instance of it. A principle that fails a test lowers the confidence or becomes a claim that
+needs its own evidence.
 
 ## Contested and national narratives (R-20261017-19)
 
@@ -72,4 +89,5 @@ are browse-only, so answers there rest on scholarship (OpenAlex), Wikidata refer
 ## Stopping early (R-20261017-21)
 
 Agents stop before the task is complete and do not say so. Before answering, check: every part of the question
-answered or marked unanswered; every count computed in code; every source in the list read in this run.
+answered or marked unanswered; every count computed in code; every source in the list read in this run;
+before calling a source outdated or wrong, reread the passage and confirm it says the thing being corrected.

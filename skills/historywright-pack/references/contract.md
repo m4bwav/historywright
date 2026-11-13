@@ -56,6 +56,9 @@ machinery; anachronism.md must then have a Mechanism section with items (see ana
   "how": "ruler on the scan, rim to rim"}}`. The locator names the sheet; `verify sources` lists the claim as
   `measured` and checks no quote, so the answer says the value was measured from the sheet, not stated.
 - `derived_from` names the source ids or URLs it copies; independence is counted from it.
+- Optional `role`: `asserted`, `conceded` or `rejected` (the author reports the view to refute it); `verify
+  sources` warns, in one line, when sources lack it. Optional `removes`: 0 for a document or eyewitness, 1 for a
+  historian citing it, 2 for a reference work citing the historian.
 
 ## entities.json
 

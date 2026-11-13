@@ -1,11 +1,11 @@
 # historywright handoff
 
-Updated 2026-11-02 (DPLA probe, 0.6.1 session).
+Updated 2026-11-13 (Craft of Research book track, 0.7.0).
 
 ## State
 
 - Public: https://github.com/m4bwav/historywright (main). Three skills, hw.py (six stdlib modules), 85-source
-  registry (96 sources), 64 offline tests, CI green on three systems with Python 3.9 and 3.14.
+  registry (96 sources), 65 offline tests, CI green on three systems with Python 3.9 and 3.14.
 - Released: v0.1.0, v0.2.0, v0.3.0 (2026-10-24: pack fixes, loc-habs) and **v0.4.0 on 2026-11-01** (`hw.py fetch`,
   Water path, Commons filter; the v0.3.0 tag had missed PR #21, L-013): https://github.com/m4bwav/historywright/releases/tag/v0.4.0.
   **v0.5.0 on 2026-11-01** (long-s quotes, EDTF interval checks, measured claims, IIIF/IA add-ref; C-20261101-3 to -8):
@@ -15,7 +15,8 @@ Updated 2026-11-02 (DPLA probe, 0.6.1 session).
   **v0.6.0 on 2026-11-02** (`hw.py src dpla`, keyed; C-20261102-1 and -2):
   https://github.com/m4bwav/historywright/releases/tag/v0.6.0.
   **v0.6.1 on 2026-11-02** (DPLA probe; C-20261102-3 and -4): https://github.com/m4bwav/historywright/releases/tag/v0.6.1.
-  Installed copy updated to 0.6.1.
+  **v0.7.0 on 2026-11-13** (source `role` and `removes`, principle tests, limiting conditions; C-20261113-1 and -2).
+  Installed copy updated to 0.7.0. Wiki still at 0.6.1 (update it to mention `role` and `removes`).
 - 0.2.0 = CHANGELOG C-20261018-5 to -10: project home, Roman and Hijri dates, Wayback collapse, PDF quotes,
   `place search --source ohm`, Seshat CC BY-SA, doi "only the year differs", South Asia era outline 185 BCE-320 CE.
 - Wiki at 0.6.1 (wiki commit 3e900dc; live 12 pages, 0 failures). Procedure and verifier:

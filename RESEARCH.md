@@ -44,6 +44,7 @@ Topic: answering history questions from sources, not model memory; a source regi
 - Resolved 2026-11-01 (R-20261101-1): an honest User-Agent clears neither Gallica nor QDL (Cloudflare); DPLA's 403 is a missing key; HathiTrust answers.
 - Islamic AH conversion beyond tabular, Japanese nengō before 1873, the Wanli reign figure, current CMOS edition, Smithsonian Human Origins terms, Paris Musées and National Palace Museum image terms: unsearched (budget ran out).
 - Is the IntCal20 successor out (hoped 2026–2027)?
+- Causal (why, how) questions: Booth, Colomb and Williams (ch. 10) say a causal claim should name the other causes, rank them and answer the best counterexample. Not adopted on 2026-11-13 (owner verdict: not now); revisit if why and how questions come into scope. (R-20261113-1)
 - The exact r/AskHistorians AI rule text (reddit is blocked to the fetcher; use RSS).
 
 ## Search plan
@@ -91,6 +92,13 @@ Best sources (primary first): the Wikimedia API changelog and rate-limit pages, 
 ## Findings log
 
 Newest first within the day. Track is subject, tooling, practice, or testing. Creation-pass magnitudes are `n/a (initial)`. Their `Applied:` lines name where the Step 2 build (2026-10-17) used them: SKILL.md guards cite the `R-` id in place.
+
+### R-20261113-1 · 2026-11-13 · Practice: The Craft of Research on reading and arguing from sources
+- Summary: Wayne C. Booth, Gregory G. Colomb and Joseph M. Williams, The Craft of Research, 3rd ed. (University of Chicago Press, 2008), ch. 4-11. Rules taken, in our words: record whether a cited passage is asserted, conceded or reported to be rejected (ch. 6); count the removes between a source and the event and cite the nearest one reached (ch. 5, 9); test a general principle an inference rests on five ways (ch. 11); say why scholars differ (evidence read differently, different evidence, definition, principle; ch. 6, 10); state confidence as a limiting condition, keep precision at the source's and replace vague quantity words with names or counts (ch. 8, 9); reread before correcting a source (ch. 4, 6). Book rules, unverified on our tools except the role warning, measured below. Measured 2026-11-13: none of the 71 sources in the 18 sources files on the author's machine (15 cached answers, two test packs, the example pack) carries `role`, so the warning is one summary line per file, never one per source.
+- Track: practice
+- Sources: the book (read with readwright; notes kept outside this repository)
+- Magnitude: 0.2 (method additions; no core claim changed)
+- Applied: skills/historywright/references/method.md, references/answer-format.md, SKILL.md Steps 7 and 8, skills/historywright-pack/references/contract.md, hw_check.py (`check_sources` role warning)
 
 ### R-20261102-1 · 2026-11-02 · Build: DPLA terms, limits and item fields
 - Summary: DPLA's API policies page (pro.dp.la answers 403 to scripts and to the fetch tool; read through the Wayback copy of 2025-03-19, the newest 200 capture) says the key goes in `?api_key=`, use is "not ordinarily rate-limited or revoked", and access may be limited only for abuse that degrades service to others; uptime is best effort. Live `/v2/items?q=Gettysburg%20Address` with the key: 200, 731 hits. Fields: `docs[].id`, `isShownAt` (the holder's page), `object` (thumbnail), `dataProvider.name`, `rightsCategory` (first hit "Unspecified Rights Status"), `sourceResource.title[]`, `.date[].displayDate`, `.creator[]`, `.type[]`. The DPLA record page is `dp.la/item/{id}`.

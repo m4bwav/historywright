@@ -257,6 +257,20 @@ class Verify(unittest.TestCase):
         res = C.check_sources(doc, network=False, require_fetched=True)
         self.assertTrue(any("not fetched in this run" in p for p in res["problems"]))
 
+    def test_role_warning_is_one_line_and_never_fails(self):
+        base = {"title": "t", "url": "https://example.org/b", "kind": "secondary", "tier": 1,
+                "retrieved": "2026-11-13", "claims": []}
+        doc = {"sources": [dict(base, id="a"), dict(base, id="b", role="conceded"), dict(base, id="c", role="maybe")]}
+        res = C.check_sources(doc, network=False, require_fetched=False)
+        self.assertTrue(res["ok"], res)
+        lines = [w for w in res["warnings"] if "no role" in w]
+        self.assertEqual(len(lines), 1)
+        self.assertIn("1 of 3", lines[0])
+        self.assertTrue(any("'maybe'" in w for w in res["warnings"]))
+        doc = {"sources": [dict(base, id="a", role="asserted", removes=2)]}
+        res = C.check_sources(doc, network=False, require_fetched=False)
+        self.assertFalse(any("role" in w for w in res["warnings"]), res)
+
     def test_measured_claims(self):
         good = {"claim": "the wheel was 14 ft across", "locator": "Sheet 3 of 7",
                 "measured": {"scale": "1:24 (scale bar on the sheet)", "how": "ruler on the scan, rim to rim"}}

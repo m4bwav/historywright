@@ -14,8 +14,19 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 - 0.5.1 (2026-11-01): C-20261101-9 and -10. https://github.com/m4bwav/historywright/releases/tag/v0.5.1
 - 0.6.0 (2026-11-02): C-20261102-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.6.0
 - 0.6.1 (2026-11-02): C-20261102-3 and -4. https://github.com/m4bwav/historywright/releases/tag/v0.6.1
+- 0.7.0 (2026-11-13): C-20261113-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.7.0
 
 ## Changes
+
+### C-20261113-2 · 2026-11-13 · Version 0.7.0: role and removes fields, principle tests
+- because: release C-20261113-1
+- files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)
+- Minor bump: `verify sources` gains a warning and sources gain two optional fields.
+
+### C-20261113-1 · 2026-11-13 · Method from The Craft of Research: role of the passage, removes, principles, limiting conditions
+- because: R-20261113-1 (Booth, Colomb and Williams, The Craft of Research, 3rd ed., 2008); book rules, unverified on our tools except the role warning, measured on 71 existing sources (all lack it, so one summary line)
+- files: skills/historywright/references/method.md (Reading a source, Independence, Disagreement, new Arguments that rest on a principle, Stopping early), skills/historywright/references/answer-format.md (Shape), skills/historywright/SKILL.md (Steps 7 and 8), skills/historywright-pack/references/contract.md (sources.json), skills/historywright/scripts/hw_check.py (`check_sources`), tests/test_hw.py (`test_role_warning_is_one_line_and_never_fails`)
+- Sources take optional `role` (asserted, conceded, rejected) and `removes`; `verify sources` warns in one line when sources lack a role and never fails on it. method.md adds the role check, the removes count, why scholars differ and what would settle it, a five-test section for inferences from silence, analogy or a rule, and a misreading check before correcting a source. The confidence reason becomes a limiting condition where one exists, precision stays at the source's, and "many historians" becomes names or a count. The causal-questions note was left out (Open questions).
 
 ### C-20261102-4 · 2026-11-02 · Version 0.6.1: DPLA probe
 - because: release C-20261102-3

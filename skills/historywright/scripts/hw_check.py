@@ -207,6 +207,9 @@ def load_json(p):
     return json.loads(Path(p).read_text(encoding="utf-8"))
 
 
+ROLES = {"asserted", "conceded", "rejected"}  # how the passage stands in its source (Booth et al. ch. 6)
+
+
 def check_sources(doc, network=True, require_fetched=True):
     """Every claim's quote is in its fetched page; corroboration counts independent, non-mirror sources."""
     problems, warnings, checked = [], [], []
@@ -272,6 +275,14 @@ def check_sources(doc, network=True, require_fetched=True):
         for d in s.get("derived_from") or []:
             if d not in ids and not re.match(r"https?://", str(d)):
                 warnings.append("%s: derived_from %s is not a source id or URL" % (s.get("id"), d))
+    # role of the passage (asserted, conceded, reported to reject): a warning only, one summary line
+    no_role = [s.get("id") for s in srcs if s.get("id") and not s.get("role")]
+    if no_role:
+        warnings.append("%d of %d source(s) have no role (asserted, conceded or rejected): %s"
+                        % (len(no_role), len(srcs), ", ".join(map(str, no_role[:10]))))
+    for s in srcs:
+        if s.get("role") and s["role"] not in ROLES:
+            warnings.append("%s: role %r is not one of %s" % (s.get("id"), s["role"], ", ".join(sorted(ROLES))))
     indep = independent_set(srcs)
     strong = [s for s in indep if s.get("tier") == 1 or s.get("kind") in ("primary", "secondary")]
     corroborated = len(indep) >= 2 and len(strong) >= 1
