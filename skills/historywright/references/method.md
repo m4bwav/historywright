@@ -79,6 +79,23 @@ colonial history and national founding stories: search in the language of each p
 than one country, attribute each account ("Turkish historiography holds ..., Greek accounts ..."), and state
 settled findings as fact (Council of Europe multiperspectivity; Wikipedia's due weight).
 
+## Reading an old or national map (R-20261117-1)
+
+A map is a source like any other, with its own traps:
+
+- **Maker and audience**: who drew it, for whom, and to claim what. Makers tend to centre their own side.
+- **Boundaries before their time**: a line drawn on a map dated before the treaty or war that made it is a later
+  copy or a forgery. Check each line against the event that created it.
+- **Names**: a place name fits a date and a naming authority (a survey, a committee, a colonial office). Names
+  replaced wholesale mark a change of control, not a change on the ground.
+- **Legal status of lines**: treaty, armistice, ceasefire, claimed, historical. Does the legend say which, and are
+  lines of equal status drawn with equal weight?
+- **Editions and omissions**: compare editions and a same-date source; note what was added, dropped or restyled.
+  Absent villages or borders are evidence of the maker's choice, not of absence.
+- **Provenance**: holding institution, catalogue record, earlier owners. A map without a chain is a lead.
+- **Copied maps**: a map copied from an earlier one carries the older information, so date its content by the
+  source it copied, not by its print date.
+
 ## Where memory is weakest
 
 HiST-LLM (Seshat, NeurIPS 2024): the best model scored 46% on four-choice history questions, worst for

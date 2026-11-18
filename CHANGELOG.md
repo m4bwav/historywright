@@ -15,8 +15,19 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 - 0.6.0 (2026-11-02): C-20261102-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.6.0
 - 0.6.1 (2026-11-02): C-20261102-3 and -4. https://github.com/m4bwav/historywright/releases/tag/v0.6.1
 - 0.7.0 (2026-11-13): C-20261113-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.7.0
+- 0.7.1 (2026-11-17): C-20261117-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.7.1
 
 ## Changes
+
+### C-20261117-2 · 2026-11-17 · Version 0.7.1: map-reading section
+- because: release C-20261117-1
+- files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)
+- Patch bump: reference text only, no change to commands or output.
+
+### C-20261117-1 · 2026-11-17 · Method: reading an old or national map as a source
+- because: R-20261117-1 (Akerman, Decolonizing the Map, 2017; Leuenberger and Schnell, The Politics of Maps, 2020); book rules, unverified on our tools
+- files: skills/historywright/references/method.md (new Reading an old or national map)
+- Seven checks: maker and audience, boundaries drawn before they existed, names by date and authority, legal status and equal visual weight of lines, editions and omissions against a same-date source, provenance chain, copied maps carry older information. Stolen-map registries left out: no live registry verified.
 
 ### C-20261113-2 · 2026-11-13 · Version 0.7.0: role and removes fields, principle tests
 - because: release C-20261113-1
