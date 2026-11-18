@@ -91,6 +91,11 @@ Best sources (primary first): the Wikimedia API changelog and rate-limit pages, 
 
 ## Findings log
 
+### R-20261117-1 · 2026-11-17 · Practice: reading maps as historical sources
+- Source: James R. Akerman (ed.), Decolonizing the Map (Chicago, 2017); Christine Leuenberger and Izhak Schnell, The Politics of Maps (Springer, 2020). Read for the method only.
+- Finding: maps encode the maker's claims through selection, names, line styles and omissions; names and boundaries carry dates and authorities; editions and copies shift content. Book rules, unverified on our tools (no check in hw.py).
+- Changes: C-20261117-1.
+
 Newest first within the day. Track is subject, tooling, practice, or testing. Creation-pass magnitudes are `n/a (initial)`. Their `Applied:` lines name where the Step 2 build (2026-10-17) used them: SKILL.md guards cite the `R-` id in place.
 
 ### R-20261113-1 · 2026-11-13 · Practice: The Craft of Research on reading and arguing from sources
