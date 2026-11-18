@@ -59,6 +59,10 @@ catches more cheaply than web research.
 Edit eras.md when a route changes or a region proves thinly served; keep it under 12 KB (`hw.py lint` reports
 the band). Add a recipe to recipes.md when a query pattern saved a step, with its check date.
 
+## YouTube videos
+
+Lectures and documentaries are secondary sources: record speaker, channel and date, and trace claims to primary sources. Use fetchwright's `yt.py read URL` (captions, chapters, `&t=` links; opt-in route) and `yt.py clip URL A-B "question"` (Gemini reads the screen for spans of 2 minutes or less). Cite the `&t=` link and check numbers against a written source: auto-captions drop decimals.
+
 ## Maintenance
 
 Shares the plugin's evergreen unit (tier `moderate`): `evergreen.json` at the plugin root,
