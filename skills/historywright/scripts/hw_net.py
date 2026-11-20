@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-VERSION = "0.7.1"
+VERSION = "0.8.0"
 REPO = "https://github.com/m4bwav/historywright"
 HERE = Path(__file__).resolve().parent
 SKILLS = HERE.parent.parent
