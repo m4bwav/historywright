@@ -16,8 +16,14 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 - 0.6.1 (2026-11-02): C-20261102-3 and -4. https://github.com/m4bwav/historywright/releases/tag/v0.6.1
 - 0.7.0 (2026-11-13): C-20261113-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.7.0
 - 0.7.1 (2026-11-17): C-20261117-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.7.1
+- 0.8.0 (2026-11-19): C-20261119-1 and -2. https://github.com/m4bwav/historywright/releases/tag/v0.8.0
 
 ## Changes
+
+### C-20261119-2 · 2026-11-19 · Version 0.8.0: Loewen checks
+- because: release C-20261119-1
+- files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)
+- Minor bump: new advisory check in `hw.py verify answer`.
 
 ### C-20261119-1 · 2026-11-19 · Loewen: agentless-harm lint, motive sources, myth labels, textbook rank
 - because: R-20261119-1
