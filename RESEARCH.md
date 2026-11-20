@@ -91,6 +91,11 @@ Best sources (primary first): the Wikimedia API changelog and rate-limit pages, 
 
 ## Findings log
 
+### R-20261119-1 · 2026-11-19 · Practice: Loewen, Lies My Teacher Told Me, on textbook and public-history failures
+- Source: James W. Loewen, Lies My Teacher Told Me (New Press, 1st ed. 1995; survey of twelve US textbooks). Read: Introduction, ch. 1 (half), Afterword; grep of ch. 2, 3, 11. The survey describes 1990s books, not today's; Loewen's own claims need the corroboration he asks for.
+- Finding: heroification cuts a life to its inspiring episode; agentless passives hide who killed or removed; invented inner states; superseded estimates kept alone; disputes left to footnotes; textbooks copy each other under adoption-board pressure; markers and monuments carry errors too; five source questions (purpose and audience, missing viewpoint, plausibility, corroboration, how the reader is meant to feel).
+- Changes: C-20261119-1.
+
 ### R-20261117-1 · 2026-11-17 · Practice: reading maps as historical sources
 - Source: James R. Akerman (ed.), Decolonizing the Map (Chicago, 2017); Christine Leuenberger and Izhak Schnell, The Politics of Maps (Springer, 2020). Read for the method only.
 - Finding: maps encode the maker's claims through selection, names, line styles and omissions; names and boundaries carry dates and authorities; editions and copies shift content. Book rules, unverified on our tools (no check in hw.py).

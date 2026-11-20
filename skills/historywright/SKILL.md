@@ -95,6 +95,8 @@ AI-researched with historywright; sources fetched and read on <date>.
   against actual power), or a genuine scholarly dispute (R-20261017-24).
 - The confidence reason is a limiting condition where one exists; precision never exceeds the source's; "many
   historians" becomes names or a count ([references/answer-format.md](references/answer-format.md); R-20261113-1).
+- Motive and feeling claims carry a source; myth corrections say `contradicted` or `unverifiable`; `hw.py verify
+  answer` flags harm with no actor (R-20261119-1).
 - A direct quote of a person appears only if its exact words were found in a fetched text naming the speaker.
 - Unverified: when the sources cannot be reached, or the only support is Wikipedia and its mirrors, say
   "Unverified:" first, give what you found and what would settle it. Never fill the gap from memory.

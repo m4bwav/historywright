@@ -26,6 +26,12 @@ AI-researched with historywright; sources fetched and read on YYYY-MM-DD.
   hands from the event.
 - Precision never exceeds the source's: a year-precision source gives a year, not a day. "Many historians" or
   "most scholars" becomes names or a count.
+- Correcting a myth: label it `contradicted by <source>` or `unverifiable` (no evidence either way), and give a
+  sentence of the evidence; a bare "actually" does not stick (Loewen, ch. 2 and Afterword).
+- "Who was X": cover the adult life after the famous episode, not only the inspiring part. A collective outcome
+  is not credited to one leader alone (Loewen, ch. 1).
+- A disagreement goes in the body and the note, never only a footnote. Run `hw.py verify answer <draft>`: it
+  lists passives of killing, removal or seizure with no actor; name the actor or say it is unknown (advisory).
 - "Sources agree." is a valid note. Leave neither out.
 - Dates: give the calendar when it matters ("25 October 1917 (Old Style; 7 November New Style)"), and say
   "republican calendar" for Roman dates before 45 BC.

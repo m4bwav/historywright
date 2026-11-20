@@ -19,12 +19,17 @@ further only when a follow-up would change the answer.
 
 ## Reading a source (Historical Thinking Chart, Wineburg; R-20261017-11)
 
-- **Sourcing**: who wrote it, when, how close to the event, why. Suetonius wrote about 150 years after Caesar's
+- **Sourcing**: who wrote it, when, how close to the event, why and for whom (a school textbook is written for
+  adoption boards; a marker or monument for its sponsors), and whose viewpoint it leaves out. Suetonius wrote about 150 years after Caesar's
   birth; a 1995 Fortune interview with the founders is close to Microsoft's founding.
 - **Contextualisation**: what the author could know; what genre the text is (a law quoted by Macrobius, a
   biography, a press release, a filing under penalty of law).
 - **Corroboration**: does an independent source agree, and does it derive from the first?
-- **Close reading**: what the passage actually says; an inference ("he was 56 when he died") is not a date.
+- **Close reading**: what the passage actually says; an inference ("he was 56 when he died") is not a date. Name
+  the loaded words that tell the reader how to feel, and the passives that hide who acted ("2,000 were killed").
+  A claim about what someone believed or felt needs a letter, diary or record behind it (Loewen, Lies My Teacher
+  Told Me, ch. 1 and Afterword; R-20261119-1).
+- **Silence**: when sources leave out an event or a later part of a life, say so if it changes the picture.
 - **Role of the passage**: does the author assert it, concede it, or report it in order to reject it?
   `verify quote` proves the words are on the page, not that the author holds them. Record `role` (`asserted`,
   `conceded`, `rejected`) on each source; `verify sources` warns when it is missing. A concession, or a view
@@ -39,6 +44,9 @@ Tertiary sources (Wikipedia, Britannica, encyclopedias, AI answers) route you an
 cite what they cite, after reading it. Curated structured data (Wikidata with references, Pleiades, PeriodO,
 DPRR, CBDB) sits between: cite the statement's own reference. Primary sources and peer-reviewed scholarship
 carry the answer. A Wikidata statement with no reference beyond "imported from Wikimedia project" is a lead.
+School textbooks and public history (markers, monuments, museum labels) rank below other tertiary sources on a
+contested topic: textbooks copy each other, and a recent bibliography is no sign the narrative used it
+(Loewen, Introduction, ch. 11).
 
 ## Independence (R-20261017-17)
 
@@ -55,7 +63,8 @@ confidence line when it is above one.
 Classify before writing the "Sources disagree" note:
 
 - **Outdated source**: a later find or edition corrected it. Give the current view and say the older one is
-  superseded.
+  superseded. A contested number is a range with whose estimate each end is and its year, never the old figure
+  alone (Loewen, ch. 3).
 - **Different frame**: both are right about different things (formal against de facto reign; founding against
   incorporation; Julian against Gregorian). Give both with their frames.
 - **Genuine scholarly dispute**: name each position's holders and evidence, and say which is the consensus
