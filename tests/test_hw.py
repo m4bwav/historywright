@@ -271,6 +271,15 @@ class Verify(unittest.TestCase):
         res = C.check_sources(doc, network=False, require_fetched=False)
         self.assertFalse(any("role" in w for w in res["warnings"]), res)
 
+    def test_agentless_harm_lint(self):
+        bad = "In 1838 the Cherokee were forcibly removed from Georgia. Many were killed on the march."
+        res = C.agentless_harm(bad)
+        self.assertTrue(res["ok"])
+        self.assertEqual(len(res["warnings"]), 2, res)
+        good = ("In 1838 the Cherokee were removed from Georgia by the US Army under Winfield Scott. "
+                "The treaty was signed in 1835.")
+        self.assertEqual(C.agentless_harm(good)["warnings"], [])
+
     def test_measured_claims(self):
         good = {"claim": "the wheel was 14 ft across", "locator": "Sheet 3 of 7",
                 "measured": {"scale": "1:24 (scale bar on the sheet)", "how": "ruler on the scan, rim to rim"}}

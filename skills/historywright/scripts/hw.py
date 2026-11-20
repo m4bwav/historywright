@@ -12,7 +12,7 @@ Every command prints one JSON object and fails soft ({"ok": false, "error": ...}
   src ID QUERY                    any registry source with a JSON search (museums, libraries, archives)
   cal date|jdn|span|era|cjk|setup dates in code: JDN, Julian/Gregorian, BCE, AUC, O.S./N.S., Islamic, CJK eras
   cache get|put|list              answers already researched, with sources and retrieval dates
-  verify url|quote|doi|qid|sources   URL health, quote spans, DOIs, QIDs, a whole sources.json
+  verify url|quote|doi|qid|sources|answer   URL health, quote spans, DOIs, QIDs, a sources.json, agentless harm
   fetch URL [--find TERM]         read a page into the run's page store, its text to a file; find terms (long-s too)
   pack init|add-ref|csl           research packs (polywright asset folders); validate-pack DIR checks one
   probe [--only ids]              every registry endpoint, to catch moves between refreshes
@@ -238,6 +238,12 @@ def cmd_verify(a):
         return out(S.doi_lookup(a.values[0], a.title, a.author, a.year))
     if a.sub == "qid":
         return out(C.verify_qid(a.values[0], a.label))
+    if a.sub == "answer":
+        try:
+            text = Path(a.values[0]).read_text(encoding="utf-8")
+        except (OSError, IndexError) as e:
+            return fail("cannot read answer file: %s" % e)
+        return out(C.agentless_harm(text))
     if a.sub == "sources":
         try:
             doc = C.load_json(a.values[0])
@@ -582,7 +588,7 @@ def build():
     x.set_defaults(fn=cmd_cache)
 
     x = sp.add_parser("verify")
-    x.add_argument("sub", choices=["url", "quote", "doi", "qid", "sources"])
+    x.add_argument("sub", choices=["url", "quote", "doi", "qid", "sources", "answer"])
     x.add_argument("values", nargs="*")
     x.add_argument("--url")
     x.add_argument("--quote")

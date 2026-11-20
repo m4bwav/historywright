@@ -293,6 +293,24 @@ def check_sources(doc, network=True, require_fetched=True):
             "independent_sources": [s.get("id") for s in indep], "corroborated": corroborated}
 
 
+_HARM = (r"(?:killed|massacred|slaughtered|murdered|executed|removed|expelled|deported|seized|confiscated|burned|"
+         r"burnt|destroyed|enslaved|displaced)")
+_PASSIVE = re.compile(r"\b(?:was|were|been|being|be|is|are|got)\s+(?:\w+ly\s+)?" + _HARM + r"\b([^.;:!?]*)", re.I)
+
+
+def agentless_harm(text):
+    """Advisory lint (Loewen, Lies My Teacher Told Me, ch. 1): a passive verb of violence, removal or seizure with no
+    "by <actor>" in the rest of its clause. One warning per hit; never fails."""
+    rows = []
+    for m in _PASSIVE.finditer(text):
+        if re.search(r"\bby\b", m.group(1), re.I):
+            continue
+        start = max(text.rfind(".", 0, m.start()), text.rfind("\n", 0, m.start())) + 1
+        rows.append({"phrase": m.group(0)[:60].strip(), "sentence": text[start:m.end()].strip()[:160]})
+    return {"ok": True, "warnings": rows,
+            "note": "name who did it, or say the actor is unknown" if rows else "no agentless harm found"}
+
+
 def independent_set(srcs):
     """Sources that are not mirrors and share no derived_from with each other (R-20261017-17)."""
     pool = [s for s in srcs if not is_mirror(s.get("url") or "") and s.get("kind") != "tertiary"]

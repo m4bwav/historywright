@@ -19,6 +19,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 ## Changes
 
+### C-20261119-1 · 2026-11-19 · Loewen: agentless-harm lint, motive sources, myth labels, textbook rank
+- because: R-20261119-1
+- files: skills/historywright/scripts/hw_check.py (`agentless_harm`), skills/historywright/scripts/hw.py (`verify answer`), tests/test_hw.py (`test_agentless_harm_lint`), skills/historywright/references/method.md (Reading a source, Source hierarchy, Disagreement), skills/historywright/references/answer-format.md (Shape), skills/historywright/references/cli.md, skills/historywright/SKILL.md (Step 7)
+- New advisory `hw.py verify answer` lists passives of killing, removal or seizure with no "by" actor. Sourcing asks purpose, audience and the missing viewpoint; close reading names loaded words and needs a document for motive claims; silence noted; textbooks and markers rank below other tertiary sources on contested topics; contested numbers as attributed ranges; myth corrections labelled `contradicted` or `unverifiable` with evidence; "who was X" covers the later life.
+
 ### C-20261117-2 · 2026-11-17 · Version 0.7.1: map-reading section
 - because: release C-20261117-1
 - files: .claude-plugin/plugin.json (version), skills/historywright/scripts/hw_net.py (VERSION)
