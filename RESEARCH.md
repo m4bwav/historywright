@@ -37,6 +37,7 @@ Topic: answering history questions from sources, not model memory; a source regi
 
 ## Open questions
 
+- Do hw.py's SPARQL queries run unchanged on the QLever Wikidata endpoint? WDQS cutover date still unannounced (R-20261120-1).
 - Resolved 2026-10-17 (R-20261017-26): WHG's `suggest/entity?prefix=` and `api/index/?name=` answer with a Bearer token; `api/places/` is 404. Current docs re-read 2026-10-18 (R-20261018-4).
 - Resolved 2026-10-17: the DILA Time Authority data is CC BY-SA 3.0 Unported (COPYING.rst in github.com/DILA-edu/Authority-Databases; the site footer says CC BY-SA 2.5 Taiwan). hw.py may download it on demand and build the table locally, with attribution. kltng/calendar_converter's repository has no licence, so do not fetch its prebuilt db.
 - Resolved 2026-10-17 (R-20261017-25): `action=parse` HTML gives every footnote as `<li id="cite&#95;note-...">` with a `reference-text` span; `hw.py wp refs --near` maps a sentence to its footnotes. Parsoid untested.
@@ -90,6 +91,13 @@ Testing:
 Best sources (primary first): the Wikimedia API changelog and rate-limit pages, Wikidata Help:Dates and the WDQS graph-split page, each source's own API docs, live API calls (cheap and decisive), the MCP registry and skills.sh APIs, GitHub's API, Humphries' substack, arXiv HTML. Sources that proved noisy: API directories (apis.io, jentic, publicapi.dev, freeapihub), arXiv mirrors (themoonlight, alphaxiv, catalyzex), quote sites, SEO listicles; searches naming Devereaux without `site:acoup.blog`. Fetch-refused (route through fetchwright if needed): Britannica, GatesNotes, developer.nytimes.com, open-platform.theguardian.com, si.edu, pro.europeana.eu, Trove, glam-workbench.net.
 
 ## Findings log
+
+### R-20261120-1 · 2026-11-20 · Refresh: WDQS QLever migration active; OAuth 2 attribution change
+- Summary: Wikidata Query Service Days 2026 (Oct 17-23) covered the move from Blazegraph to QLever with tool-migration help; no cutover date or final endpoint announced, today's endpoints unchanged. Wikimedia APIs changelog (Oct 2026): OAuth 2 client-credential requests from apps registered on or after 2026-10-19 now count against the registering user (matters only if hw.py uses a token); beta Attribution API breaking changes do not touch historywright. Tooling: Wikidata:MCP project page and wb-mcp.wmcloud.org for other Wikibases (note). Testing: HistBench published at ICML 2026 (best agent 27.54% pass@1); no benchmark for citation hallucination in history answers. OpenAlex key and Crossref Event Data shutdown re-confirmed. Practice quiet.
+- Track: subject (tooling, testing minor; practice quiet)
+- Sources: https://www.wikidata.org/wiki/Wikidata:News, https://www.mediawiki.org/wiki/Wikimedia_APIs/Changelog, https://www.wikidata.org/wiki/Wikidata:MCP, https://proceedings.mlr.press/v306/qiu26s.html
+- Magnitude: 0.2
+- Applied: none (note)
 
 ### R-20261119-1 · 2026-11-19 · Practice: Loewen, Lies My Teacher Told Me, on textbook and public-history failures
 - Source: James W. Loewen, Lies My Teacher Told Me (New Press, 1st ed. 1995; survey of twelve US textbooks). Read: Introduction, ch. 1 (half), Afterword; grep of ch. 2, 3, 11. The survey describes 1990s books, not today's; Loewen's own claims need the corroboration he asks for.
