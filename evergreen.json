@@ -13,9 +13,9 @@
   "source": null,
   "topic": "Answering history questions from sources, not model memory: where historical answers live (structured data, gazetteers, libraries, archives, scholarship, museums) and how to query them; dates and calendars in code; citation verification; research packs for 3D and video",
   "tier": "moderate",
-  "interval_days": 30,
-  "last_checked": "2026-10-17",
-  "next_due": "2026-11-16",
+  "interval_days": 30.0,
+  "last_checked": "2026-11-20",
+  "next_due": "2026-12-20",
   "verify_at_use": false,
   "volatile_claims": [],
   "contradiction": null,
@@ -32,12 +32,18 @@
       "m": null,
       "interval_after": 30,
       "note": "created"
+    },
+    {
+      "date": "2026-11-20",
+      "m": 0.2,
+      "interval_after": 30.0,
+      "note": "WDQS QLever migration active, OAuth2 attribution change; cost: searches 4 · fetches 2 · tool calls 8"
     }
   ],
   "counts": {
     "learnings": 0,
     "changes": 0,
-    "research": 0,
+    "research": 1,
     "tests": 1
   },
   "consolidate_every": 25,
