@@ -72,7 +72,7 @@ Full list: [skills/historywright/references/cli.md](skills/historywright/referen
 
 ## Install
 
-As a Claude Code plugin:
+In Claude Code:
 
     /plugin marketplace add m4bwav/historywright
     /plugin install historywright@historywright
