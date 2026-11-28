@@ -44,5 +44,5 @@ Updated 2026-11-13 (Craft of Research book track, 0.7.0).
 ## Read first
 
 1. [next-session-prompt.md](next-session-prompt.md).
-2. [log.md](log.md) (the 2026-10-18 entries) and the decisions folder.
+2. [log.md](log/) (the 2026-10-18 entries) and the decisions folder.
 3. [../AGENTS.md](../AGENTS.md) for the repository rules, [../README.md](../README.md) for the overview.

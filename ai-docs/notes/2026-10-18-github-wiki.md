@@ -116,4 +116,4 @@ Repository tests at 29bc397: `check_skills.py` 0 problems, `test_hw.py` 34 tests
 - On Windows, a shell redirect of the first runs wrote the saved output with CRLF, which `check_skills.py` fails; the program now sets its stdout to LF.
 - Running the Windows and Linux verifiers at once doubles the request rate per host (each has its own pace file); keep it to two.
 
-Related: see also [../HANDOFF.md](../HANDOFF.md), [../log.md](../log.md).
+Related: see also [../HANDOFF.md](../HANDOFF.md), [../log.md](../log/).
